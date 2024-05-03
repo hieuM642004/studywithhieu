@@ -1,0 +1,57 @@
+<div class="flex flex-col">
+    <div class="bg-gray-100 py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">{{ article?.title }}</h1>
+            <p class="text-gray-600">Published on {{ article?.createdAt }}</p>
+        </div>
+    </div>
+    <div class="bg-white py-8">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row">
+            <div class="w-full md:w-3/4 px-4">
+                <img *ngIf="article && article.images && article.images.length > 0" [src]="article.images[0]" alt="Blog Featured Image" class="mb-8">
+
+                <div class="prose max-w-none">
+                    <p>{{ article?.content }}</p>
+                   
+                </div>
+            </div>
+            <div class="w-full md:w-1/4 px-4">
+                <div class="bg-gray-100 p-4">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Posts</h2>
+                    <ul class="list-none">
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Blog Post 1</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Blog Post 2</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Blog Post 3</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Blog Post 4</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-gray-100 p-4 mt-4">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Categories</h2>
+                    <ul class="list-none">
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Category 1</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Category 2</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Category 3</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">Category 4</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
