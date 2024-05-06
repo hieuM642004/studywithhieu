@@ -69,12 +69,12 @@ export interface Articles {
 export interface User {
   _id: string;
   username: string;
-  avatar: string;
+  avatar?: string;
   email: string;
   password: string;
   role:string;
   slug: string;
-  articles:string[]
+  articles?:string[]
   createdAt: string;
   updatedAt: string;
   

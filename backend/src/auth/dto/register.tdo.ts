@@ -14,4 +14,5 @@ export class RegisterDto {
   @MinLength(6)
   readonly password: string;
   readonly role: UserRole;
+  readonly  slug: string;
 }

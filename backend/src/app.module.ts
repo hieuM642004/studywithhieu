@@ -34,5 +34,6 @@ export class AppModule implements NestModule {
     consumer.apply(cookieParser()).forRoutes('*');
     consumer.apply(JwtMiddleware).forRoutes('*');
     consumer.apply(bodyParser.urlencoded({ extended: true })).forRoutes('*');
+    consumer.apply(bodyParser.json()).forRoutes('*');
   }
 }

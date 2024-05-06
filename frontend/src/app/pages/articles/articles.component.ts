@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ArticlesService } from '../services/articles.service';
-import { Articles } from '../types/types';
-import { User } from '../types/types';
-import { API_URL } from '../constant/api';
-import { UsersService } from '../services/user.service';
-
+import { ArticlesService } from '../../services/articles.service';
+import { Articles } from '../../types/types';
+import { User } from '../../types/types';
+import { API_URL } from '../../constant/api';
+import { UsersService } from '../../services/user.service';
+import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
+AuthInterceptor
 @Component({
   selector: 'app-articles',
   standalone: true,
   imports:[CommonModule,HttpClientModule,RouterModule],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
+  providers:[{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}]
 })
 export class ArticlesComponent implements OnInit {
   data: Articles[] = [];

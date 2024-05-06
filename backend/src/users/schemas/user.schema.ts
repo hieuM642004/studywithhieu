@@ -28,6 +28,8 @@ export class User {
   @Prop()
   role: UserRole;
   @Prop()
+  refreshToken: string;
+  @Prop()
   slug: string;
   async generateSlug() {
     this.slug = slugify(this.username, { lower: true, remove: /[*+~.()'"!:@]/g });

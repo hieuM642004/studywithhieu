@@ -1,15 +1,17 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ArticlesComponent } from './articles/articles.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ArticlesComponent } from './pages/articles/articles.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DetailArticleComponent } from './components/detail-article/detail-article.component';
 import { DetailUserComponent } from './components/detail-user/detail-user.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 
 export const routes: Routes = [
   // A route to the home page (component)
   {
+    title:'Home page',
     path: '',
     component: HomeComponent,
   },
@@ -26,7 +28,15 @@ export const routes: Routes = [
     component: DetailUserComponent,
   },
   {
+    path: 'my-account/:slug',
+    component: DetailUserComponent,
+  },
+  {
     path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
     component: RegisterComponent,
   },
   // A route to the about us page (module)

@@ -22,30 +22,25 @@ export class AuthService {
     private readonly googleDriveUploader: GoogleDriveUploader,
   ) {}
 
-  async register(
-    registerDto: RegisterDto,
-    @UploadedFile() file: Express.Multer.File,
-  ): Promise<{ token: string }> {
-    if (!file || !file.buffer) {
-      throw new Error('Invalid file');
+  async register(user: User, file: Express.Multer.File): Promise<User> {
+    try {
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const userWithHashedPassword = { ...user, password: hashedPassword };
+      const fileStream = Readable.from(file.buffer);
+      const fileId = await this.googleDriveUploader.uploadImage(
+        fileStream,
+        file.originalname,
+        '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
+      );
+
+      const avatarUrl = this.googleDriveUploader.getThumbnailUrl(fileId);
+      const userWithAvatar = { ...userWithHashedPassword, avatar: avatarUrl };
+      const res = await this.userModel.create(userWithAvatar);
+      return res;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
     }
-
-    const hashedPassword = await bcrypt.hash(registerDto.password, 10);
-    const userWithHashedPassword = { ...registerDto, password: hashedPassword };
-    const fileStream = Readable.from(file.buffer);
-    const fileId = await this.googleDriveUploader.uploadImage(
-      fileStream,
-      file.originalname,
-      '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
-    );
-
-    const avatarUrl = this.googleDriveUploader.getThumbnailUrl(fileId);
-    const userWithAvatar = { ...userWithHashedPassword, avatar: avatarUrl };
-    const res = await this.userModel.create(userWithAvatar);
-
-    const token = this.jwtService.sign({ id: res._id });
-
-    return { token };
   }
 
   async login(
@@ -65,13 +60,14 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const payload = { id: user._id, username: user.username, role: user.role };
+    const payload = { id: user._id, username: user.username,avatar:user.avatar,email:user.email, role: user.role ,slug:user.slug};
 
     const accessToken = this.jwtService.sign(payload);
 
-    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+    user.refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+    await user.save();
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken: user.refreshToken  };
   }
 
   async refreshToken(
@@ -95,4 +91,23 @@ export class AuthService {
 
     return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   }
+  async logout(refreshToken: string): Promise<void> {
+  
+    const decodedToken = this.jwtService.decode(refreshToken) as { id: string };
+  
+    if (!decodedToken || !decodedToken.id) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+  
+    const user = await this.userModel.findById(decodedToken.id);
+  
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+  
+    
+    user.refreshToken = null;
+    await user.save();
+  }
+  
 }
