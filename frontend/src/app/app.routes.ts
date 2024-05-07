@@ -5,6 +5,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { DetailArticleComponent } from './components/detail-article/detail-article.component';
 import { DetailUserComponent } from './components/detail-user/detail-user.component';
 import { LoginComponent } from './auth/login/login.component';
+import { QuizzesComponent } from './pages/quizzes/quizzes.component';
 
 
 
@@ -39,10 +40,14 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  // A route to the about us page (module)
   {
-    path: 'about-us',
-    loadChildren: () =>
-      import('./modules/about-us/about-us.module').then((m) => m.AboutUsModule),
+    path: 'quizzes',
+    component: QuizzesComponent,
   },
+  // A route to the about us page (module)
+  // {
+  //   path: 'about-us',
+  //   loadChildren: () =>
+  //     import('./modules/about-us/about-us.module').then((m) => m.AboutUsModule),
+  // },
 ];

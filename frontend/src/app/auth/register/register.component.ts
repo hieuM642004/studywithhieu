@@ -60,7 +60,6 @@ export class RegisterComponent {
         formData.append('password', formValue.password);
         formData.append('role', 'user');
 
-        console.log(formData);
 
         const response = await this.authService.register(formData).toPromise();
 

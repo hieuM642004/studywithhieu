@@ -7,7 +7,7 @@ import { GoogleDriveUploader } from 'src/drive/drive.upload';
 import { Topic } from 'src/topics/schemas/topic.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { Favorites } from 'src/favorites/schemas/favorites.schema';
-
+import { PaginatedResult } from './interface/pagination.interface';
 @Injectable()
 export class ArticleService {
   constructor(
@@ -22,9 +22,20 @@ export class ArticleService {
     private readonly googleDriveUploader: GoogleDriveUploader,
   ) {}
 
-  async findAll(): Promise<Article[]> {
-    const articles = await this.articleModel.find();
-    return articles;
+  async findAll(page: number = 1, limit: number = 10): Promise<PaginatedResult<Article>> {
+    const totalItems = await this.articleModel.countDocuments().exec();
+    const totalPages = Math.ceil(totalItems / limit);
+    const startIndex = (page - 1) * limit;
+
+    const articles = await this.articleModel.find().skip(startIndex).limit(limit).exec();
+
+    const result: PaginatedResult<Article> = {
+      data: articles,
+      totalPages: totalPages,
+      currentPage: page,
+      totalItems: totalItems
+    };
+    return result;
   }
 
   async create(

@@ -8,7 +8,9 @@ import {
   Put,
   UseInterceptors, UploadedFiles,
   UseGuards,
-  SetMetadata
+  SetMetadata,
+  Query
+  
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ResponseData } from 'src/global/globalClass';
@@ -19,18 +21,18 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import { Article } from './schemas/article.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/auth/guards/authorization.guard';
-
+import { PaginatedResult } from './interface/pagination.interface';
 @Controller('articles')
-export class ArticleController {
+export class ArticleController  {
   constructor(private readonly articleService: ArticleService) {}
   @Get()
   // @UseGuards(AdminGuard)
-  async getAllArticles(): Promise<ResponseData<Article[]>> {
+  async getAllArticles(@Query('page') page: number = 1, @Query('limit') limit: number = 10): Promise<ResponseData<PaginatedResult<Article>>> {
     try {
-      const articles = await this.articleService.findAll();
-      return new ResponseData<Article[]>(articles, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
+      const paginatedResult = await this.articleService.findAll(page, limit);
+      return new ResponseData<PaginatedResult<Article>>(paginatedResult, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
     } catch (error) {
-      return new ResponseData<Article[]>([], HttpStatus.ERROR, HttpMessage.ERROR);
+      return new ResponseData<PaginatedResult<Article>>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
 
