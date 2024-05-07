@@ -27,14 +27,15 @@ export class ArticleController  {
   constructor(private readonly articleService: ArticleService) {}
   @Get()
   // @UseGuards(AdminGuard)
-  async getAllArticles(@Query('page') page: number = 1, @Query('limit') limit: number = 10): Promise<ResponseData<PaginatedResult<Article>>> {
+  async getAllArticles(@Query('page') page: number = 1, @Query('limit') limit: number = 10, @Query('search') searchQuery?: string): Promise<ResponseData<PaginatedResult<Article>>> {
     try {
-      const paginatedResult = await this.articleService.findAll(page, limit);
+      const paginatedResult = await this.articleService.findAll(page, limit, searchQuery);
       return new ResponseData<PaginatedResult<Article>>(paginatedResult, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
     } catch (error) {
       return new ResponseData<PaginatedResult<Article>>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
+  
 
   @Post()
   @UseInterceptors(FilesInterceptor('images', 10))

@@ -66,6 +66,17 @@ export interface Articles {
   slug: string;
   user?: User;
 }
+
+export interface PaginatedArticles {
+  data: {
+    data: Articles[]; 
+    totalPages: number; 
+    currentPage: number; 
+    totalItems: number;
+  };
+}
+
+
 export interface User {
   _id: string;
   username: string;

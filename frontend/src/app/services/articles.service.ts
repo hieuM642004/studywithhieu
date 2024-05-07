@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { PaginationParams, Articles } from '../types/types';
+import { PaginatedArticles, Articles } from '../types/types';
 import { API_URL } from '../constant/api';
+import { HttpClient } from '@angular/common/http';
 
+HttpClient
 @Injectable({
   providedIn: 'root',
 })
 export class ArticlesService {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private http:HttpClient) {}
 
   // Getting articles from the API
-  getArticles(): Observable<{ data: Articles[] }> { 
-    return this.apiService.get(`${API_URL}/articles`, {
-      responseType: 'json',
-    });
+  getArticles(page: number, limit: number): Observable<PaginatedArticles> {
+    return this.http.get<PaginatedArticles>(`${API_URL}/articles?page=${page}&limit=${limit}`);
   }
   getArticlesById(identifier: string): Observable<any> {
     return this.apiService.get(`${API_URL}/articles/${identifier}`, {

@@ -22,13 +22,20 @@ export class ArticleService {
     private readonly googleDriveUploader: GoogleDriveUploader,
   ) {}
 
-  async findAll(page: number = 1, limit: number = 10): Promise<PaginatedResult<Article>> {
-    const totalItems = await this.articleModel.countDocuments().exec();
+  async findAll(page: number = 1, limit: number = 10, searchQuery?: string): Promise<PaginatedResult<Article>> {
+    let query = {};
+  
+   
+    if (searchQuery) {
+      query = { title: { $regex: searchQuery, $options: 'i' } }; 
+    }
+
+    const totalItems = await this.articleModel.countDocuments(query).exec();
     const totalPages = Math.ceil(totalItems / limit);
     const startIndex = (page - 1) * limit;
 
-    const articles = await this.articleModel.find().skip(startIndex).limit(limit).exec();
-
+    const articles = await this.articleModel.find(query).skip(startIndex).limit(limit).exec();
+  
     const result: PaginatedResult<Article> = {
       data: articles,
       totalPages: totalPages,
@@ -37,6 +44,7 @@ export class ArticleService {
     };
     return result;
   }
+  
 
   async create(
     articleDto: Article,
