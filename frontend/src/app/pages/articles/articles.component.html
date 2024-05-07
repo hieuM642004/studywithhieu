@@ -28,13 +28,13 @@
         <a routerLink="/articles/{{ article.slug }}" routerLinkActive="active">
           <h1 class="font-semibold text-gray-900 mt-1 text-xl">
             {{ article.title }}
-          </h1></a
-        >
+          </h1>
         <img
           [src]="article.images[0]"
           alt=""
           class="object-cover object-center w-full rounded-lg max-h-96 my-2"
         />
+</a>
         <p class="text-gray-700">{{ article.content }}</p>
         <div class="mt-4 flex items-center">
           <div class="flex mr-4 text-gray-700 text-xl">

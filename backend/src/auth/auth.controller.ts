@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post,UploadedFile,UseInterceptors,Response,Res, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Get, Post,UploadedFile,UseInterceptors,Response,Res, UnauthorizedException ,Query} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.tdo';
+
 import { HttpStatus,HttpMessage } from 'src/global/globalEnum';
 import { User } from 'src/users/schemas/user.schema';
 import { ResponseData } from 'src/global/globalClass';
@@ -60,4 +61,28 @@ newUser.generateSlug()
       throw error;
     }
   }
+  @Post('/forgot-password')
+  async forgotPassword(@Body() body: any): Promise<{ message: string }> {
+    
+    
+    const { email } = body;
+    try {
+      await this.authService.forgotPassword(email);
+      return { message: 'Password reset email sent' };
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      throw error;
+    }
+  }
+  @Post('/reset-password')
+async resetPassword(@Query('token') token: string, @Body('newPassword') newPassword: string): Promise<{ message: string }> {
+  try {
+    await this.authService.resetPassword(token, newPassword);
+    return { message: 'Password reset successful' };
+  } catch (error) {
+    console.error('Error resetting password:', error);
+    throw error;
+  }
+}
+
 }

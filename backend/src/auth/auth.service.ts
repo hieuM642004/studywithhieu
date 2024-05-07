@@ -12,9 +12,10 @@ import { RegisterDto } from './dto/register.tdo';
 import { LoginDto } from './dto/login.dto';
 import { User } from 'src/users/schemas/user.schema';
 import { GoogleDriveUploader } from 'src/drive/drive.upload';
-
+import { transporter } from './mail/mailler';
 @Injectable()
 export class AuthService {
+  private readonly transporter;
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
@@ -41,6 +42,7 @@ export class AuthService {
       console.error('Error creating user:', error);
       throw error;
     }
+
   }
 
   async login(
@@ -109,5 +111,63 @@ export class AuthService {
     user.refreshToken = null;
     await user.save();
   }
+
   
+  async forgotPassword(email: string): Promise<void> {
+    
+    const user = await this.userModel.findOne({ email });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+   
+    const token = this.jwtService.sign({ id: user._id }, { expiresIn: '1h' });
+    
+    user.passwordResetToken = token;
+    const expiresDate = new Date(Date.now() + 3600000);
+user.passwordResetExpires = expiresDate.toISOString();
+    await user.save();
+
+    // Send the password reset email
+    const resetUrl = `http://localhost:3000/auth/reset-password?token=${token}`;
+    const mailOptions = {
+      from: '<hieu@78544@gmail.com>',
+      to: user.email,
+      subject: 'Password Reset Request',
+      html: `
+        <p>You requested a password reset. Click the link below to reset your password:</p>
+        <a href="${resetUrl}">${resetUrl}</a>
+        <p>Ex: ${expiresDate}</p>
+      `,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions); 
+    } catch (error) {
+      console.error('Failed to send password reset email:', error);
+      throw new Error('Failed to send password reset email');
+    }
+  }
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const decodedToken = this.jwtService.decode(token) as { id: string };
+    if (!decodedToken || !decodedToken.id) {
+      throw new UnauthorizedException('Invalid token');
+    }
+
+    const user = await this.userModel.findById(decodedToken.id);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    if (new Date() > new Date(user.passwordResetExpires)) {
+      throw new Error('Password reset token has expired');
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    user.passwordResetToken = null;
+    user.passwordResetExpires = null;
+    await user.save();
+  }
 }
