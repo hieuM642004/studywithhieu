@@ -35,13 +35,22 @@ export class User {
   passwordResetToken: string;
 
   @Prop()
-  passwordResetExpires: string; 
+  passwordResetExpires: string;
 
   @Prop()
   slug: string;
+  @Prop({
+    type: [
+      { userId: { type: SchemaTypes.ObjectId, ref: 'User' }, followedAt: Date },
+    ],
+  })
+  followers: { userId: string; followedAt: Date }[];
 
   async generateSlug() {
-    this.slug = slugify(this.username, { lower: true, remove: /[*+~.()'"!:@]/g });
+    this.slug = slugify(this.username, {
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
   }
 }
 

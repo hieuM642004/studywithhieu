@@ -81,6 +81,7 @@ export class UserService {
       user.password = userDto.password;
       user.role = userDto.role;
       user.slug = userDto.slug;
+      user.followers = userDto.followers;
 
       return await user.save();
     } catch (error) {
@@ -91,5 +92,49 @@ export class UserService {
 
   async deleteById(id: string): Promise<User> {
     return await this.userModel.findByIdAndDelete(id);
+  }
+
+  async followUser(userId: string, followerId: string): Promise<User> {
+    const userToFollowDocument = await this.userModel.findById(userId);
+    const follower = await this.userModel.findById(followerId);
+
+    if (!userToFollowDocument || !follower) {
+      throw new NotFoundException('User not found.');
+    }
+
+    const userToFollow = userToFollowDocument.toObject() as User;
+
+    const isAlreadyFollowing = follower.followers.some(
+      (u) => u.userId === userToFollow._id.toString(),
+    );
+
+    if (!isAlreadyFollowing) {
+      follower.followers.push({
+        userId: userToFollow._id.toString(),
+        followedAt: new Date(),
+      });
+      await follower.save();
+    }
+
+    return follower;
+  }
+
+  async unfollowUser(userId: string, followerId: string): Promise<User> {
+    const userToUnfollowDocument = await this.userModel.findById(userId);
+    const follower = await this.userModel.findById(followerId);
+
+    if (!userToUnfollowDocument || !follower) {
+      throw new NotFoundException('User not found.');
+    }
+
+    const userToUnfollow = userToUnfollowDocument.toObject() as User;
+
+    await this.userModel.findByIdAndUpdate(
+      followerId,
+      { $pull: { followers: { userId: userToUnfollow._id.toString() } } },
+      { new: true },
+    );
+
+    return follower;
   }
 }

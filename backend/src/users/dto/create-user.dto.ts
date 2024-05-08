@@ -8,5 +8,6 @@ export class CreateUserDto {
   readonly password: string;
   readonly articles: Article[];
   readonly role: UserRole;
-  readonly  slug: string;;
+  readonly slug: string;
+  readonly followers: { userId: string; followedAt: Date }[];
 }
