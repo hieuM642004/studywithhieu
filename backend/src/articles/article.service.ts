@@ -8,6 +8,16 @@ import { Topic } from 'src/topics/schemas/topic.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { Favorites } from 'src/favorites/schemas/favorites.schema';
 import { PaginatedResult } from './interface/pagination.interface';
+import imageType, { ImageTypeResult } from 'image-type';
+
+import {
+  app,
+  db,
+  getStorage,
+  sRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from '../firebase/firebase.service'
 @Injectable()
 export class ArticleService {
   constructor(
@@ -46,22 +56,51 @@ export class ArticleService {
   }
   
 
-  async create(
-    articleDto: Article,
-    files: Express.Multer.File[],
-  ): Promise<Article> {
+  // async create(
+  //   articleDto: Article,
+  //   files: Express.Multer.File[],
+  // ): Promise<Article> {
+  //   try {
+  //     const imagesUrlPromises = files.map(async (file) => {
+  //       const fileStream = Readable.from(file.buffer);
+  //       const fileId = await this.googleDriveUploader.uploadImage(
+  //         fileStream,
+  //         file.originalname,
+  //         '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
+  //       );
+  //       return this.googleDriveUploader.getThumbnailUrl(fileId);
+  //     });
+  //     const imagesUrl = await Promise.all(imagesUrlPromises);
+
+  //     const newArticle = new this.articleModel({
+  //       ...articleDto,
+  //       images: imagesUrl,
+  //     });
+  //     await this.topicModel.findByIdAndUpdate(
+  //       articleDto.idTopic,
+  //       { $push: { articles: newArticle._id } },
+  //       { new: true },
+  //     );
+  //     await this.userModel.findByIdAndUpdate(
+  //       articleDto.postedBy,
+  //       { $push: { articles: newArticle._id } },
+  //       { new: true },
+  //     );
+    
+  //     return newArticle.save();
+  //   } catch (error) {
+  //     console.error('Error creating article:', error);
+  //     throw error;
+  //   }
+  // }
+  async create(articleDto: Article, files: Express.Multer.File[]): Promise<Article> {
     try {
       const imagesUrlPromises = files.map(async (file) => {
-        const fileStream = Readable.from(file.buffer);
-        const fileId = await this.googleDriveUploader.uploadImage(
-          fileStream,
-          file.originalname,
-          '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
-        );
-        return this.googleDriveUploader.getThumbnailUrl(fileId);
+        const imageUrl = await this.uploadImageToFirebase(file.buffer, file.originalname,'articles');
+        return imageUrl;
       });
       const imagesUrl = await Promise.all(imagesUrlPromises);
-
+  
       const newArticle = new this.articleModel({
         ...articleDto,
         images: imagesUrl,
@@ -76,14 +115,35 @@ export class ArticleService {
         { $push: { articles: newArticle._id } },
         { new: true },
       );
-    
+  
       return newArticle.save();
     } catch (error) {
       console.error('Error creating article:', error);
       throw error;
     }
   }
+  
+  async uploadImageToFirebase(imageBuffer: Buffer, imageName: string, folderName: string): Promise<string> {
+    try {
+   
+      const imageInfo: ImageTypeResult = await imageType(imageBuffer);
+      const mimeType = imageInfo ? `image/${imageInfo.ext}` : 'image/jpeg'; 
+  
+ 
+      const storage = getStorage(app);
+      const storageRef = sRef(storage, `${folderName}/${imageName}`);
+  
 
+      const uploadTaskSnapshot = await uploadBytesResumable(storageRef, imageBuffer, { contentType: mimeType });
+  
+      const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
+  
+      return downloadURL;
+    } catch (error) {
+      console.error('Error uploading image to Firebase:', error);
+      throw error;
+    }
+  }
   async findById(identifier: string): Promise<Article> {
     let article: Article;
 
