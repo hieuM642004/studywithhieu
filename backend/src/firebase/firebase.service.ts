@@ -25,40 +25,49 @@ import {
   update as dbUpdate,
 } from "firebase/database";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDSqxC_xkmpFjeRg9yJMXp48rGzYmD8pFI",
-    authDomain: "podcast-4073a.firebaseapp.com",
-    projectId: "podcast-4073a",
-    storageBucket: "podcast-4073a.appspot.com",
-    messagingSenderId: "646206095901",
-    appId: "1:646206095901:web:f7c10e06372ee02653fcf4",
-    measurementId: "G-CY6CKNY1X1"
-  };
+class FirebaseService {
+  private appInstance;
+  private dbInstance;
+  private auth;
+  private authDomain;
 
-const appInstance = initializeApp(firebaseConfig);
-const dbInstance = getDb(appInstance);
-const auth = getAuth(appInstance);
-const authDomain = dbRef(dbInstance);
-export {
-  appInstance as app,
-  dbInstance as db,
-  dbRef,
-  dbSet,
-  dbGet,
-  dbChild,
-  push,
-  orderByChild,
-  equalTo,
-  getStorage,
-  sRef,
-  uploadBytesResumable,
-  getDownloadURL,
-  dbRemove,
-  dbUpdate,
-  auth,
-  authDomain,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider
-};
+  constructor() {
+    const firebaseConfig = {
+      apiKey: "AIzaSyDSqxC_xkmpFjeRg9yJMXp48rGzYmD8pFI",
+      authDomain: "podcast-4073a.firebaseapp.com",
+      projectId: "podcast-4073a",
+      storageBucket: "podcast-4073a.appspot.com",
+      messagingSenderId: "646206095901",
+      appId: "1:646206095901:web:f7c10e06372ee02653fcf4",
+      measurementId: "G-CY6CKNY1X1"
+    };
+
+    this.appInstance = initializeApp(firebaseConfig);
+    this.dbInstance = getDb(this.appInstance);
+    this.auth = getAuth(this.appInstance);
+    this.authDomain = dbRef(this.dbInstance);
+  }
+
+  async uploadImageToFirebase(imageBuffer: Buffer, imageName: string, folderName: string): Promise<string> {
+    try {
+      const ext = imageName.split('.').pop()?.toLowerCase();
+      const mimeType = ext ? `image/${ext === 'jpg' ? 'jpeg' : ext}` : 'image/jpeg';
+
+      const storage = getStorage(this.appInstance);
+      const storageRef = sRef(storage, `${folderName}/${imageName}`);
+
+      const uploadTaskSnapshot = await uploadBytesResumable(storageRef, imageBuffer, { contentType: mimeType });
+
+      const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
+
+      return downloadURL;
+    } catch (error) {
+      console.error('Error uploading image to Firebase:', error);
+      throw error;
+    }
+  }
+
+
+}
+
+export default FirebaseService;
