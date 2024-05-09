@@ -6,6 +6,7 @@ import { DetailArticleComponent } from './components/detail-article/detail-artic
 import { DetailUserComponent } from './components/detail-user/detail-user.component';
 import { LoginComponent } from './auth/login/login.component';
 import { QuizzesComponent } from './pages/quizzes/quizzes.component';
+import {AboutComponent} from './pages/about/about.component';
 
 
 
@@ -43,6 +44,10 @@ export const routes: Routes = [
   {
     path: 'quizzes',
     component: QuizzesComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
   },
   // A route to the about us page (module)
   // {
