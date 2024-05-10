@@ -10,7 +10,7 @@ import { QuizzesComponent } from './pages/quizzes/quizzes.component';
 
 
 export const routes: Routes = [
-  // A route to the home page (component)
+  // A route to the home page (component) 
   {
     title:'Home page',
     path: '',

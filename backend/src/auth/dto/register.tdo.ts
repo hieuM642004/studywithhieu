@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { UserRole } from 'src/users/schemas/user.schema';
+import { UserRole } from 'src/apis/users/schemas/user.schema';
+
 
 export class RegisterDto {
   @IsNotEmpty()

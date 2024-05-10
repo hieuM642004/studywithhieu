@@ -1,7 +1,7 @@
 declare const module: any;
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from './pipes/validation.pipe';
+import { ValidationPipe } from './common/pipes/validation.pipe';
 import * as cookieParser from "cookie-parser";
 
 async function bootstrap() {
