@@ -40,8 +40,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     const refreshToken = this.cookieService.get('refreshToken');
-    this.cookieService.delete('accessToken');
-    this.cookieService.delete('refreshToken');
+  
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 

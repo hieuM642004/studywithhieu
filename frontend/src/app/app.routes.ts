@@ -11,7 +11,7 @@ import {AboutComponent} from './pages/about/about.component';
 
 
 export const routes: Routes = [
-  // A route to the home page (component)
+  // A route to the home page (component) 
   {
     title:'Home page',
     path: '',

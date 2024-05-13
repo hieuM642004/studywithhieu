@@ -7,8 +7,9 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 import { JwtStrategy } from './JWT/jwt.strategy';
-import { GoogleDriveUploader } from 'src/drive/drive.upload';
-import { UserSchema } from 'src/users/schemas/user.schema';
+import { GoogleDriveUploader } from 'src/providers/storage/drive/drive.upload';
+import { UserSchema } from 'src/apis/users/schemas/user.schema';
+
 
 @Module({
   imports: [

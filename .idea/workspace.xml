@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="efbe934e-8a5f-44d6-a69f-590be4466a4a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/article.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/article.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/article.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/dto/create-article.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/dto/update-article.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/interface/pagination.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/articles/schemas/article.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/JWT/jwt.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/JWT/jwt.strategy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/auth.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/auth.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/dto/register.tdo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/dto/register.tdo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/guards/authorization.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/auth/guards/authorization.guard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/auth/mail/mailler.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/drive/drive.upload.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/drive/keydrive.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/exception-filters/http-exception.filter.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/favorites/dto/create-favorites.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/favorites/dto/update-favorites.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/favorites/favorites.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/favorites/favorites.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/favorites/favorites.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/favorites/schemas/favorites.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/firebase/config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/firebase/firebase.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/firebase/keyfirebase.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/pipes/validation.pipe.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/quizs/dto/create-quiz.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/quizs/dto/update-quiz.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/quizs/quiz.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/quizs/quiz.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/quizs/quiz.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/quizs/schemas/quiz.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/topics/dto/create-topic.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/topics/dto/update-topic.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/topics/schemas/topic.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/topics/topic.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/topics/topic.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/topics/topic.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/users/dto/create-user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/users/dto/update-user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/users/schemas/user.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/users/user.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/users/user.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/users/user.service.ts" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2gG1Aisx6B69wjWiJvBRw0ut3Ts" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "hieu",
+    "last_opened_file_path": "C:/Users/ADMIN/Documents/NodeJs/studywithhieu",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Users\\ADMIN\\Documents\\NodeJs\\studywithhieu\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="efbe934e-8a5f-44d6-a69f-590be4466a4a" name="Changes" comment="" />
+      <created>1715308959686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715308959686</updated>
+      <workItem from="1715308960902" duration="120000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

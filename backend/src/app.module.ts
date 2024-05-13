@@ -6,13 +6,13 @@ import * as bodyParser from 'body-parser';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 //Modules
-import { UserModule } from './users/user.module';
+import { ArticleModule } from './apis/articles/article.module';
+import { TopicModule } from './apis/topics/topic.module';
+import { FavoritesModule } from './apis/favorites/favorites.module';
+import { EpisodeModule } from './apis/articles copy/episode.module';
+import { UserModule } from './apis/users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './auth/JWT/jwt.decode';
-import { ArticleModule } from './articles/article.module';
-import { QuizModule } from './quizs/quiz.module';
-import { TopicModule } from './topics/topic.module';
-import { FavoritesModule } from './favorites/favorites.module';
 
 
 @Module({
@@ -20,9 +20,9 @@ import { FavoritesModule } from './favorites/favorites.module';
     UserModule,
     AuthModule,
     ArticleModule,
-    QuizModule,
     TopicModule,
     FavoritesModule,
+    EpisodeModule,
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     MongooseModule.forRoot(process.env.DB_URL),
   ],

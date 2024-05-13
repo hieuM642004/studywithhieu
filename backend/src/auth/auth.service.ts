@@ -10,9 +10,9 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.tdo';
 import { LoginDto } from './dto/login.dto';
-import { User } from 'src/users/schemas/user.schema';
-import { GoogleDriveUploader } from 'src/drive/drive.upload';
-import { transporter } from './mail/mailler';
+import { User } from 'src/apis/users/schemas/user.schema';
+import { GoogleDriveUploader } from 'src/providers/storage/drive/drive.upload';
+import { transporter } from '../providers/mail/mailler';
 @Injectable()
 export class AuthService {
   private readonly transporter;

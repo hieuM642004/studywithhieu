@@ -5,8 +5,8 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.tdo';
 
 import { HttpStatus,HttpMessage } from 'src/global/globalEnum';
-import { User } from 'src/users/schemas/user.schema';
 import { ResponseData } from 'src/global/globalClass';
+import { User } from 'src/apis/users/schemas/user.schema';
 UnauthorizedException
 @Controller('auth')
 export class AuthController {
