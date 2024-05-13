@@ -8,18 +8,11 @@ import { Topic } from 'src/topics/schemas/topic.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { Favorites } from 'src/favorites/schemas/favorites.schema';
 import { PaginatedResult } from './interface/pagination.interface';
-import imageType, { ImageTypeResult } from 'image-type';
+import FirebaseService from 'src/firebase/firebase.service';
 
-import {
-  app,
-  db,
-  getStorage,
-  sRef,
-  uploadBytesResumable,
-  getDownloadURL,
-} from '../firebase/firebase.service'
 @Injectable()
 export class ArticleService {
+  private firebaseService: FirebaseService;
   constructor(
     @InjectModel(Article.name)
     private articleModel: mongoose.Model<Article>,
@@ -27,80 +20,58 @@ export class ArticleService {
     private topicModel: mongoose.Model<Topic>,
     @InjectModel(User.name)
     private userModel: mongoose.Model<User>,
-    @InjectModel(Favorites.name) 
-  private favoritesModel: mongoose.Model<Favorites>,
+    @InjectModel(Favorites.name)
+    private favoritesModel: mongoose.Model<Favorites>,
     private readonly googleDriveUploader: GoogleDriveUploader,
-  ) {}
+  ) {
+    this.firebaseService = new FirebaseService();
+  }
 
-  async findAll(page: number = 1, limit: number = 10, searchQuery?: string): Promise<PaginatedResult<Article>> {
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    searchQuery?: string,
+  ): Promise<PaginatedResult<Article>> {
     let query = {};
-  
-   
+
     if (searchQuery) {
-      query = { title: { $regex: searchQuery, $options: 'i' } }; 
+      query = { title: { $regex: searchQuery, $options: 'i' } };
     }
 
     const totalItems = await this.articleModel.countDocuments(query).exec();
     const totalPages = Math.ceil(totalItems / limit);
     const startIndex = (page - 1) * limit;
 
-    const articles = await this.articleModel.find(query).skip(startIndex).limit(limit).exec();
-  
+    const articles = await this.articleModel
+      .find(query)
+      .skip(startIndex)
+      .limit(limit)
+      .exec();
+
     const result: PaginatedResult<Article> = {
       data: articles,
       totalPages: totalPages,
       currentPage: page,
-      totalItems: totalItems
+      totalItems: totalItems,
     };
     return result;
   }
-  
 
-  // async create(
-  //   articleDto: Article,
-  //   files: Express.Multer.File[],
-  // ): Promise<Article> {
-  //   try {
-  //     const imagesUrlPromises = files.map(async (file) => {
-  //       const fileStream = Readable.from(file.buffer);
-  //       const fileId = await this.googleDriveUploader.uploadImage(
-  //         fileStream,
-  //         file.originalname,
-  //         '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
-  //       );
-  //       return this.googleDriveUploader.getThumbnailUrl(fileId);
-  //     });
-  //     const imagesUrl = await Promise.all(imagesUrlPromises);
-
-  //     const newArticle = new this.articleModel({
-  //       ...articleDto,
-  //       images: imagesUrl,
-  //     });
-  //     await this.topicModel.findByIdAndUpdate(
-  //       articleDto.idTopic,
-  //       { $push: { articles: newArticle._id } },
-  //       { new: true },
-  //     );
-  //     await this.userModel.findByIdAndUpdate(
-  //       articleDto.postedBy,
-  //       { $push: { articles: newArticle._id } },
-  //       { new: true },
-  //     );
-    
-  //     return newArticle.save();
-  //   } catch (error) {
-  //     console.error('Error creating article:', error);
-  //     throw error;
-  //   }
-  // }
-  async create(articleDto: Article, files: Express.Multer.File[]): Promise<Article> {
+  async create(
+    articleDto: Article,
+    files: Express.Multer.File[],
+  ): Promise<Article> {
     try {
       const imagesUrlPromises = files.map(async (file) => {
-        const imageUrl = await this.uploadImageToFirebase(file.buffer, file.originalname,'articles');
+        const imageUrl = await this.firebaseService.uploadImageToFirebase(
+          file.buffer,
+          file.originalname,
+          'articles',
+        );
         return imageUrl;
       });
       const imagesUrl = await Promise.all(imagesUrlPromises);
-  
+
       const newArticle = new this.articleModel({
         ...articleDto,
         images: imagesUrl,
@@ -115,35 +86,14 @@ export class ArticleService {
         { $push: { articles: newArticle._id } },
         { new: true },
       );
-  
+
       return newArticle.save();
     } catch (error) {
       console.error('Error creating article:', error);
       throw error;
     }
   }
-  
-  async uploadImageToFirebase(imageBuffer: Buffer, imageName: string, folderName: string): Promise<string> {
-    try {
-   
-      const imageInfo: ImageTypeResult = await imageType(imageBuffer);
-      const mimeType = imageInfo ? `image/${imageInfo.ext}` : 'image/jpeg'; 
-  
- 
-      const storage = getStorage(app);
-      const storageRef = sRef(storage, `${folderName}/${imageName}`);
-  
 
-      const uploadTaskSnapshot = await uploadBytesResumable(storageRef, imageBuffer, { contentType: mimeType });
-  
-      const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
-  
-      return downloadURL;
-    } catch (error) {
-      console.error('Error uploading image to Firebase:', error);
-      throw error;
-    }
-  }
   async findById(identifier: string): Promise<Article> {
     let article: Article;
 
@@ -156,7 +106,7 @@ export class ArticleService {
       throw new NotFoundException('Article not found.');
     }
     article.views += 1;
-    await this.articleModel.findByIdAndUpdate(article._id , {
+    await this.articleModel.findByIdAndUpdate(article._id, {
       views: article.views,
     });
     return article;
