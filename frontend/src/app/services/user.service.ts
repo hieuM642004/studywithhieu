@@ -38,4 +38,22 @@ export class UsersService {
   deleteUser(userId: string): Observable<any> {
     return this.apiService.delete(`${API_URL}/users/${userId}`, {});
   }
+
+    // follow a user via the API
+    followUser(followedUserId:string, userId:string): Observable<any> {
+      const body = {
+        userId: followedUserId,
+        followerId: userId
+      };
+      return this.apiService.post(`${API_URL}/users/follow`, body, {});
+    }
+    // follow a user via the API
+    unfollowUser(followedUserId:string, userId:string): Observable<any> {
+      const body = {
+        userId: followedUserId,
+        followerId: userId
+      };
+      return this.apiService.post(`${API_URL}/users/unfollow`, body, {});
+    }
+    
 }

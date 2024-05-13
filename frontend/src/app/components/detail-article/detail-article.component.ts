@@ -4,12 +4,14 @@ import { ArticlesService } from '../../services/articles.service';
 import { Articles } from '../../types/types';
 import { ActivatedRoute } from '@angular/router';
 import { API_URL } from '../../constant/api';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { ButtonModule } from 'primeng/button';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 @Component({
   selector: 'app-detail-article',
   standalone:true,
-  imports:[CommonModule],
+  imports:[CommonModule,ButtonModule,ToggleButtonModule,FormsModule],
   templateUrl: './detail-article.component.html',
   styleUrls: ['./detail-article.component.scss']
 })

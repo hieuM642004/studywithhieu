@@ -10,8 +10,14 @@
                         <h1 *ngIf="user && user.username" class="text-xl font-bold">{{user.username}}</h1>
                         <p class="text-gray-700">Software Developer</p>
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                            <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Chat</a>
-                            <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Following</a>
+                            <button  class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Chat</button>
+                            <button (click)="toggleFollow()" 
+        [ngClass]="{' border-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ': !isFollowing, 
+                    'bg-blue-gray-800  hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  ': isFollowing}">
+  {{ isFollowing ? 'Unfollow' : 'Follow' }}
+</button>
+
+                              
                         </div>
                     </div>
                     <hr class="my-6 border-t border-gray-300">

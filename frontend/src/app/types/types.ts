@@ -85,7 +85,8 @@ export interface User {
   password: string;
   role:string;
   slug: string;
-  articles?:string[]
+  articles?:string[];
+  followers?:string[]
   createdAt: string;
   updatedAt: string;
   

@@ -12,9 +12,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ProfileUserComponent  implements OnInit{
   userPayload: any;
-  loggingOut: boolean = false;
+  // loggingOut: boolean = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,private cookieService:CookieService) { }
 
   ngOnInit(): void {
     this.getUserPayload();
@@ -25,22 +25,23 @@ export class ProfileUserComponent  implements OnInit{
   }
 
   logoutAcount(): void {
-    // Kiểm tra nếu đã đang logout thì không thực hiện lại
-    if (this.loggingOut) return;
+ 
+    // if (this.loggingOut) return;
     
-    this.loggingOut = true; 
+    // this.loggingOut = true; 
 
    
     this.authService.logout().subscribe(
       () => {
-        console.log('Logout successful');
-        // Đã hoàn thành logout, log ra thông điệp 'clicked'
-        console.log('clicked');
+        console.log('logged out');
+        
+        this.cookieService.delete('accessToken');
+        this.cookieService.delete('refreshToken');
         window.location.reload();
       },
       (error) => {
         console.error('Error during logout:', error);
-        // Có lỗi xảy ra trong quá trình logout, cần xử lý tại đây
+
       }
     );
   }
