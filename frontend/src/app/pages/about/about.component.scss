@@ -2,16 +2,18 @@
     --accent-color: #c7b0c3;
 }
 
-* {
-    box-sizing: border-box;
+.about-title{
+    h1{
+        font-size: 50px;
+        font-weight: 600;
+    }
 }
-
 .about-item{
     border-radius: 5px;
     height: 200px;
-    width: 25rem;
+    width: 24rem;
     padding: 20px;
-    margin: 10px;
+    margin: 0 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     &:hover{
         box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,

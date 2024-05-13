@@ -7,6 +7,7 @@ import { DetailUserComponent } from './components/detail-user/detail-user.compon
 import { LoginComponent } from './auth/login/login.component';
 import { QuizzesComponent } from './pages/quizzes/quizzes.component';
 import {AboutComponent} from './pages/about/about.component';
+import {PopulerComponent} from './pages/populer/populer.component';
 
 
 
@@ -48,6 +49,10 @@ export const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
+  },
+  {
+    path: 'populer',
+    component: PopulerComponent,
   },
   // A route to the about us page (module)
   // {
