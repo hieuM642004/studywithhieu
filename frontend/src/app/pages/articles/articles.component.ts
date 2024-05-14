@@ -10,8 +10,6 @@ import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
 AuthInterceptor
 @Component({
   selector: 'app-articles',
-  standalone: true,
-  imports:[CommonModule,HttpClientModule,RouterModule],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
   providers:[{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}]

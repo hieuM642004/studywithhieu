@@ -2,15 +2,13 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ArticlesComponent } from './pages/articles/articles.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { DetailArticleComponent } from './components/detail-article/detail-article.component';
-import { DetailUserComponent } from './components/detail-user/detail-user.component';
+import { DetailArticleComponent } from './pages/detail-article/detail-article.component';
+import { DetailUserComponent } from './pages/detail-user/detail-user.component';
 import { LoginComponent } from './auth/login/login.component';
-import { QuizzesComponent } from './pages/quizzes/quizzes.component';
 
 
 
 export const routes: Routes = [
-  // A route to the home page (component) 
   {
     title:'Home page',
     path: '',
@@ -18,19 +16,23 @@ export const routes: Routes = [
   },
   {
     path: 'articles',
-    component: ArticlesComponent,
+    loadChildren: () =>
+      import('./pages/articles/articles.module').then((m) => m.ArticlesModule),
   },
   {
     path: 'articles/:slug',
-    component: DetailArticleComponent,
+    loadChildren: () =>
+      import('./pages/detail-article/detail-article.module').then((m) => m.DetailArticleModule),
   },
   {
     path: 'user/:slug',
-    component: DetailUserComponent,
+    loadChildren: () =>
+      import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
   },
   {
     path: 'my-account/:slug',
-    component: DetailUserComponent,
+    loadChildren: () =>
+      import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
   },
   {
     path: 'login',
@@ -40,14 +42,4 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  {
-    path: 'quizzes',
-    component: QuizzesComponent,
-  },
-  // A route to the about us page (module)
-  // {
-  //   path: 'about-us',
-  //   loadChildren: () =>
-  //     import('./modules/about-us/about-us.module').then((m) => m.AboutUsModule),
-  // },
 ];

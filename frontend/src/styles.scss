@@ -1,4 +1,4 @@
-// Your global styles: imports, variables, etc.
+
 @import 'tailwindcss/base';
 
 @import 'tailwindcss/components';
@@ -8,10 +8,7 @@
 @import "./styles/theme-overrides.scss";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-::selection {
-  color: red;
-  background: yellow;
-}
+
 html,
 body,
 p,

@@ -3,6 +3,7 @@ import { Component,OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-profile-user',
   standalone: true,

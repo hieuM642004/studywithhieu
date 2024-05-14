@@ -1,14 +1,9 @@
-import { AfterViewInit, Component,ElementRef,ViewChild } from '@angular/core';
-
-import { ProductComponent } from '../../components/product/product.component';
+import {Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
-import { EditPopupComponent } from '../../components/edit-popup/edit-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { SearchService } from '../../services/search.service';
 import { SearchComponent } from '../../components/search/search.component';
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 @Component({
   selector: 'app-home',
