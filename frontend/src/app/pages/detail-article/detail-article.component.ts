@@ -10,8 +10,6 @@ import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 @Component({
   selector: 'app-detail-article',
-  standalone:true,
-  imports:[CommonModule,ButtonModule,ToggleButtonModule,FormsModule],
   templateUrl: './detail-article.component.html',
   styleUrls: ['./detail-article.component.scss']
 })

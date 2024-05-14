@@ -2,16 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UsersService } from '../../services/user.service';
 import { User } from '../../types/types';
-import { API_URL } from '../../constant/api';
-import { CommonModule } from '@angular/common';
 import { ArticlesService } from '../../services/articles.service';
 import { Articles } from '../../types/types';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-detail-user',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './detail-user.component.html',
   styleUrl: './detail-user.component.scss',
 })

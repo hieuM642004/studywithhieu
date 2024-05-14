@@ -7,6 +7,7 @@ import { RegisterDto } from './dto/register.tdo';
 import { HttpStatus,HttpMessage } from 'src/global/globalEnum';
 import { ResponseData } from 'src/global/globalClass';
 import { User } from 'src/apis/users/schemas/user.schema';
+import { log } from 'console';
 UnauthorizedException
 @Controller('auth')
 export class AuthController {
@@ -51,7 +52,7 @@ newUser.generateSlug()
   @Post('/logout')
   async logout(@Body() body: any): Promise<{ message: string }> {
     
-    
+    console.log(body)
     const { refresh_token } = body;
     try {
       await this.authService.logout(refresh_token);

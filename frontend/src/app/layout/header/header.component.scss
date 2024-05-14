@@ -1,17 +1,13 @@
 
-//   a {
-//     text-decoration: none;
-//     font-weight: 300;
-//     color: white;
-//     &.active svg path {
-//         fill: white; 
-//         transition: 0.3s ease-in;
-//       }
-//     &.active  {
-   
-//         border-left: 1px solid #DDDDDD
-//       }
-//   }
+  a {
+    text-decoration: none;
+    font-weight: 300;
+    color: black;
+    &.active  {
+   background-color:  rgb(243 244 246);
+        border-left: 1px solid #DDDDDD
+      }
+  }
 
 
 // nav{
