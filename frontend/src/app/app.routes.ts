@@ -5,8 +5,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { DetailArticleComponent } from './pages/detail-article/detail-article.component';
 import { DetailUserComponent } from './pages/detail-user/detail-user.component';
 import { LoginComponent } from './auth/login/login.component';
-import {AboutComponent} from './pages/about/about.component';
-import {PopulerComponent} from './pages/populer/populer.component';
+
 
 
 
@@ -37,6 +36,16 @@ export const routes: Routes = [
       import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
   },
   {
+    path: 'about',
+    loadChildren: () =>
+      import('./pages/about/about.module').then((m) => m.AboutModule),
+  },
+  {
+    path: 'populer',
+    loadChildren: () =>
+      import('./pages/populer/populer.module').then((m) => m.PopulerModule),
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },
@@ -44,14 +53,7 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  {
-    path: 'about',
-    component: AboutComponent,
-  },
-  {
-    path: 'populer',
-    component: PopulerComponent,
-  },
+  
   // A route to the about us page (module)
   // {
   //   path: 'about-us',
