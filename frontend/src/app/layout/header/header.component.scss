@@ -9,7 +9,24 @@
       }
   }
 
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+}
 
-// nav{
-//     border-top: 1px solid #ccc;
-// }
+/* Trong file CSS toàn cục */
+body {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+body.isAsideVisible {
+  margin-left: 64px; /* Đảm bảo phần nội dung chính không bị che phủ bởi sidebar */
+}
+
+
+.none {
+  display: none;
+}
