@@ -11,7 +11,7 @@ export class Favorites  {
 
   @Prop({ type: 'ObjectId', ref: 'User' } )
   idUser: User
-  @Prop({ type: [{ type: 'ObjectId', ref: 'Article' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Article' }] })
   idArticle: Article[]
 
 

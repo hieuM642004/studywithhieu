@@ -13,6 +13,7 @@ import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
   providers:[{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}]
 })
 export class ArticlesComponent implements OnInit {
+
   data: Articles[] = [];
   users: User[] = [];
   totalPages: number = 0;

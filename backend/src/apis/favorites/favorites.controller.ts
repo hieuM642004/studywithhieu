@@ -64,9 +64,8 @@ export class FavoritesController {
   }
 
 
-  @Put(':id')
+  @Put()
   async updateFavorites(
-    @Param('id') id: string,
     @Body() favoritesDto: Favorites,
   ): Promise<ResponseData<Favorites>> {
     try {
@@ -75,7 +74,7 @@ export class FavoritesController {
 
     
  
-      const saveFavorites = await this.favoritesService.updateById(id, updatedFavorites);
+      const saveFavorites = await this.favoritesService.updateById(updatedFavorites);
       return new ResponseData<Favorites>(saveFavorites, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
     } catch (error) {
       return new ResponseData<Favorites>(null, HttpStatus.ERROR, HttpMessage.ERROR);
@@ -91,6 +90,17 @@ export class FavoritesController {
       return new ResponseData<Favorites>(deletedFavorites, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
     } catch (error) {
       return new ResponseData<Favorites>(null, HttpStatus.ERROR, HttpMessage.ERROR);
+    }
+  }
+  @Get(':id/count-likes')
+  async countFavoritesByArticleId(
+    @Param('id') id: string,
+  ): Promise<ResponseData<number>> {
+    try {
+      const count = await this.favoritesService.countFavoritesByArticleId(id);
+      return new ResponseData<number>(count, HttpStatus.SUCCESS,  HttpMessage.SUCCESS);
+    } catch (error) {
+      return new ResponseData<number>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
 }

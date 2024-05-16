@@ -16,24 +16,27 @@ export class FavoritesService {
 
   async create(favoritesDto: Favorites): Promise<Favorites> {
     try {
-      const articlesString = favoritesDto.idArticle.join(',');
-      const articlesArray = articlesString
-        .split(',')
-        .map((quizz) => quizz.trim());
-      const newFavorites = new this.favoritesModel({
-        idUser: favoritesDto.idUser,
-        idArticle: articlesArray, 
-      });
-  
      
-     
+      const existingFavorites = await this.favoritesModel.findOne({ idUser: favoritesDto.idUser });
   
-      return newFavorites.save();
+      if (existingFavorites) {
+       
+        existingFavorites.idArticle.push(...favoritesDto.idArticle);
+        return existingFavorites.save();
+      } else {
+     
+        const newFavorites = new this.favoritesModel({
+          idUser: favoritesDto.idUser,
+          idArticle: favoritesDto.idArticle, 
+        });
+        return newFavorites.save();
+      }
     } catch (error) {
       console.error('Error creating favorites:', error);
       throw error;
     }
   }
+  
   
 
   async findById(identifier: string): Promise<Favorites> {
@@ -52,26 +55,36 @@ export class FavoritesService {
     return favorites;
   }
 
-  async updateById(id: string, favorites: Favorites): Promise<Favorites> {
-    const quizzesString = favorites.idArticle.join(',');
-    const quizzesArray = quizzesString
-      .split(',')
-      .map((option) => option.trim());
-    return await this.favoritesModel.findByIdAndUpdate(
-      id,
-      {
-        idUser: favorites.idUser,
-        idArticle: quizzesArray,
-       
-      },
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+  async updateById(favorites: Favorites): Promise<Favorites> {
+    try {
+      const idUser = favorites.idUser;
+      const quizzesString = favorites.idArticle.join(',');
+      const quizzesArray = quizzesString
+        .split(',')
+        .map((option) => option.trim());
+  
+      return await this.favoritesModel.findOneAndUpdate(
+        { idUser: idUser },
+        {
+          idArticle: quizzesArray,
+        },
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
+    } catch (error) {
+      console.error('Error updating favorites:', error);
+      throw error;
+    }
   }
+  
 
   async deleteById(id: string): Promise<Favorites> {
     return await this.favoritesModel.findByIdAndDelete(id);
+  }
+
+  async countFavoritesByArticleId(articleId: string): Promise<number> {
+    return this.favoritesModel.countDocuments({ idArticle: articleId }).exec();
   }
 }

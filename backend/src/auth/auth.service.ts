@@ -13,28 +13,32 @@ import { LoginDto } from './dto/login.dto';
 import { User } from 'src/apis/users/schemas/user.schema';
 import { GoogleDriveUploader } from 'src/providers/storage/drive/drive.upload';
 import { transporter } from '../providers/mail/mailler';
+import FirebaseService from 'src/providers/storage/firebase/firebase.service';
 @Injectable()
 export class AuthService {
   private readonly transporter;
+  private firebaseService: FirebaseService;
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
     private readonly googleDriveUploader: GoogleDriveUploader,
-  ) {}
+  ) {
+    this.firebaseService = new FirebaseService();
+  }
 
   async register(user: User, file: Express.Multer.File): Promise<User> {
     try {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       const userWithHashedPassword = { ...user, password: hashedPassword };
-      const fileStream = Readable.from(file.buffer);
-      const fileId = await this.googleDriveUploader.uploadImage(
-        fileStream,
-        file.originalname,
-        '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
-      );
-
-      const avatarUrl = this.googleDriveUploader.getThumbnailUrl(fileId);
+      let avatarUrl: string | undefined = undefined;
+      if (file) {
+        avatarUrl = await this.firebaseService.uploadImageToFirebase(
+          file.buffer,
+          file.originalname,
+          'avatars',
+        );
+      }
       const userWithAvatar = { ...userWithHashedPassword, avatar: avatarUrl };
       const res = await this.userModel.create(userWithAvatar);
       return res;
