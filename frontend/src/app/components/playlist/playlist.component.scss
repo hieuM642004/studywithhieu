@@ -8,7 +8,7 @@
     background-color: white;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
     .episode {
-      @apply cursor-pointer p-4 border-b border-gray-300;
+      @apply cursor-pointer  border-b border-gray-300;
       h3 {
         @apply text-lg font-semibold;
       }
@@ -19,7 +19,7 @@
   }
   
   .audio-player {
-    @apply  p-4 border-t border-gray-300;
+    @apply  pb-2 border-t border-gray-300;
   
     .control-buttons {
       @apply flex items-center space-x-2;
