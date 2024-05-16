@@ -75,14 +75,12 @@ export class EpisodeController  {
     @UploadedFiles() audioFiles: Express.Multer.File[], 
   ): Promise<ResponseData<Episode>> {
     try {
-      // Tạo một instance của Episode từ updateEpisodeDto
+      
       const updatedEpisode = new Episode(); 
       Object.assign(updatedEpisode, updateEpisodeDto); 
   
-      // Gọi phương thức updateById của episodeService để cập nhật tập phim
       const savedEpisode = await this.episodeService.updateById(id, updatedEpisode, audioFiles);
-      
-      // Trả về dữ liệu phản hồi
+     
       return new ResponseData<Episode>(savedEpisode, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
     } catch (error) {
       console.error('Error updating episode:', error);

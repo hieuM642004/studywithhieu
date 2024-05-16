@@ -16,8 +16,7 @@ export class Episode   {
   
   @Prop({ default: 0 })
   duration: number; 
-  //@Prop({ type: 'ObjectId', ref: 'Podcast' })
-  @Prop()
+  @Prop({ type: 'ObjectId', ref: 'Article' })
   idPodcast: string;
 }
 

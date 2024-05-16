@@ -5,7 +5,7 @@ export class GoogleDriveUploader {
   private readonly drive;
 
   constructor(private readonly credentials: Credentials) {
-    const keyFilePath = 'src/drive/keydrive.json';
+    const keyFilePath = 'src/providers/storage/drive/keydrive.json';
     const auth = new google.auth.JWT({
       keyFile: keyFilePath,
       scopes: 'https://www.googleapis.com/auth/drive',

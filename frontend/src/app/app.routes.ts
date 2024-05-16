@@ -35,6 +35,11 @@ export const routes: Routes = [
       import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
   },
   {
+    path: 'new-post',
+    loadChildren: () =>
+      import('./pages/editor/editor.module').then((m) => m.EditorModule),
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },

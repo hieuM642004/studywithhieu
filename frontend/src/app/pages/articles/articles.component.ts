@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesService } from '../../services/articles.service';
 import { Articles,PaginatedArticles } from '../../types/types';
 import { User } from '../../types/types';
 import { UsersService } from '../../services/user.service';
 import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
-AuthInterceptor
+
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
@@ -31,7 +29,6 @@ export class ArticlesComponent implements OnInit {
 
   fetchArticles(page: number, limit: number) {
     this.articlesService.getArticles(page, limit).subscribe((articlesData: PaginatedArticles) => {
-      console.log(articlesData);
       if (articlesData && articlesData.data && Array.isArray(articlesData.data.data)) {
         this.data = articlesData.data.data;
         this.totalPages = articlesData.data.totalPages;

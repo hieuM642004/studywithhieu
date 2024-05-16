@@ -1,168 +1,72 @@
-<form class="max-w-md mx-auto" (ngSubmit)="searchVideos()">
-  <label
-    for="default-search"
-    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-    >Search</label
-  >
-  <div class="relative">
-    <input
-      type="search"
-      id="default-search"
-      name="searchKeyword"
-      [(ngModel)]="searchKeyword"
-      class="block w-full p-4 ps-10 text-sm text-gray-900 rounded-lg bg-gray-50"
-      placeholder="Search Vocabulary"
-      required
-    />
-    <button
-      type="submit"
-      class="text-white absolute end-2.5 bottom-2.5 focus:ring-4 focus:outline-nonefont-medium rounded-lg text-sm px-4 py-2"
+<div class="relative">
+  <form class="w-72 mx-auto relative">
+    <label
+      for="default-search"
+      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+      >Search</label
     >
-      <svg
-        class="w-4 h-4 text-gray-500 dark:text-gray-400"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 20 20"
+    <div class="relative">
+      <div
+        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
       >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-        />
-      </svg>
-    </button>
-  </div>
-</form>
-
-<!-- <div class="page-content w-full rounded-md shadow-md">
-  <div class="tabbed">
-    <input type="radio" id="tab1" name="css-tabs" checked />
-    <input type="radio" id="tab2" name="css-tabs" />
-
-    <ul class="tabs">
-      <li class="tab"><label for="tab1">Vocabulary</label></li>
-      <li class="tab"><label for="tab2">Video</label></li>
-    </ul>
-
-    <div class="tab-content">
-      <div *ngIf="dictionaryResult && dictionaryResult.length > 0">
-        <h3>Definitions for "{{ searchKeyword }}"</h3>
-        <ul>
-          <li *ngFor="let entry of dictionaryResult">
-            <div>
-              <h2 class="text-2xl font-bold">{{ entry.word }}</h2>
-              <ul>
-                <li *ngFor="let phonetic of entry.phonetics">
-                  <button
-                    *ngIf="phonetic.audio"
-                    (click)="playAudio(phonetic.audio)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
-                      />
-                    </svg>
-                  </button>
-                  <p *ngIf="phonetic.text">{{ phonetic.text }}</p>
-                </li>
-
-                <li *ngFor="let meaning of entry.meanings">
-                  <div>Part of Speech: {{ meaning.partOfSpeech }}</div>
-                  <ul>
-                    <li *ngFor="let definition of meaning.definitions">
-                      <div>Definition: {{ definition.definition }}</div>
-                      <div *ngIf="definition.example">
-                        Example: {{ definition.example }}
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-              <div>
-                Source URL:
-                <a [href]="entry.sourceUrls[0]" target="_blank">{{
-                  entry.sourceUrls[0]
-                }}</a>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <svg
+          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
       </div>
-      <div *ngIf="!dictionaryResult || dictionaryResult.length === 0" class="flex justify-center items-center my-48">
- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-</svg>
-<p>Search vocabulary</p>
-      </div>
+      <input
+        type="search"
+        id="default-search"
+        class="block w-full h-12 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Search Podcast..."
+        required
+        (input)="onInputChange($event)"
+      />
     </div>
-
-    <div class="tab-content">
-      <div class="flex flex-col flex-wrap">
-        <div class="video-container">
-          <iframe
-            height="500"
-            class="rounded-md shadow-md mx-3 my-3 w-full"
-            [src]="safeUrls[currentSlideIndex]"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
+  </form>
+  <ul
+    *ngIf="showSuggestions"
+    class="absolute top-14 right-0 bg-white border border-gray-200 rounded-lg shadow-lg w-full"
+  >
+    <li
+      *ngFor="let article of dataFromSearch"
+      class="px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+      (click)="selectSuggestion()"
+    >
+      <a
+        [routerLink]="['/articles', article.slug]"
+        class="flex hover:bg-gray-100 dark:hover:bg-gray-700"
+      >
+        <div class="flex-shrink-0">
+          <img
+            class="rounded-full w-11 h-11"
+            [src]="article.images[0]"
+            alt="image"
+          />
         </div>
-        <div class="controls flex mx-auto">
-          <button
-            class="control-btn prev bg-black text-white rounded-md p-3 mr-2"
-            (click)="prevSlide()"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z"
-              />
-            </svg>
-          </button>
-          <button
-            class="control-btn next bg-black text-white rounded-md p-3"
-            (click)="nextSlide()"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
-              />
-            </svg>
-          </button>
+        <div class="w-full ps-3">
+          <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
+            {{ article.title }}
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div> -->
+      </a>
+    </li>
+    <li
+      *ngIf="!dataFromSearch || dataFromSearch.length === 0"
+      class="px-4 py-2 text-gray-500"
+    >
+      No suggestions
+    </li>
+  </ul>
+</div>

@@ -91,4 +91,24 @@ export interface User {
   updatedAt: string;
   
 }
+export interface Topics {
+  _id: string;
+  name: string;
+  articles?: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  
+}
+export interface Episodes {
+  _id?: string;
+  title: string;
+  description?: string;
+  audioUrl: string;
+  duration: string;
+  idPodcast: string;
+  createdAt: string;
+  updatedAt: string;
+  
+}
 

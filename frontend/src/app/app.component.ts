@@ -9,7 +9,6 @@ import { AuthInterceptor } from './services/interceptor/auth.interceptor';
 import { MainComponent } from './layout/main/main.component';
 
 
-
 @Component({
   selector: 'app-root',
   standalone: true,

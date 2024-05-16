@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import slugify from 'slugify';
-
+import { Episode } from 'src/apis/articles copy/schemas/episode.schema';
+import { SchemaTypes, Types } from 'mongoose';
 @Schema({
   timestamps: true,
 })
@@ -20,6 +21,8 @@ export class Article  {
   postedBy: string;
   @Prop({ type: 'ObjectId', ref: 'Topic' }) 
   idTopic: string;
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'Episode' }] })
+  episodes: Episode[];
   @Prop()
   slug: string;
   async generateSlug() {

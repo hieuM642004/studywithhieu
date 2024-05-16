@@ -1,81 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';;
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
+import { ArticlesService } from '../../services/articles.service';
+import { EventEmitter, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { PaginatedArticles } from '../../types/types';
+import { Articles } from '../../types/types';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports:[CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
-  searchKeyword: string = '';
-  transcripts: any[] = [];
-  safeUrls: SafeResourceUrl[] = [];
-  currentSlideIndex: number = 0;
-  dictionaryResult: any[] = [];
+  @Output() searchInput: EventEmitter<string> = new EventEmitter<string>();
+  private searchTerms: Subject<string> = new Subject<string>();
+  dataFromSearch: Articles[] = [];
+  showSuggestions: boolean = false;
+  constructor(
+    private articleService: ArticlesService,
+    private eRef: ElementRef
+  ) {
+    this.searchTerms
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((searchQuery: string) =>
+          this.articleService.getArticles(1, 10, searchQuery)
+        )
+      )
+      .subscribe(
+        (articlesData: PaginatedArticles) => {
+          this.dataFromSearch = articlesData.data.data;
+          this.showSuggestions = true;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  onInputChange(event: Event): void {
+    const searchQuery = (event.target as HTMLInputElement).value;
+    this.searchTerms.next(searchQuery);
+  }
 
-  ngOnInit() {
-    this.searchVideos();
+  selectSuggestion(): void {
+    this.showSuggestions = false;
   }
-  
-  searchVideos() {
-    const apiUrl = `https://api.tracau.vn/WBBcwnwQpV89/trans/${this.searchKeyword}`;
-    this.http.get(apiUrl).subscribe(
-      (data: any) => {
-        this.transcripts = data.transcripts;
-        this.safeUrls = this.transcripts.map((transcript) =>
-          this.sanitizer.bypassSecurityTrustResourceUrl(
-            `https://www.youtube-nocookie.com/embed/${
-              transcript.fields.youtube_id
-            }?start=${Math.round(
-              parseFloat(transcript.fields.start)
-            )}&amp;feature=oembed&amp;rel=0&cc_load_policy=1&cc_lang_pref=en`
-          )
-        );
-       
-        this.searchDictionary(this.searchKeyword);
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-      }
-    );
-  }
-  
-  searchDictionary(keyword: string) {
-    const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${keyword}`;
-    this.http.get(apiUrl).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.dictionaryResult = data;
-      },
-      (error) => {
-        console.error('Error fetching dictionary data:', error);
-      }
-    );
-  }
-  playAudio(audioSrc: string) {
-    const audio = new Audio(audioSrc);
-    audio.play();
-  }
-  
 
-  nextSlide() {
-    if (this.currentSlideIndex < this.safeUrls.length - 1) {
-      this.currentSlideIndex++;
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.showSuggestions = false;
     }
   }
-
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--;
-    }
-  }
-  
-  
 }

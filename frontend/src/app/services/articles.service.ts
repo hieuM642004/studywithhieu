@@ -13,9 +13,14 @@ export class ArticlesService {
   constructor(private apiService: ApiService, private http:HttpClient) {}
 
   // Getting articles from the API
-  getArticles(page: number, limit: number): Observable<PaginatedArticles> {
-    return this.http.get<PaginatedArticles>(`${API_URL}/articles?page=${page}&limit=${limit}`);
+  getArticles(page: number, limit: number,search?:string): Observable<PaginatedArticles> {
+   let url= `${API_URL}/articles?page=${page}&limit=${limit}`;
+   if(search){
+    url += `&search=${encodeURIComponent(search)}`;
+   }
+   return this.http.get<PaginatedArticles>(url)
   }
+
   getArticlesById(identifier: string): Observable<any> {
     return this.apiService.get(`${API_URL}/articles/${identifier}`, {
       responseType: 'json',
@@ -24,9 +29,9 @@ export class ArticlesService {
   
 
   // Adding a article via the API
-  addArticle = (url: string, body: any): Observable<any> => {
-    return this.apiService.post(url, body, {});
-  };
+  addArticle(body: any): Observable<any> {
+    return this.apiService.post(`${API_URL}/articles`, body, {});
+  }
 
   // Editing a article via the API
   editArticle = (url: string, body: any): Observable<any> => {

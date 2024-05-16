@@ -7,6 +7,8 @@ import { DetailArticleComponent } from './detail-article.component';
 import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
+import { PlaylistComponent } from '../../components/playlist/playlist.component';
+import { DateFormatPipe } from '../../pipes/time.pipe';
 
 const routes: Routes = [
   {
@@ -25,6 +27,7 @@ const routes: Routes = [
     ButtonModule,
     ToggleButtonModule,
     FormsModule,
+    PlaylistComponent,
   ],
   exports: [],
   providers: [],

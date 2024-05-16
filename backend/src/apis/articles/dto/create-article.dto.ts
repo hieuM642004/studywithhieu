@@ -1,3 +1,4 @@
+import { Episode } from "src/apis/articles copy/schemas/episode.schema";
 export class CreateArticleDto {
   readonly title: string;
   readonly images: string[];
@@ -6,6 +7,6 @@ export class CreateArticleDto {
   readonly postedBy: string;
   readonly  idTopic: string;
   readonly  slug: string;
-
+  readonly  episodes: Episode[];
 
 }

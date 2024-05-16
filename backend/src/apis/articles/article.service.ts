@@ -144,6 +144,7 @@ export class ArticleService {
       article.images = imagesUrl;
       article.idTopic = articleDto.idTopic;
       article.slug = articleDto.slug;
+      article.episodes = articleDto.episodes;
 
       return await article.save();
     } catch (error) {

@@ -18,6 +18,11 @@
             <a  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" routerLink="/my-account/{{ userPayload.slug }}">My account</a>
           </li>
           </ng-container>
+          <ng-container *ngIf="userPayload">
+             <li>
+            <a  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" routerLink="/new-post">Post</a>
+          </li>
+          </ng-container>
          
           <ng-container *ngIf="!userPayload">
             <li>
