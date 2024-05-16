@@ -33,7 +33,6 @@ export class DetailUserComponent {
     } else {
       console.error('Slug not found in URL');
     }
-    
   }
 
   fetchUser(slug: string) {
@@ -90,12 +89,22 @@ export class DetailUserComponent {
   }
 
   checkFollowingStatus(userData: any): void {
-    const userId = this.authService.getAccessTokenPayload().followers;
-
+    const userId = this.authService.getAccessTokenPayload().id;
     if (userId) {
-      this.isFollowing = userId.some((follower: any) => {
-        return follower.userId === userData._id;
-      });
+      this.usersService.getUserById(userId).subscribe(
+        (user: any) => {
+          console.log(user);
+
+          this.isFollowing = user.data.followers.some((follower: any) => {
+            console.log(follower);
+            return follower.userId === userData._id;
+          });
+        },
+        (error) => {
+          console.error('Error getting user by ID:', error);
+          this.isFollowing = false;
+        }
+      );
     } else {
       this.isFollowing = false;
     }
