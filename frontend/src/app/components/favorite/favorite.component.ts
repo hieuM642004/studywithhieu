@@ -21,17 +21,6 @@ export class FavoriteComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.articleId) {
-      
-      this.favoriteService.countFavoritesByArticleId(this.articleId).subscribe(
-        (count) => {
-          this.favoritesCount = count.data;
-        },
-        (error) => {
-          console.error('Error counting favorites:', error);
-        }
-      );
-
-      
       const idUser = this.authService.getAccessTokenPayload().id;
       this.favoriteService.getFavorites().subscribe(
         (response) => {
@@ -46,6 +35,15 @@ export class FavoriteComponent implements OnInit {
         },
         (error) => {
           console.error('Error checking favorite:', error);
+        }
+      );
+
+      this.favoriteService.countFavoritesByArticleId(this.articleId).subscribe(
+        (count) => {
+          this.favoritesCount = count.data;
+        },
+        (error) => {
+          console.error('Error counting favorites:', error);
         }
       );
     } else {
@@ -66,6 +64,7 @@ export class FavoriteComponent implements OnInit {
           (response) => {
             console.log(response);
             this.isFavorited = false;
+            this.favoritesCount--;
           },
           (error) => {
             console.error('Error removing favorite:', error);
@@ -76,6 +75,7 @@ export class FavoriteComponent implements OnInit {
           (response) => {
             console.log(response);
             this.isFavorited = true;
+            this.favoritesCount++;
           },
           (error) => {
             console.error('Error adding favorite:', error);
