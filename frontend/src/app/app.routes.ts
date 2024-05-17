@@ -46,6 +46,16 @@ export const routes: Routes = [
       import('./pages/populer/populer.module').then((m) => m.PopulerModule),
   },
   {
+    path: 'populer-views',
+    loadChildren: () =>
+      import('./pages/populer-detail-by-views/populerDetail.module').then((m) => m.PopulerModule),
+  },
+  {
+    path: 'populer-followers',
+    loadChildren: () =>
+      import('./pages/detail-populer-user/populerUser.module').then((m) => m.PopulerModule),
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },

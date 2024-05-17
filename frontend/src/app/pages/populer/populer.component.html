@@ -3,59 +3,79 @@
     <div class="popular-raido-item m-4">
         <div class="title-popular m-4">
             <p class="text-2xl mb-4">Radio phổ biến</p>
-            <a href="" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]">Xem thêm</a>
+            <a routerLink="/populer-views" 
+            class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]"
+            routerLinkActive="active"
+            >Xem thêm</a>
         </div>
-        <div class="grid grid-cols-4">
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 1</p>
-                <p>nội dung</p>
-            </div>
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 2</p>
-            </div>
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 3</p>
-            </div>
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 4</p>
+        <div class="grid grid-cols-4 " *ngIf="topItems.length > 0">
+            <div *ngFor="let article of topItems">
+                <div class="item-popular m-4">
+                    <a routerLink="/articles/{{ article.slug }}" routerLinkActive="active">
+                        <img
+                            src="{{article.images[0]}}"
+                            alt=""
+                            class="object-cover object-center w-full rounded-lg max-h-96 my-2"
+                        />
+                        <p>{{ article.title | truncate }}</p>
+                    </a>
+                    <div class="item-infor mt-2">
+                        <a *ngIf="article.user" >
+                            <div class="flex">
+                                <img
+                                  *ngIf="article.user"
+                                  class="w-12 h-12 rounded-full object-cover mr-4 shadow"
+                                  [src]="article.user.avatar"
+                                  alt="avatar"
+                                />
+                                <a *ngIf="article.user" routerLink="/user/{{ article.user.slug }}">
+                                    <h2
+                                    class="text-lg font-semibold text-gray-900 mt-1"
+                                    *ngIf="article.user"
+                                  >
+                                    {{ article.user.username }}
+                                  </h2>
+                                </a>
+                              </div>
+                        </a>
+                        <small class="text-sm text-gray-700">{{ article.createdAt }}</small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <hr>
     <div class="popular-channel-item m-4">
         <div class="title-popular m-4">
-            <p class="text-2xl mb-4">Danh mục phổ biến</p>
-            <a href="" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]">Xem thêm</a>
+            <p class="text-2xl mb-4">Người dùng phổ biến</p>
+            <a
+                routerLink="/populer-followers"  
+                class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]"
+                routerLinkActive="active">Xem thêm</a>
         </div>
         <div class="grid grid-cols-4">
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 1</p>
-                <p>nội dung</p>
-            </div>
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 2</p>
-            </div>
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 3</p>
-            </div>
-            <div class="item-popular mx-4">
-                <img src="https://i.pinimg.com/736x/c2/e9/02/c2e902e031e1d9d932411dd0b8ab5eef.jpg" 
-                alt="post">
-                <p>pod 4</p>
+            <div class="item-popular mx-4 " *ngFor="let users of topUser ">
+                <div class="item-infor mt-2">
+                    <a *ngIf="users" >
+                        <div class="flex">
+                            <img
+                              *ngIf="users"
+                              class="w-12 h-12 rounded-full object-cover mr-4 shadow"
+                              [src]="users.avatar"
+                              alt="avatar"
+                            />
+                            <a routerLink="/user/{{ users.slug }}">
+                                <h2
+                                class="text-lg font-semibold text-gray-900 mt-1"
+                                *ngIf="users"
+                              >
+                                {{ users.username }}
+                              </h2>
+                            </a>
+                          </div>
+                    </a>
+                    <small class="text-sm text-gray-700">{{ users.createdAt }}</small>
+                </div>
             </div>
         </div>
     </div>

@@ -55,5 +55,5 @@ export class UsersService {
       };
       return this.apiService.post(`${API_URL}/users/unfollow`, body, {});
     }
-    
+
 }
