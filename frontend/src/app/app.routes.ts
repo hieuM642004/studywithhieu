@@ -5,14 +5,10 @@ import { LoginComponent } from './auth/login/login.component';
 
 
 
+
 export const routes: Routes = [
   {
-    title:'Home page',
     path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'articles',
     loadChildren: () =>
       import('./pages/articles/articles.module').then((m) => m.ArticlesModule),
   },
@@ -32,9 +28,24 @@ export const routes: Routes = [
       import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
   },
   {
-    path: 'new-post',
+    path: 'about',
     loadChildren: () =>
-      import('./pages/editor/editor.module').then((m) => m.EditorModule),
+      import('./pages/about/about.module').then((m) => m.AboutModule),
+  },
+  {
+    path: 'populer',
+    loadChildren: () =>
+      import('./pages/populer/populer.module').then((m) => m.PopulerModule),
+  },
+  {
+    path: 'populer-views',
+    loadChildren: () =>
+      import('./pages/populer-detail-by-views/populerDetail.module').then((m) => m.PopulerModule),
+  },
+  {
+    path: 'populer-followers',
+    loadChildren: () =>
+      import('./pages/detail-populer-user/populerUser.module').then((m) => m.PopulerModule),
   },
   {
     path: 'login',
@@ -44,4 +55,11 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
+  
+  // A route to the about us page (module)
+  // {
+  //   path: 'about-us',
+  //   loadChildren: () =>
+  //     import('./modules/about-us/about-us.module').then((m) => m.AboutUsModule),
+  // },
 ];
