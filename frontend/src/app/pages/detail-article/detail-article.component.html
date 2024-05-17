@@ -24,7 +24,7 @@
      </div>
 <!-- playlist -->
 <app-playlist  *ngIf="article && article._id"  [articleId]="article._id"></app-playlist>
-
+<app-favorite  *ngIf="article && article._id"  [articleId]="article._id"></app-favorite>
       </div>
       <div class="w-full md:w-1/4 px-4">
         <div class="bg-gray-100 p-4">

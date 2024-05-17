@@ -9,6 +9,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { PlaylistComponent } from '../../components/playlist/playlist.component';
 import { DateFormatPipe } from '../../pipes/time.pipe';
+import { FavoriteComponent } from '../../components/favorite/favorite.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     ToggleButtonModule,
     FormsModule,
     PlaylistComponent,
+    FavoriteComponent
   ],
   exports: [],
   providers: [],
