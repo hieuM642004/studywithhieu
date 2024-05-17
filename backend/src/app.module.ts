@@ -13,6 +13,7 @@ import { EpisodeModule } from './apis/articles copy/episode.module';
 import { UserModule } from './apis/users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './auth/JWT/jwt.decode';
+import { CommentModule } from './socket/comments/comment.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { JwtMiddleware } from './auth/JWT/jwt.decode';
     TopicModule,
     FavoritesModule,
     EpisodeModule,
+    CommentModule,
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     MongooseModule.forRoot(process.env.DB_URL),
   ],
