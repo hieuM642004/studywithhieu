@@ -20,7 +20,9 @@ export class EditorComponent implements OnInit {
   episode = '';
   sets: any[] = [{ firstName: '', content: '', audioFile: null }];
   previousArticleId: string | undefined;
-
+  loading = false;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
   constructor(
     private readonly articlesService: ArticlesService,
     private readonly topicsService: TopicsService,
@@ -66,7 +68,7 @@ export class EditorComponent implements OnInit {
       console.error('No topic selected');
       return;
     }
-
+    this.loading = true; 
     const data = this.extractContentAndTitle(this.editorData);
 
     const formData = new FormData();
@@ -87,9 +89,10 @@ export class EditorComponent implements OnInit {
           return this.episodeService.addEpisode(episodeFormData);
         });
 
-        // Wait for all episode requests to complete
         forkJoin(episodeRequests).subscribe(
           (episodeResponses) => {
+            this.loading = false; 
+            this.successMessage = 'Data saved successfully';
             console.log('Episodes data saved successfully', episodeResponses);
           },
           (error) => {

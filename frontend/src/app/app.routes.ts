@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 
 
@@ -21,6 +23,11 @@ export const routes: Routes = [
     path: 'user/:slug',
     loadChildren: () =>
       import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
+  },
+  {
+    path: 'new-post',
+    loadChildren: () =>
+      import('./pages/editor/editor.module').then((m) => m.EditorModule),
   },
   {
     path: 'my-account/:slug',
@@ -54,6 +61,10 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'auth/reset-password',
+    component: ResetPasswordComponent,
   },
   
   // A route to the about us page (module)

@@ -19,7 +19,7 @@ export class ArticlesComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 1;
   totalItems: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalPagesArray:number[]=[]
   constructor(private articlesService: ArticlesService, private usersService: UsersService) {}
 

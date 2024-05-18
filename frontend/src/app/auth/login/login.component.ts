@@ -1,15 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, RouterModule,ReactiveFormsModule,ForgotPasswordComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [CookieService],
@@ -17,6 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent {
   userForm: FormGroup;
 errors:any
+
   constructor(private formBuilder: FormBuilder, private authService: AuthService,private cookieService:CookieService) {
     this.userForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,5 +46,6 @@ errors:any
       this.userForm.markAllAsTouched();
     }
   }
+
 }
 

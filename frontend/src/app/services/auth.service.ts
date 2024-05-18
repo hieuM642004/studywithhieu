@@ -20,6 +20,18 @@ export class AuthService {
   register(body: any): Observable<any> {
     return this.apiService.post(`${API_URL}/auth/register`, body, {});
   }
+  forgotPassword(body: any): Observable<any> {
+    return this.apiService.post(`${API_URL}/auth/forgot-password`, body, {});
+  }
+  resetPassword(body: any, token: any): Observable<any> {
+    console.log(body, token);
+
+    return this.apiService.post(
+      `${API_URL}/auth/reset-password?token=${token}`,
+      body,
+      {}
+    );
+  }
   login(body: any): Observable<any> {
     return this.apiService.post(`${API_URL}/auth/login`, body, {});
   }
@@ -37,10 +49,12 @@ export class AuthService {
     }
     return null;
   }
-
+  isLoggedIn(): boolean {
+    const accessToken = this.cookieService.get('accessToken');
+    return !!accessToken;
+  }
   logout(): Observable<any> {
     const refreshToken = this.cookieService.get('refreshToken');
-  
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 

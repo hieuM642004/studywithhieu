@@ -2,13 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FavoriteService } from '../../services/favorite.service';
-
+import { Router } from '@angular/router';
+import { AuthGuard } from '../../guards/auth.guard';
 @Component({
   selector: 'app-favorite',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './favorite.component.html',
   styleUrl: './favorite.component.scss',
+  providers:[AuthGuard]
 })
 export class FavoriteComponent implements OnInit {
   @Input() articleId: string | undefined;
@@ -16,10 +18,13 @@ export class FavoriteComponent implements OnInit {
   favoritesCount: number = 0;
   constructor(
     private readonly authService: AuthService,
-    private readonly favoriteService: FavoriteService
+    private readonly favoriteService: FavoriteService,
+    private readonly router: Router,
+    private readonly authGuard: AuthGuard
   ) {}
 
   ngOnInit(): void {
+  
     if (this.articleId) {
       const idUser = this.authService.getAccessTokenPayload().id;
       this.favoriteService.getFavorites().subscribe(
@@ -52,6 +57,10 @@ export class FavoriteComponent implements OnInit {
   }
 
   handleFavoriteClick() {
+    if (!this.authGuard.canActivate()) {
+      this.router.navigate(['/login']); 
+      return; 
+    }
     if (this.articleId) {
       const idUser = this.authService.getAccessTokenPayload().id;
       const data = {

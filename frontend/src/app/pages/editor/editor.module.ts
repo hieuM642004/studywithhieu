@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditorComponent } from './editor.component';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule,RouterModule,
     RouterModule,
-    CKEditorModule
+    CKEditorModule,
+    LoadingComponent
   ],
   exports: [],
   providers: [],
