@@ -1,0 +1,222 @@
+[{
+  "_id": {
+    "$oid": "6628fd423b28e3c5969fedf7"
+  },
+  "username": "usernix",
+  "avatar": "https://drive.google.com/thumbnail?id=1mM63RXqfidmHeWauaAEZmqUz8JhCC84E",
+  "email": "h@gmail.com",
+  "password": "123456",
+  "role": "user",
+  "createdAt": {
+    "$date": "2024-04-24T12:38:26.110Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T10:54:49.946Z"
+  },
+  "__v": 4,
+  "articles": [],
+  "slug": "usernix",
+  "followers": []
+},
+{
+  "_id": {
+    "$oid": "662bb64a472dfd08555605a6"
+  },
+  "username": "h2k kn",
+  "avatar": "https://drive.google.com/thumbnail?id=1c6HY1KzvaCDPNSu-gYmSV1hafEy77eUq",
+  "email": "2k@gmail.com",
+  "password": "123456",
+  "articles": [],
+  "role": "user",
+  "createdAt": {
+    "$date": "2024-04-26T14:12:26.990Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-28T13:37:32.826Z"
+  },
+  "__v": 0,
+  "slug": "h2k"
+},
+{
+  "_id": {
+    "$oid": "662e53502dc4850a6bfcfdcf"
+  },
+  "username": "h2k king",
+  "avatar": "https://drive.google.com/thumbnail?id=1fCCiUsltsycYE9E_1dgUURZBzZ4EkkO7",
+  "email": "2k@gmail.com",
+  "password": "123456",
+  "articles": [],
+  "role": "user",
+  "slug": "h2k-king",
+  "createdAt": {
+    "$date": "2024-04-28T13:46:56.800Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-28T13:47:48.150Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6634ea97234d5e33aa2ba029"
+  },
+  "username": "user",
+  "avatar": "https://drive.google.com/thumbnail?id=1P_lJUSFAMRTbI3h4MV14m95Y5AEM7cyD",
+  "email": "j@example.com",
+  "password": "$2b$10$oS/2N2NGjyBs9ciro.UoJO6vZhD6krNWboZqoBp53XcwUQA7rehyq",
+  "articles": [],
+  "role": "user",
+  "createdAt": {
+    "$date": "2024-05-03T13:45:59.345Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-03T13:45:59.345Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6635edfbd333040367eea313"
+  },
+  "username": "testuser",
+  "avatar": "https://drive.google.com/thumbnail?id=1OxsPSjF4FPNbpFM25ZcV-uHkBvnMp9ad",
+  "email": "aa@gmail.com",
+  "password": "$2b$10$6FxxUm7bEj8wl93GB/SfxuxGly0eq0fvH4/4XQrQsilWk6XF/AI6y",
+  "articles": [],
+  "role": "user",
+  "createdAt": {
+    "$date": "2024-05-04T08:12:43.703Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-04T08:12:43.703Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6638def3c5d22262166fa119"
+  },
+  "username": "admin1234",
+  "avatar": "https://drive.google.com/thumbnail?id=1cOJdTLuzTNenxCJ_DPy99OvLL9NaLd0N",
+  "email": "hl9531609@gmail.com",
+  "password": "$2b$10$bo1PvikOWLxIE9X2aN7Q3u4npt67wdUfEAVMXw2qG7OWg8NmehBUe",
+  "articles": [
+    {
+      "$oid": "66488f0be496521e55a68561"
+    },
+    {
+      "$oid": "66488f6de496521e55a68579"
+    }
+  ],
+  "role": "user",
+  "slug": "admin1234",
+  "createdAt": {
+    "$date": "2024-05-06T13:45:23.350Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:32:50.778Z"
+  },
+  "__v": 1,
+  "followers": [],
+  "passwordResetExpires": "2024-05-18T12:32:50.778Z",
+  "passwordResetToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzhkZWYzYzVkMjIyNjIxNjZmYTExOSIsImlhdCI6MTcxNjAzMTk3MCwiZXhwIjoxNzE2MDM1NTcwfQ.bOkwNsmQD3m8UgzV_rLxIfutX4SpRTtVr1O4JV30LGo",
+  "refreshToken": null
+},
+{
+  "_id": {
+    "$oid": "6645bc733889bfb0f25fcc89"
+  },
+  "username": "ezzw",
+  "avatar": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/avatars%2Fv25.png?alt=media&token=17922a7c-877e-48e2-ab23-f0367bb21dd4",
+  "email": "sew@gmail.com",
+  "password": "$2b$10$SoBeoiHzWe4eF3cWWgIBn.9EIng/RpXRPlSeeOfx0ZQtu5NmSxxha",
+  "articles": [
+    {
+      "$oid": "66488d91e496521e55a684ef"
+    },
+    {
+      "$oid": "66488e3ee496521e55a68515"
+    }
+  ],
+  "role": "user",
+  "slug": "ezzw",
+  "followers": [
+    {
+      "userId": {
+        "$oid": "6628fd423b28e3c5969fedf7"
+      },
+      "followedAt": {
+        "$date": "2024-05-16T07:59:32.937Z"
+      },
+      "_id": {
+        "$oid": "6645bce4c63e450e6a61efb8"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-05-16T07:57:39.127Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:18:14.189Z"
+  },
+  "__v": 1,
+  "refreshToken": null
+},
+{
+  "_id": {
+    "$oid": "66488b3ce496521e55a68450"
+  },
+  "username": "Le Minh Hieu",
+  "avatar": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/avatars%2Favatar-of-a-man-portrait-of-a-yo.jpg?alt=media&token=594b927c-01ae-4281-989c-e29b82b95d1c",
+  "email": "hix@gmail.com",
+  "password": "$2b$10$gXGb/P8dxR.JA.Gtn7Y6Aedh.rdsLa1Y//r3aIJlPnKoisU6Y749.",
+  "articles": [
+    {
+      "$oid": "66488c27e496521e55a68477"
+    },
+    {
+      "$oid": "66488cb0e496521e55a68495"
+    },
+    {
+      "$oid": "66488d10e496521e55a684a5"
+    }
+  ],
+  "role": "user",
+  "slug": "le-minh-hieu",
+  "followers": [],
+  "createdAt": {
+    "$date": "2024-05-18T11:04:28.490Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:12:54.794Z"
+  },
+  "__v": 0,
+  "refreshToken": null
+},
+{
+  "_id": {
+    "$oid": "6648979be496521e55a68716"
+  },
+  "username": "hieu",
+  "avatar": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/avatars%2Fava.png?alt=media&token=25ef9a90-6e68-4ca5-ac08-d93786158d9d",
+  "email": "hieulmpc05108@fpt.edu.vn",
+  "password": "$2b$10$0a4If8OJ0ec8bByKUVqVluvPnQil2YWgGD92UM.0TDxx.PUHkx1Iy",
+  "articles": [
+    {
+      "$oid": "6648989ae496521e55a68803"
+    }
+  ],
+  "role": "user",
+  "slug": "hieu",
+  "followers": [],
+  "createdAt": {
+    "$date": "2024-05-18T11:57:15.209Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T12:03:14.417Z"
+  },
+  "__v": 1,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDg5NzliZTQ5NjUyMWU1NWE2ODcxNiIsInVzZXJuYW1lIjoiaGlldSIsImF2YXRhciI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IvcG9kY2FzdC00MDczYS5hcHBzcG90LmNvbS9vL2F2YXRhcnMlMkZhdmEucG5nP2FsdD1tZWRpYSZ0b2tlbj0yNWVmOWE5MC02ZTY4LTRjYTUtYWMwOC1kOTM3ODYxNThkOWQiLCJlbWFpbCI6ImhpZXVsbXBjMDUxMDhAZnB0LmVkdS52biIsInJvbGUiOiJ1c2VyIiwic2x1ZyI6ImhpZXUiLCJmb2xsb3dlcnMiOltdLCJpYXQiOjE3MTYwMzM3OTQsImV4cCI6MTcxNjYzODU5NH0.C_Jm_3FF_O5SKnmQ8AvZXtt0KCp3WqSSFuDnrAGu_2M",
+  "passwordResetExpires": null,
+  "passwordResetToken": null
+}]

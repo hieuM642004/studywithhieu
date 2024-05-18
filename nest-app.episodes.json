@@ -1,0 +1,171 @@
+[{
+  "_id": {
+    "$oid": "66488c29e496521e55a6847b"
+  },
+  "title": "Những món ăn không thể bỏ qua",
+  "description": "Giới thiệu về văn hóa ẩm thực đường phố ở các thành phố lớn như Hà Nội, Sài Gòn, Đà Nẵng.\r\nNhững món ăn không thể bỏ qua: phở, bún chả, bánh mì, bánh xèo.\r\nCâu chuyện và lịch sử đằng sau mỗi món ăn.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=b5fbdaa3-003b-4e9f-9152-8e750afb782b",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488c27e496521e55a68477"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:08:25.139Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:08:25.139Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488cb2e496521e55a68499"
+  },
+  "title": "Khái niệm về ẩm thực chay và lý do mọi người chọn ăn chay.",
+  "description": "Các món ăn chay nổi tiếng và cách chế biến chúng: gỏi cuốn chay, đậu hũ sốt cà chua, cơm chay.\r\nPhỏng vấn một đầu bếp chay về những kỹ thuật và nguyên liệu đặc biệt.\r\nLợi ích sức khỏe và môi trường của việc ăn chay.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=849fed4b-95f7-4b44-839c-b85154fdf913",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488cb0e496521e55a68495"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:10:42.696Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:10:42.696Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488d13e496521e55a684a9"
+  },
+  "title": "Giới thiệu về ẩm thực Ý với món pizza và pasta.",
+  "description": "Khám phá ẩm thực Nhật Bản với sushi và ramen.\r\nThưởng thức món tacos của Mexico và phở của Việt Nam.\r\nNhững điểm chung và khác biệt giữa các nền ẩm thực.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Fenchanted-explorations-documentary-atmospheric-piano-201653.mp3?alt=media&token=29c836b9-33b3-4f30-8238-61d8c01633d4",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488d10e496521e55a684a5"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:12:19.091Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:12:19.091Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488d93e496521e55a684f4"
+  },
+  "title": "Giới thiệu về tầm quan trọng của việc trình bày món ăn.",
+  "description": "Những kỹ thuật cơ bản trong việc trang trí: cắt tỉa rau củ, sử dụng màu sắc và hình dạng.\r\nPhỏng vấn một đầu bếp chuyên nghiệp về kinh nghiệm và mẹo vặt trong trang trí món ăn.\r\nCách làm món ăn trông hấp dẫn hơn mà không cần tốn quá nhiều thời gian.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=b10a25c3-ef6e-4606-8f80-ffa062026f1d",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488d91e496521e55a684ef"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:14:27.685Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:14:27.685Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488e40e496521e55a6851a"
+  },
+  "title": "Giới thiệu về quá trình lên men và lợi ích của thực phẩm lên men.",
+  "description": "Công thức làm kimchi và kombucha tại nhà.\r\nPhỏng vấn một chuyên gia lên men về những bí quyết và kinh nghiệm.\r\nTác động tích cực của thực phẩm lên men đối với sức khỏe tiêu hóa.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=986976f0-2a4e-443f-bc5b-80fe8742daf7",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488e3ee496521e55a68515"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:17:20.551Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:17:20.551Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488f0de496521e55a68565"
+  },
+  "title": "Giới thiệu về vấn đề lãng phí thực phẩm và lợi ích của việc tái chế.",
+  "description": "Các công thức đơn giản để sử dụng lại đồ thừa: súp, hầm, salad.\r\nPhỏng vấn một đầu bếp về những mẹo vặt trong việc tận dụng thực phẩm.\r\nNhững câu chuyện thành công từ những người đã thay đổi thói quen lãng phí thực phẩm.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=7f12bac7-2f59-4c27-9574-fbf7e288015d",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488f0be496521e55a68561"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:20:45.776Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:20:45.776Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488f6ee496521e55a6857d"
+  },
+  "title": "Giới thiệu về Tết và ý nghĩa của các món ăn truyền thống.",
+  "description": "Những món ăn phổ biến: bánh chưng, dưa hành, giò lụa.\r\nPhỏng vấn một người lớn tuổi về cách làm và câu chuyện đằng sau mỗi món ăn.\r\nVai trò của những món ăn này trong văn hóa và lễ hội Tết.",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=c98ddbc2-fc17-4ec5-b665-717a05537970",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488f6de496521e55a68579"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:22:23.002Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:22:23.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66488f6fe496521e55a68580"
+  },
+  "title": "Khuyến khích thính giả tự tay làm các món ăn truyền thống trong dịp Tết.",
+  "description": "Những món ăn gắn liền với tuổi thơ: canh chua, cá kho tộ, cơm tấm.\r\nPhỏng vấn các thành viên trong gia đình về kỷ niệm với từng",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Fenchanted-explorations-documentary-atmospheric-piano-201653.mp3?alt=media&token=3db87155-2633-4e87-b395-60db484497c1",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "66488f6de496521e55a68579"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T11:22:23.670Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T11:22:23.670Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6648989ce496521e55a68807"
+  },
+  "title": "Những món ăn không thể bỏ qua",
+  "description": "Những món ăn gắn liền với tuổi thơ: canh chua, cá kho tộ, cơm tấm.\r\nPhỏng vấn các thành viên trong gia đình về kỷ niệm với từng",
+  "audioUrl": "https://firebasestorage.googleapis.com/v0/b/podcast-4073a.appspot.com/o/episodes%2Ffor-a-moment-schort-melancholic-guitar-ballad-179018.mp3?alt=media&token=be03da76-c2ee-4cc2-a6e8-c5578f8d7b39",
+  "duration": 0,
+  "idPodcast": {
+    "$oid": "6648989ae496521e55a68803"
+  },
+  "createdAt": {
+    "$date": "2024-05-18T12:01:32.358Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-18T12:01:32.358Z"
+  },
+  "__v": 0
+}]
