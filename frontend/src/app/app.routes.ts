@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
-import { AuthGuard } from './guards/auth.guard';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 

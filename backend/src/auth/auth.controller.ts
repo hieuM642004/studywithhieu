@@ -51,8 +51,6 @@ newUser.generateSlug()
   }
   @Post('/logout')
   async logout(@Body() body: any): Promise<{ message: string }> {
-    
-    console.log(body)
     const { refresh_token } = body;
     try {
       await this.authService.logout(refresh_token);

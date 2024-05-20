@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import * as bodyParser from 'body-parser';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import cors from 'cors'
 //Modules
 import { ArticleModule } from './apis/articles/article.module';
 import { TopicModule } from './apis/topics/topic.module';
@@ -39,3 +40,6 @@ export class AppModule implements NestModule {
     consumer.apply(bodyParser.json()).forRoutes('*');
   }
 }
+
+
+

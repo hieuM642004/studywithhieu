@@ -31,7 +31,8 @@
             {{ article.title }}
           </h1>
         <img
-          [src]="article.images[0]"
+        width="400" height="200" loading="lazy"
+          [ngSrc]="article.images[0]"
           alt=""
           class="object-cover object-center w-full rounded-lg max-h-96 my-2"
         />

@@ -15,7 +15,7 @@
             </h1>
             <p class="text-gray-700">Software Developer</p>
             <div class="mt-6 flex flex-wrap gap-4 justify-center">
-              <button
+              <button *ngIf="hideBtnFollower"
                 (click)="toggleFollow()"
                 [ngClass]="
                   isFollowing

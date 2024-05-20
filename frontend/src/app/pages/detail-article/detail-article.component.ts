@@ -22,6 +22,7 @@ export class DetailArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     
     this.slug = this.route.snapshot.paramMap.get('slug') ?? '';
     if (this.slug) {
@@ -30,6 +31,8 @@ export class DetailArticleComponent implements OnInit {
       console.error('Slug not found in URL');
     }
   }
+
+
 
   fetchArticle(slug: string) {
     this.articlesService.getArticlesById(slug).subscribe((responseData) => {

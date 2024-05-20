@@ -16,7 +16,7 @@ export class DetailUserComponent {
   slug: string;
   userArticles: Articles[] = [];
   isFollowing: boolean = false;
-
+hideBtnFollower: boolean = true;
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
@@ -42,6 +42,7 @@ export class DetailUserComponent {
 
         this.fetchUserArticles();
         this.checkFollowingStatus(this.user);
+        this.checkDisplayBtnFollow();
       },
       (error) => {
         console.error('Error fetching user:', error);
@@ -67,6 +68,7 @@ export class DetailUserComponent {
   toggleFollow(): void {
     const followerId = this.authService.getAccessTokenPayload().id;
     const followedUserId = this.user?._id;
+ 
     if (this.isFollowing) {
       if (followedUserId) {
         this.usersService
@@ -87,7 +89,16 @@ export class DetailUserComponent {
       }
     }
   }
+checkDisplayBtnFollow(){
+  const followerId = this.authService.getAccessTokenPayload().id;
+  const followedUserId = this.user?._id;
+  if(followedUserId === followerId){
+    this.hideBtnFollower=false
+  }else{
 
+    this.hideBtnFollower=true
+  }
+}
   checkFollowingStatus(userData: any): void {
     const userId = this.authService.getAccessTokenPayload().id;
     if (userId) {

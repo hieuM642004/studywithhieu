@@ -1,21 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component,OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile-user',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './profile-user.component.html',
-  styleUrl: './profile-user.component.scss'
+  styleUrl: './profile-user.component.scss',
 })
-export class ProfileUserComponent  implements OnInit{
+export class ProfileUserComponent implements OnInit {
   userPayload: any;
-  // loggingOut: boolean = false;
+  private destroy$ = new Subject<void>();
 
-  constructor(private authService: AuthService,private cookieService:CookieService) { }
+  constructor(
+    private authService: AuthService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getUserPayload();
@@ -26,24 +31,28 @@ export class ProfileUserComponent  implements OnInit{
   }
 
   logoutAcount(): void {
- 
-    // if (this.loggingOut) return;
-    
-    // this.loggingOut = true; 
+    this.authService
+      .logout()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Logged out');
+          this.cookieService.delete('accessToken');
+          this.cookieService.delete('refreshToken');
 
-   
-    this.authService.logout().subscribe(
-      () => {
-        console.log('logged out');
-        
-        this.cookieService.delete('accessToken');
-        this.cookieService.delete('refreshToken');
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error during logout:', error);
+          this.router.navigate(['']).then(() => {
+            window.location.reload();
+          });
+        },
+        (error) => {
+          console.error('Error during logout:', error);
+        }
+      );
+  }
 
-      }
-    );
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    console.log('ProfileUserComponent destroyed');
   }
 }
