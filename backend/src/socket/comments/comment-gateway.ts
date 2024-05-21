@@ -12,16 +12,18 @@ import { Server, Socket } from 'socket.io';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './schemas/comment.schema';
 import { Injectable } from '@nestjs/common';
-Comment;
+import { UpdateCommentDto } from './dto/update-comment.dto';
+import { User } from 'src/apis/users/schemas/user.schema';
 @WebSocketGateway(3002, { cors: true })
 @Injectable()
 export class CommentGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
   constructor(
-    @InjectModel(Comment.name)
-    private commentModel: mongoose.Model<Comment>,
+    @InjectModel(Comment.name) private commentModel: Model<Comment>,
+    @InjectModel(User.name) private userModel: Model<User>, 
   ) {}
+
   @WebSocketServer() server: Server;
 
   handleConnection(client: Socket) {
@@ -31,38 +33,42 @@ export class CommentGateway
   handleDisconnect(client: Socket) {
     console.log('Client disconnected:', client.id);
   }
+
   @SubscribeMessage('requestComments')
   async handleRequestComments(client: Socket, articleId: string) {
     try {
-      console.log(articleId);
-      
-      const comments = await this.commentModel.find({ idArticle: articleId }).exec();
-      this.server.emit('comments', comments);
+      const comments = await this.commentModel.find({ idArticle: articleId }).populate('idUser').exec();
+        this.server.emit('comments', comments);
+         
     } catch (error) {
       console.error('Error fetching comments:', error);
       throw error;
     }
   }
-  
 
   @SubscribeMessage('newComment')
-  async handleNewComment(client: Socket, commentDto: Comment) {
+  async handleNewComment(client: Socket, commentDto: CreateCommentDto) {
     try {
-      let repliesArray: string[] = [];
-      if (commentDto.replies && Array.isArray(commentDto.replies)) {
-        const repliesString = commentDto.replies.join(',');
-        repliesArray = repliesString.split(',').map((r) => r.trim());
-      }
       const newComment = new this.commentModel({
         idUser: commentDto.idUser,
         idArticle: commentDto.idArticle,
         parentId: commentDto.parentId,
         content: commentDto.content,
-        replies: repliesArray,
       });
+
       const savedComment = await newComment.save();
-      this.server.emit('comment', savedComment);
-      return savedComment;
+
+      if (commentDto.parentId) {
+        const parentComment = await this.commentModel.findById(commentDto.parentId);
+        if (parentComment) {
+          parentComment.replies.push(savedComment._id);
+          await parentComment.save();
+        }
+      }
+
+      const populatedComment = await this.commentModel.findById(savedComment._id).populate('idUser');
+      this.server.emit('comment', populatedComment);
+      return populatedComment;
     } catch (error) {
       console.error('Error creating comment:', error);
       throw error;
@@ -70,23 +76,19 @@ export class CommentGateway
   }
 
   @SubscribeMessage('updateComment')
-  async handleUpdateComment(id: string, comment: Comment) {
+  async handleUpdateComment(id: string, comment: UpdateCommentDto) {
     try {
       const updatedComment = await this.commentModel.findByIdAndUpdate(
-        id,
+        comment._id,
         {
-          idUser: comment.idUser,
-          idArticle: comment.idArticle,
-          parentId: comment.parentId,
           content: comment.content,
-          replies: comment.replies,
         },
         {
           new: true,
           runValidators: true,
         },
-      );
-      this.server.emit('updateComment', updatedComment);
+      ).populate('idUser'); 
+      this.server.emit('updateCommentSuccess', updatedComment);
       return updatedComment;
     } catch (error) {
       console.error('Error updating comment:', error);
@@ -97,13 +99,13 @@ export class CommentGateway
   @SubscribeMessage('deleteComment')
   async handleDeleteComment(client: Socket, commentId: string) {
     try {
-      const deletedComment =
-        await this.commentModel.findByIdAndDelete(commentId);
-      this.server.emit('commedeleteCommentnt', commentId);
+      const deletedComment = await this.commentModel.findByIdAndDelete(commentId);
+      this.server.emit('deleteCommentSuccess', deletedComment);
       return deletedComment;
     } catch (error) {
       console.error('Error deleting comment:', error);
       throw error;
     }
   }
+  
 }

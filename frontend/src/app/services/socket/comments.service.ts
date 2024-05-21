@@ -17,13 +17,35 @@ export class CommentService {
     this.socket.emit('newComment', comment);
   }
 
-  updateComment(comment: any): void {
-    this.socket.emit('updateComment', comment);
+  updateComment(comment: any): Observable<any> {
+    return new Observable<any>(observer => {
+      this.socket.emit('updateComment', comment, (response: any) => {
+        if (response.success) {
+          observer.next(response.updatedComment); 
+          observer.complete(); 
+        } else {
+          observer.error(response.error); 
+        }
+      });
+    });
   }
-
-  deleteComment(id: string): void {
-    this.socket.emit('deleteComment', id);
+  
+  deleteComment(commentId: string): Observable<any> {
+    return new Observable<any>(observer => {
+    
+      this.socket.emit('deleteComment', commentId, (response: any) => {
+        if (response.success) {
+         
+          observer.next(response.deletedComment);
+          observer.complete();
+        } else {
+         
+          observer.error(response.error);
+        }
+      });
+    });
   }
+  
 
   onNewComment(): Observable<any> {
     return new Observable<Comment>(observer => {
@@ -31,12 +53,19 @@ export class CommentService {
     });
   }
 
-  onCommentDeleted(): Observable<string> {
-    return new Observable<string>(observer => {
-      this.socket.on('comment_deleted', (commentId: string) => observer.next(commentId));
+  onUpdateCommentSuccess(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.socket.on('updateCommentSuccess', (updatedComment: any) => observer.next(updatedComment)); 
     });
   }
-
+  
+  onDeleteCommentSuccess(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on('deleteCommentSuccess', (deletedComment: any) => observer.next(deletedComment)); 
+    });
+  }
+  
+  
   onComments(): Observable<any> {
     return new Observable<any>(observer => {
       this.socket.on('comments', (data: any) => observer.next(data));

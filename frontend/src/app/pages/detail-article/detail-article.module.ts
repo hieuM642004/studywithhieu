@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { PlaylistComponent } from '../../components/playlist/playlist.component';
 import { DateFormatPipe } from '../../pipes/time.pipe';
 import { FavoriteComponent } from '../../components/favorite/favorite.component';
-import { CommentsComponent } from '../../components/notification/comments/comments.component';
+import { CommentsComponent } from '../../components/comments/comments.component'; 
 
 const routes: Routes = [
   {
