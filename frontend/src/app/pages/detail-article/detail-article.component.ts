@@ -3,11 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticlesService } from '../../services/articles.service';
 import { Articles } from '../../types/types';
 import { ActivatedRoute } from '@angular/router';
-import { API_URL } from '../../constant/api';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { ToggleButtonModule } from 'primeng/togglebutton';
+
 @Component({
   selector: 'app-detail-article',
   templateUrl: './detail-article.component.html',
@@ -17,12 +13,12 @@ export class DetailArticleComponent implements OnInit {
   article: Articles | undefined;
   slug: string;
   sameTopic: Articles[] = [];
-  constructor(private articlesService: ArticlesService, private route: ActivatedRoute) {
+  constructor(private articlesService: ArticlesService, private route: ActivatedRoute ) {
     this.slug = '';
   }
 
   ngOnInit(): void {
-
+    
     
     this.slug = this.route.snapshot.paramMap.get('slug') ?? '';
     if (this.slug) {
@@ -43,4 +39,5 @@ export class DetailArticleComponent implements OnInit {
       console.error('Error fetching article:', error);
     });
   }
+ 
 }

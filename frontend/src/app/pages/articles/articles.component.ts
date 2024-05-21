@@ -6,7 +6,6 @@ import { Articles,PaginatedArticles } from '../../types/types';
 import { User } from '../../types/types';
 import { UsersService } from '../../services/user.service';
 import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
-import { CommentService } from '../../services/socket/comments.service';
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
@@ -22,10 +21,10 @@ export class ArticlesComponent implements OnInit {
   totalItems: number = 0;
   pageSize: number = 5;
   totalPagesArray:number[]=[]
-  constructor(private articlesService: ArticlesService, private usersService: UsersService,private commentService: CommentService ) {}
+  constructor(private articlesService: ArticlesService, private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.sendNewComment()
+  
     this.fetchArticles(this.currentPage, this.pageSize);
     this.totalPagesArray = Array.from({length: this.totalPages}, (_, i) => i + 1);
   }
@@ -73,11 +72,6 @@ export class ArticlesComponent implements OnInit {
       this.fetchArticles(page, this.pageSize);
     }
   }
-  sendNewComment(): void {
-    const newComment = {
-      content: "Đây là một bình luận mới từ Angular!",
-    };
-    this.commentService.sendComment(newComment);
-  }
+ 
 }
 

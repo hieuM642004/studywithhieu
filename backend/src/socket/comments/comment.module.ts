@@ -8,8 +8,8 @@ import { CommentService } from "./comment.service";
 
 @Module({
     imports:[MongooseModule.forFeature([{ name: 'Comment', schema: CommentSchema }])],
-    controllers:[CommentController],
-    providers:[CommentGateway,CommentService]
+    controllers:[],
+    providers:[CommentGateway]
 })
 export class CommentModule{
    

@@ -12,14 +12,22 @@ export class CommentService {
     this.socket = io('ws://localhost:3002');
   }
 
+  // Socket Methods
   sendComment(comment: any): void {
     this.socket.emit('newComment', comment);
   }
 
+  updateComment(comment: any): void {
+    this.socket.emit('updateComment', comment);
+  }
+
+  deleteComment(id: string): void {
+    this.socket.emit('deleteComment', id);
+  }
 
   onNewComment(): Observable<any> {
-    return new Observable<any>(observer => {
-      this.socket.on('comment', (data: any) => observer.next(data));
+    return new Observable<Comment>(observer => {
+      this.socket.on('comment', (data: Comment) => observer.next(data));
     });
   }
 
@@ -27,5 +35,15 @@ export class CommentService {
     return new Observable<string>(observer => {
       this.socket.on('comment_deleted', (commentId: string) => observer.next(commentId));
     });
+  }
+
+  onComments(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.socket.on('comments', (data: any) => observer.next(data));
+    });
+  }
+
+  requestComments(articleId: string): void {
+    this.socket.emit('requestComments', articleId);
   }
 }
