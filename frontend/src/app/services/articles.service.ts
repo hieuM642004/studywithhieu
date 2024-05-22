@@ -3,14 +3,15 @@ import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { PaginatedArticles, Articles } from '../types/types';
 import { API_URL } from '../constant/api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 HttpClient
 @Injectable({
   providedIn: 'root',
 })
 export class ArticlesService {
-  constructor(private apiService: ApiService, private http:HttpClient) {}
+  constructor(private apiService: ApiService, private http:HttpClient,private readonly authService:AuthService) {}
 
   // Getting articles from the API
   getArticles(page: number, limit: number,search?:string): Observable<PaginatedArticles> {
@@ -18,7 +19,9 @@ export class ArticlesService {
    if(search){
     url += `&search=${encodeURIComponent(search)}`;
    }
-   return this.http.get<PaginatedArticles>(url)
+   return this.http.get<PaginatedArticles>(url,{
+    headers: new HttpHeaders().set('Authorization', this.authService.getAccessToken()),
+  })
   }
 
   getArticlesById(identifier: string): Observable<any> {

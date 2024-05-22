@@ -46,7 +46,6 @@ export class AuthService {
       console.error('Error creating user:', error);
       throw error;
     }
-
   }
 
   async login(
@@ -66,14 +65,22 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const payload = { id: user._id, username: user.username,avatar:user.avatar,email:user.email, role: user.role ,slug:user.slug,followers:user.followers};
+    const payload = {
+      id: user._id,
+      username: user.username,
+      avatar: user.avatar,
+      email: user.email,
+      role: user.role,
+      slug: user.slug,
+      followers: user.followers,
+    };
 
     const accessToken = this.jwtService.sign(payload);
 
     user.refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
     await user.save();
 
-    return { accessToken, refreshToken: user.refreshToken  };
+    return { accessToken, refreshToken: user.refreshToken };
   }
 
   async refreshToken(
@@ -98,39 +105,34 @@ export class AuthService {
     return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   }
   async logout(refreshToken: string): Promise<void> {
-  
     const decodedToken = this.jwtService.decode(refreshToken) as { id: string };
-  
+
     if (!decodedToken || !decodedToken.id) {
       throw new UnauthorizedException('Invalid refresh token');
     }
-  
+
     const user = await this.userModel.findById(decodedToken.id);
-  
+
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
-  
-    
+
     user.refreshToken = null;
     await user.save();
   }
 
-  
   async forgotPassword(email: string): Promise<void> {
-    
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
       throw new Error('User not found');
     }
 
-   
     const token = this.jwtService.sign({ id: user._id }, { expiresIn: '1h' });
-    
+
     user.passwordResetToken = token;
     const expiresDate = new Date(Date.now() + 3600000);
-user.passwordResetExpires = expiresDate.toISOString();
+    user.passwordResetExpires = expiresDate.toISOString();
     await user.save();
 
     // Send the password reset email
@@ -147,7 +149,7 @@ user.passwordResetExpires = expiresDate.toISOString();
     };
 
     try {
-      await transporter.sendMail(mailOptions); 
+      await transporter.sendMail(mailOptions);
     } catch (error) {
       console.error('Failed to send password reset email:', error);
       throw new Error('Failed to send password reset email');

@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isLoggedIn() &&  this.authService.getAccessTokenPayload().role==="admin") {
       return true; 
     } else {
       this.router.navigate(['/login']);

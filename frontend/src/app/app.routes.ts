@@ -3,7 +3,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-
+import { AuthGuard } from './guards/auth.guard';
+import { TopicsComponent } from './admin/topics/topics.component';
 
 
 
@@ -65,11 +66,11 @@ export const routes: Routes = [
     path: 'auth/reset-password',
     component: ResetPasswordComponent,
   },
+  //Routes for admin
+  {
+    path: 'admin',
+    component: TopicsComponent,
+    canActivate: [AuthGuard]
+  },
   
-  // A route to the about us page (module)
-  // {
-  //   path: 'about-us',
-  //   loadChildren: () =>
-  //     import('./modules/about-us/about-us.module').then((m) => m.AboutUsModule),
-  // },
 ];
