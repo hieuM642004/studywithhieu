@@ -75,7 +75,8 @@ export class AuthService {
       followers: user.followers,
     };
 
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '30s' });
+    
 
     user.refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
     await user.save();
@@ -98,7 +99,13 @@ export class AuthService {
       throw new UnauthorizedException('User not found');
     }
 
-    const payload = { id: user._id, username: user.username, role: user.role };
+    const payload = {    id: user._id,
+      username: user.username,
+      avatar: user.avatar,
+      email: user.email,
+      role: user.role,
+      slug: user.slug,
+      followers: user.followers, };
     const newAccessToken = this.jwtService.sign(payload);
     const newRefreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 

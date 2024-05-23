@@ -31,7 +31,7 @@ export class ArticleService {
     page: number = 1,
     limit: number = 10,
     searchQuery?: string,
-    topicId?: string, // Thêm topicId vào đây
+    topicId?: string, 
   ): Promise<PaginatedResult<Article>> {
     let query: any = {};
 
@@ -40,7 +40,7 @@ export class ArticleService {
     }
 
     if (topicId) {
-      query = { ...query, idTopic: topicId }; // Lọc theo topicId nếu có
+      query = { ...query, idTopic: topicId }; 
     }
 
     const totalItems = await this.articleModel.countDocuments(query).exec();

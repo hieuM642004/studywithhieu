@@ -6,7 +6,7 @@ import { ArticlesService } from '../../services/articles.service';
 import { Articles, PaginatedArticles } from '../../types/types';
 import { User } from '../../types/types';
 import { UsersService } from '../../services/user.service';
-import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
+import { AuthInterceptor } from '../../interceptor/auth.interceptor';
 import {TruncatePipe} from '../../pipes/truncate.pipe';
 
 

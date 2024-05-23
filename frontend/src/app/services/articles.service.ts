@@ -24,11 +24,11 @@ export class ArticlesService {
    if(search){
     url += `&search=${encodeURIComponent(search)}`;
    }
-   return this.http.get<PaginatedArticles>(url)
+   return this.http.get<PaginatedArticles>(url,{
+    headers: new HttpHeaders().set('Authorization','Bearer ' + this.authService.getAccessToken()),
+  })
   }
-// {
-//     headers: new HttpHeaders().set('Authorization','Bearer ' + this.authService.getAccessToken()),
-//   }
+
   getArticlesById(identifier: string): Observable<any> {
     return this.apiService.get(`${API_URL}/articles/${identifier}`, {
       responseType: 'json',
