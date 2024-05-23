@@ -10,9 +10,10 @@ export class TopicService {
   ) {}
 
   async findAll(): Promise<Topic[]> {
-    const topics = await this.topicModel.find();
+    const topics = await this.topicModel.find().populate('articles');
     return topics;
-  }
+}
+
 
   async create(topicDto: Topic): Promise<Topic> {
     try {

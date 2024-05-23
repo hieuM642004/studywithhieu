@@ -1,12 +1,11 @@
 <div class="flex flex-wrap justify-center">
-  
   <div
     *ngFor="let article of data"
     class="flex bg-white shadow-lg rounded-lg md:mx-auto w-5/6 mb-2"
   >
-    <div class="flex items-start px-4 py-6">
+    <div class="flex items-start px-4 py-6 ">
       <div class="">
-        <div class="flex justify-between">
+        <div class="flex ">
           <div class="flex">
             <img
               *ngIf="article.user"
@@ -24,23 +23,27 @@
             >
           </div>
 
-          <small class="text-sm text-gray-700">{{ article.createdAt }}</small>
+          <small class="ml-2 text-sm text-gray-700">{{ article.createdAt | dateFormat:'dd/MM/yyyy HH:mm:ss' }}</small>
         </div>
         <a routerLink="/articles/{{ article.slug }}" routerLinkActive="active">
           <h1 class="font-semibold text-gray-900 mt-1 text-xl">
             {{ article.title }}
           </h1>
-        <img
-        width="400" height="200" loading="lazy"
-          [ngSrc]="article.images[0]"
-          alt=""
-          class="object-cover object-center w-full rounded-lg max-h-96 my-2"
-        />
-</a>
+          <img
+           
+           
+            [src]="article.images[0]"
+            alt="image"
+            class="object-scale-down object-center w-full max-h-96 my-2"
+          />
+        </a>
         <p class="text-gray-700">{{ article.content }}</p>
         <div class="mt-4 flex items-center">
           <div class="flex mr-4 text-gray-700 text-xl">
-            <app-favorite  *ngIf="article && article._id"  [articleId]="article._id"></app-favorite>
+            <app-favorite
+              *ngIf="article && article._id"
+              [articleId]="article._id"
+            ></app-favorite>
           </div>
           <div class="flex mr-4 text-gray-700 text-xl">
             <svg
@@ -72,10 +75,12 @@
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
               />
             </svg>
-            <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Flocalhost%3A4200%2Farticles%2F%7B%7Barticle.slug%7D%7D%20&layout&size&appId=494739326185154&width=86&height=20" width="86" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+           
             <span>share</span>
           </div>
+
         </div>
+       
       </div>
     </div>
   </div>

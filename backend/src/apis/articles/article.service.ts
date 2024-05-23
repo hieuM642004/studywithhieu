@@ -31,11 +31,16 @@ export class ArticleService {
     page: number = 1,
     limit: number = 10,
     searchQuery?: string,
+    topicId?: string, // Thêm topicId vào đây
   ): Promise<PaginatedResult<Article>> {
-    let query = {};
+    let query: any = {};
 
     if (searchQuery) {
-      query = { title: { $regex: searchQuery, $options: 'i' } };
+      query = { ...query, title: { $regex: searchQuery, $options: 'i' } };
+    }
+
+    if (topicId) {
+      query = { ...query, idTopic: topicId }; // Lọc theo topicId nếu có
     }
 
     const totalItems = await this.articleModel.countDocuments(query).exec();
@@ -56,6 +61,10 @@ export class ArticleService {
     };
     return result;
   }
+
+
+
+
 
   async create(
     articleDto: Article,
