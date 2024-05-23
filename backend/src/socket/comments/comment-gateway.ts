@@ -49,6 +49,7 @@ export class CommentGateway
   @SubscribeMessage('newComment')
   async handleNewComment(client: Socket, commentDto: CreateCommentDto) {
     try {
+      
       const newComment = new this.commentModel({
         idUser: commentDto.idUser,
         idArticle: commentDto.idArticle,

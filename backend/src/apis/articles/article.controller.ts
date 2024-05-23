@@ -22,6 +22,7 @@ import { Article } from './schemas/article.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/auth/guards/authorization.guard';
 import { PaginatedResult } from './interface/pagination.interface';
+import { NotificationGateway } from 'src/socket/notification/nofication-gateway';
 @Controller('articles')
 export class ArticleController  {
   constructor(private readonly articleService: ArticleService) {}

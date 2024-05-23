@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { SocketService } from './connect.socket';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +9,8 @@ import { io, Socket } from 'socket.io-client';
 export class CommentService {
   private socket: Socket;
 
-  constructor() {
-    this.socket = io('ws://localhost:3002');
+  constructor(private socketService: SocketService) {
+    this.socket = this.socketService.getSocket();
   }
 
   // Socket Methods
