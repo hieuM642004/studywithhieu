@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { User } from '../types/types';
 import { API_URL } from '../constant/api';
 import { jwtDecode } from 'jwt-decode';
@@ -42,6 +42,22 @@ export class AuthService {
     }
     return null;
   }
+
+  isAccessTokenExpired(): boolean {
+    const payload = this.getAccessTokenPayload();
+    if (payload && payload.exp) {
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp < currentTime;
+    }
+    return true;
+  }
+
+  refreshAccessToken(): Observable<string> {
+    const refreshToken = this.cookieService.get('refreshToken');
+    return this.http.post<{ accessToken: string }>(`${API_URL}/auth/refresh-token`, { refresh_token: refreshToken })
+      .pipe(map(response => response.accessToken));
+  }
+
   getAccessToken(): any {
     const accessToken = this.cookieService.get('accessToken');
     if (accessToken) {

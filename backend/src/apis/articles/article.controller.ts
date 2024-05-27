@@ -22,11 +22,13 @@ import { Article } from './schemas/article.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/auth/guards/authorization.guard';
 import { PaginatedResult } from './interface/pagination.interface';
+import { NotificationGateway } from 'src/socket/notification/nofication-gateway';
 @Controller('articles')
 export class ArticleController  {
   constructor(private readonly articleService: ArticleService) {}
   @Get()
   // @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard('jwt'))
   async getAllArticles(@Query('page') page: number = 1, @Query('limit') limit: number = 10, @Query('search') searchQuery?: string): Promise<ResponseData<PaginatedResult<Article>>> {
     try {
       const paginatedResult = await this.articleService.findAll(page, limit, searchQuery);

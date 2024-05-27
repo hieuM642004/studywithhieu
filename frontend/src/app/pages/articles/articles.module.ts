@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ArticlesComponent } from './articles.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FavoriteComponent } from '../../components/favorite/favorite.component';
 import { CommentService } from '../../services/socket/comments.service';
+import { DateFormatPipe } from '../../pipes/time.pipe';
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ArticlesComponent],
+  declarations: [ArticlesComponent, DateFormatPipe],
   imports: [
     CommonModule,
     NgOptimizedImage,
@@ -26,7 +27,7 @@ const routes: Routes = [
    
   ],
   exports: [],
-  providers: [],
+  providers: [DatePipe],
 })
 
 

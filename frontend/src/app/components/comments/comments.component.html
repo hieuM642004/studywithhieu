@@ -30,261 +30,75 @@
 
     <article
       *ngFor="let comment of rootComments"
-      class="p-6 text-base bg-white rounded-lg dark:bg-gray-900"
+      class="comment-container p-6 text-base bg-white rounded-lg dark:bg-gray-900"
     >
-      <footer class="flex justify-between items-center mb-2">
-        <div class="flex items-center">
-          <p
-            class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"
-          >
-            <img
-              class="mr-2 w-6 h-6 rounded-full"
-              src="{{ comment?.idUser?.avatar }}"
-              alt="Michael Gough"
-            />
-            {{ comment?.idUser?.username }}
-          </p>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            <time pubdate datetime="2022-02-08" title="February 8th, 2022"
-              >Feb. 8, 2022</time
-            >
-          </p>
-        </div>
-        <button
-          (click)="toggleDropdown(comment)"
-          class="relative flex p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          type="button"
-        >
-          <svg
-            class="w-4 h-4"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 16 3"
-          >
-            <path
-              d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-            />
-          </svg>
-          <span class="sr-only">Comment settings</span>
-        </button>
-
-        <!-- Dropdown menu -->
-        <div
-          [ngStyle]="{ display: comment.showDropdown ? 'block' : 'none' }"
-          class="absolute right-44 mt-2 z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-        >
-          <ul
-            class="text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownMenuIconHorizontalButton"
-          >
-            <li>
-              <button
-                (click)="toggleEdit(comment)"
-                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Edit
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="deleteComment(comment)"
-                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Remove
-              </button>
-            </li>
-          </ul>
-        </div>
-      </footer>
-      <div *ngIf="comment.isEditing">
-        <textarea
-          rows="1"
-          [(ngModel)]="comment.content"
-          class="rounded-md px-0 w-full text-sm text-gray-900 border-gray-100 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-        ></textarea>
-        <div class="flex space-x-2">
-          <button
-            (click)="saveEdit(comment)"
-            class="text-sm text-gray-500 dark:text-gray-400"
-          >
-            Save
-          </button>
-          <button
-            (click)="cancelEdit(comment)"
-            class="text-sm text-gray-500 dark:text-gray-400"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-      <p *ngIf="!comment.isEditing" class="text-gray-500 dark:text-gray-400">
-        {{ comment.content }}
-      </p>
-
-
-      <div class="flex items-center mt-4 space-x-4">
-        <button
-          (click)="replyToComment(comment)"
-          type="button"
-          class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-        >
-          <svg
-            class="mr-1.5 w-3.5 h-3.5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 18"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-            />
-          </svg>
-          Reply
-        </button>
-        <button
-          (click)="toggleDisplayMore(comment)"
-          class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline ml-2"
-        >
-          {{ comment.isDisplayMore ? "Hide" : "Response" }}({{
-            getRepliesForComment(comment._id).length
-          }})
-        </button>
-      </div>
-      <div *ngIf="comment.isReplying" class="mt-4">
-        <textarea
-          [(ngModel)]="comment.newReplyContent"
-          rows="2"
-          class="w-full p-2 border rounded-md dark:bg-gray-800 dark:text-white"
-          placeholder="Write a reply..."
-        ></textarea>
-        <div class="flex space-x-2 mt-2">
-          <button
-            (click)="sendReply(comment)"
-            class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2"
-          >
-            Reply
-          </button>
-          <button
-            (click)="cancelReply(comment)"
-            class="text-gray-500 dark:text-gray-400 font-medium rounded-lg text-sm px-4 py-2"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-      <div *ngIf="comment.isDisplayMore">
-        <article
-          
-          *ngFor="let reply of getRepliesForComment(comment._id)"
-          class="p-2 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900"
-        >
-          <footer class="flex justify-between items-center mb-2">
-            <div class="flex items-center">
-              <p
-                class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"
-              >
-                <img
-                  class="mr-2 w-6 h-6 rounded-full"
-                  src="{{ reply?.idUser?.avatar }}"
-                  alt="Jese Leos"
-                />
-                {{ reply?.idUser?.username
-                }}
-              </p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                <time pubdate datetime="2022-02-12" title="February 12th, 2022"
-                  >Feb. 12, 2022</time
-                >
-              </p>
-            </div>
-            <button
-              id="dropdownComment2Button"
-              data-dropdown-toggle="dropdownComment2"
-              class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
-            >
-              <svg
-                class="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 16 3"
-              >
-                <path
-                  d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-                />
-              </svg>
-              <span class="sr-only">Comment settings</span>
-            </button>
-            <!-- Dropdown menu -->
-            <div
-              id="dropdownComment2"
-              class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-            >
-              <ul
-                class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownMenuIconHorizontalButton"
-              >
-                <li>
-                  <a
-                    href="#"
-                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Edit</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Remove</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Report</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </footer>
-          <p
-            *ngIf="reply && reply.content"
-            class="text-gray-500 dark:text-gray-400"
-          >
-            {{ reply.content }}
-          </p>
-          <div class="flex items-center mt-4 space-x-4">
-            <button
-              type="button"
-              class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-            >
-              <svg
-                class="mr-1.5 w-3.5 h-3.5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 18"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                />
-              </svg>
-              Reply
-            </button>
-          </div>
-        </article>
-      </div>
+      <ng-container *ngTemplateOutlet="commentTemplate; context: { $implicit: comment }"></ng-container>
     </article>
   </div>
 </section>
+
+<ng-template #commentTemplate let-comment>
+  <div class="comment-box">
+    <footer class="flex justify-between items-center mb-2">
+      <div class="flex items-center">
+        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+          <img class="mr-2 w-6 h-6 rounded-full" [src]="comment?.idUser?.avatar" alt="Avatar" />
+          {{ comment?.idUser?.username }}
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <time [attr.datetime]="comment.date" title="Comment date">{{ comment.date | date: 'MMM. d, y' }}</time>
+        </p>
+      </div>
+      <button (click)="toggleDropdown(comment)" class="relative flex p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+        </svg>
+        <span class="sr-only">Comment settings</span>
+      </button>
+
+      <!-- Dropdown menu -->
+      <div [ngStyle]="{ display: comment.showDropdown ? 'block' : 'none' }" class="absolute right-44 mt-2 z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+        <ul class="text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+          <li>
+            <button (click)="toggleEdit(comment)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</button>
+          </li>
+          <li>
+            <button (click)="deleteComment(comment._id)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</button>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    <div *ngIf="comment.isEditing">
+      <textarea rows="1" [(ngModel)]="comment.content" class="rounded-md px-0 w-full text-sm text-gray-900 border-gray-100 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"></textarea>
+      <div class="flex space-x-2">
+        <button (click)="saveEdit(comment)" class="text-sm text-gray-500 dark:text-gray-400">Save</button>
+        <button (click)="cancelEdit(comment)" class="text-sm text-gray-500 dark:text-gray-400">Cancel</button>
+      </div>
+    </div>
+    <p *ngIf="!comment.isEditing" class="text-gray-500 dark:text-gray-400">{{ comment.content }}</p>
+
+    <div class="flex items-center mt-4 space-x-4">
+      <button (click)="replyToComment(comment)" type="button" class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
+        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
+        </svg>
+        Reply
+      </button>
+      <button (click)="toggleDisplayMore(comment)" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline ml-2">
+        {{ comment.isDisplayMore ? "Hide" : "Response" }}({{ getRepliesForComment(comment._id).length }})
+      </button>
+    </div>
+    <div *ngIf="comment.isReplying" class="mt-4">
+      <textarea [(ngModel)]="comment.newReplyContent" rows="2" class="w-full p-2 border rounded-md dark:bg-gray-800 dark:text-white" placeholder="Write a reply..."></textarea>
+      <div class="flex space-x-2 mt-2">
+        <button (click)="sendReply(comment)" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">Reply</button>
+        <button (click)="cancelReply(comment)" class="text-gray-500 dark:text-gray-400 font-medium rounded-lg text-sm px-4 py-2">Cancel</button>
+      </div>
+    </div>
+    <div *ngIf="comment.isDisplayMore" class="mt-4">
+      <article *ngFor="let reply of getRepliesForComment(comment._id)" class="reply-container p-2 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
+        <ng-container *ngTemplateOutlet="commentTemplate; context: { $implicit: reply }"></ng-container>
+      </article>
+    </div>
+  </div>
+</ng-template>

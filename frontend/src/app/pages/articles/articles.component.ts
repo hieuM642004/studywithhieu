@@ -5,12 +5,11 @@ import { ArticlesService } from '../../services/articles.service';
 import { Articles,PaginatedArticles } from '../../types/types';
 import { User } from '../../types/types';
 import { UsersService } from '../../services/user.service';
-import { AuthInterceptor } from '../../services/interceptor/auth.interceptor';
+import { AuthInterceptor } from '../../interceptor/auth.interceptor';
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
-  providers:[{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}]
 })
 export class ArticlesComponent implements OnInit {
 
