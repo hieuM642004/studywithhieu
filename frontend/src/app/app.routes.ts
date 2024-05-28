@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { AuthGuard } from './guards/auth.guard';
 import { TopicsComponent } from './admin/topics/topics.component';
+import { AdminGuard } from './guards/admin.guard';
 
 
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./pages/articles/articles.module').then((m) => m.ArticlesModule),
   },
+  
   {
     path: 'articles/:slug',
     loadChildren: () =>
@@ -28,11 +30,13 @@ export const routes: Routes = [
     path: 'new-post',
     loadChildren: () =>
       import('./pages/editor/editor.module').then((m) => m.EditorModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-account/:slug',
     loadChildren: () =>
       import('./pages/detail-user/detail-user.module').then((m) => m.DetailUserModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'about',
@@ -55,6 +59,11 @@ export const routes: Routes = [
       import('./pages/detail-populer-user/populerUser.module').then((m) => m.PopulerModule),
   },
   {
+    path: 'not-found',
+    loadChildren: () =>
+      import('./pages/not-found/not-found.module').then((m) => m.NotFoundModule),
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },
@@ -70,7 +79,10 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: TopicsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
-  
+  {
+    path: '**',
+    redirectTo: 'not-found',
+  },
 ];
