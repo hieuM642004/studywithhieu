@@ -43,9 +43,9 @@ export class UserService {
     let user: User;
 
     if (mongoose.Types.ObjectId.isValid(identifier)) {
-      user = await this.userModel.findById(identifier);
+      user = await this.userModel.findById(identifier).populate('articles');
     } else {
-      user = await this.userModel.findOne({ slug: identifier });
+      user = await this.userModel.findOne({ slug: identifier }).populate('articles');
     }
 
     if (!user) {

@@ -7,6 +7,7 @@ import { CommentService } from './comment.service';
 import { UserModule } from 'src/apis/users/user.module';
 import { UserSchema } from 'src/apis/users/schemas/user.schema';
 
+
 @Module({
   imports: [
     UserModule,
@@ -14,6 +15,7 @@ import { UserSchema } from 'src/apis/users/schemas/user.schema';
       { name: 'Comment', schema: CommentSchema },
       { name: 'User', schema: UserSchema },
     ]),
+    
   ],
   controllers: [],
   providers: [CommentGateway],

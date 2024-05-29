@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ArticlesService } from '../../services/articles.service';
 import { EpisodeService } from '../../services/episode.service';
 import { forkJoin } from 'rxjs';
+
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -22,7 +23,9 @@ export class EditorComponent implements OnInit {
   previousArticleId: string | undefined;
   loading = false;
   successMessage: string | null = null;
-  errorMessage: boolean=false
+  errorMessage: boolean = false;
+  errorChanged: boolean = false;
+
   constructor(
     private readonly articlesService: ArticlesService,
     private readonly topicsService: TopicsService,
@@ -64,11 +67,14 @@ export class EditorComponent implements OnInit {
   }
 
   saveData() {
+    this.errorMessage = !this.errorMessage; // Reset errorMessage flag
     if (!this.selectedTopicId || !this.editorData.trim() || !this.image || !this.sets.every(set => set.firstName.trim() && set.content.trim() && set.audioFile)) {
-      this.errorMessage=true
+      this.errorMessage = true;
+      this.errorChanged = !this.errorChanged; // Update errorChanged flag
       return;
     }
-    this.loading = true; 
+
+    this.loading = true;
     const data = this.extractContentAndTitle(this.editorData);
 
     const formData = new FormData();
@@ -80,10 +86,10 @@ export class EditorComponent implements OnInit {
     formData.append('postedBy', data.postedBy);
     formData.append('idTopic', data.idTopic!);
 
-    this.articlesService.addArticle(formData).subscribe(
+    this.articlesService.addArticle(formData).then(
       (articleResponse) => {
+        this.errorMessage = false;
         this.previousArticleId = articleResponse.data._id;
-
         const episodeRequests = this.sets.map((set) => {
           const episodeFormData = this.extractEpisodeData(set);
           return this.episodeService.addEpisode(episodeFormData);
@@ -91,7 +97,7 @@ export class EditorComponent implements OnInit {
 
         forkJoin(episodeRequests).subscribe(
           (episodeResponses) => {
-            this.loading = false; 
+            this.loading = false;
             this.successMessage = 'Data saved successfully';
             console.log('Episodes data saved successfully', episodeResponses);
           },
@@ -101,6 +107,8 @@ export class EditorComponent implements OnInit {
         );
       },
       (error) => {
+        this.errorMessage = true;
+        this.errorChanged = !this.errorChanged; // Update errorChanged flag
         console.error('Error saving article data', error);
       }
     );

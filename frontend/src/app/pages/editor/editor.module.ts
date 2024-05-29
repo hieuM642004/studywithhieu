@@ -9,6 +9,7 @@ import { LoadingComponent } from '../../components/loading/loading.component';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { AlertComponent } from '../../components/alert/alert.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -26,7 +27,8 @@ const routes: Routes = [
     RouterModule,
     CKEditorModule,
     LoadingComponent,
-    AlertComponent
+    AlertComponent,
+   
   ],
   exports: [],
   providers: [],

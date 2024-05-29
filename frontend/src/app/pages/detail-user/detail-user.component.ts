@@ -16,7 +16,7 @@ export class DetailUserComponent {
   slug: string;
   userArticles: Articles[] = [];
   isFollowing: boolean = false;
-hideBtnFollower: boolean = true;
+  hideBtnFollower: boolean = true;
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
@@ -40,7 +40,12 @@ hideBtnFollower: boolean = true;
       (responseData) => {
         this.user = responseData.data;
 
-        this.fetchUserArticles();
+        if (this.user?.articles && this.user.articles.length > 0) {
+          this.user.articles.forEach((article: any) => {
+            this.userArticles.push(article);
+          });
+        }
+
         this.checkFollowingStatus(this.user);
         this.checkDisplayBtnFollow();
       },
@@ -50,25 +55,25 @@ hideBtnFollower: boolean = true;
     );
   }
 
-  fetchUserArticles() {
-    if (this.user && this.user.articles && this.user.articles.length > 0) {
-      this.user.articles.forEach((articleId) => {
-        this.articlesService.getArticlesById(articleId).subscribe(
-          (articleData) => {
-            this.userArticles.push(articleData.data);
-          },
-          (error) => {
-            console.error('Error fetching article:', error);
-          }
-        );
-      });
-    }
-  }
+  // fetchUserArticles() {
+  //   if (this.user && this.user.articles && this.user.articles.length > 0) {
+  //     this.user.articles.forEach((articleId) => {
+  //       this.articlesService.getArticlesById(articleId).subscribe(
+  //         (articleData) => {
+  //           this.userArticles.push(articleData.data);
+  //         },
+  //         (error) => {
+  //           console.error('Error fetching article:', error);
+  //         }
+  //       );
+  //     });
+  //   }
+  // }
 
   toggleFollow(): void {
     const followerId = this.authService.getAccessTokenPayload().id;
     const followedUserId = this.user?._id;
- 
+
     if (this.isFollowing) {
       if (followedUserId) {
         this.usersService
@@ -89,16 +94,15 @@ hideBtnFollower: boolean = true;
       }
     }
   }
-checkDisplayBtnFollow(){
-  const followerId = this.authService.getAccessTokenPayload().id;
-  const followedUserId = this.user?._id;
-  if(followedUserId === followerId){
-    this.hideBtnFollower=false
-  }else{
-
-    this.hideBtnFollower=true
+  checkDisplayBtnFollow() {
+    const followerId = this.authService.getAccessTokenPayload().id;
+    const followedUserId = this.user?._id;
+    if (followedUserId === followerId) {
+      this.hideBtnFollower = false;
+    } else {
+      this.hideBtnFollower = true;
+    }
   }
-}
   checkFollowingStatus(userData: any): void {
     const userId = this.authService.getAccessTokenPayload().id;
     if (userId) {

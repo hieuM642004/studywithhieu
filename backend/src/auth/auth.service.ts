@@ -75,7 +75,7 @@ export class AuthService {
       followers: user.followers,
     };
 
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '30s' });
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '1h' });
     
 
     user.refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });

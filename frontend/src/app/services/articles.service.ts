@@ -36,21 +36,23 @@ export class ArticlesService {
   }
   
 
-  // Adding a article via the API
-  addArticle(body: any): Observable<any> {
-    const addRequest = this.http.post(`${API_URL}/articles`, body);
+ 
+  async addArticle(body: any): Promise<any> {
+    try {
+      const articleResponse: any = await this.apiService.post(`${API_URL}/articles`, body, {}).toPromise();
   
-    addRequest.subscribe((articleResponse: any) => {
       const articleData = {
-        userId: this.authService.getAccessTokenPayload().id, 
+        userId: this.authService.getAccessTokenPayload().id,
         articleId: articleResponse.data._id,
       };
-      console.log(articleData);
-      
-      this.socket.emit('newArticle', articleData); 
-    });
   
-    return addRequest;
+      this.socket.emit('newArticle', articleData);
+  
+      return articleResponse;
+    } catch (error) {
+      console.error('Error adding article:', error);
+      throw error; 
+    }
   }
   
 
