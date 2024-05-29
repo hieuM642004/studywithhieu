@@ -1,8 +1,8 @@
 
 <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-white rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
     <span class="sr-only">Open user menu</span>
-    <img *ngIf="userPayload && userPayload.avatar" class="w-8 h-8 rounded-full" [src]="userPayload.avatar" alt="user photo">
-    <span *ngIf="!userPayload || !userPayload.avatar" ><button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Đăng nhập</button></span>
+    <img *ngIf="userPayload " class="w-8 h-8 rounded-full" [src]="userPayload.avatar" alt="user photo">
+    <span *ngIf="!userPayload" ><button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Đăng nhập</button></span>
 
     </button>
     
