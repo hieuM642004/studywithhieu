@@ -1,0 +1,12 @@
+
+.title-popular{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: space-around;
+    a{
+        height: fit-content;
+        width: 7rem;
+        padding: auto;
+        margin-left: 30.6rem;
+    }
+}

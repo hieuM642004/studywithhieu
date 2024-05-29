@@ -71,6 +71,10 @@ export class ArticlesComponent implements OnInit {
       this.fetchArticles(page, this.pageSize);
     }
   }
+  shareOnTwitter(article: any) {
+    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent('https://mywebsitePodccast.com/articles/' + article.slug)}&text=${encodeURIComponent(article.title)}&hashtags=${encodeURIComponent('example,angular')}`;
+    window.open(url, '_blank');
+  }
  
 }
 

@@ -3,6 +3,10 @@
     <div class="popular-raido-item m-4">
         <div class="title-popular m-4">
             <p class="text-2xl mb-4">Radio phổ biến</p>
+            <a
+                routerLink="/populer"  
+                class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]"
+                routerLinkActive="active"><i class="pi pi-angle-left"></i>Quay lại</a>
         </div>
         <div class="grid grid-cols-4 " *ngIf="topItems.length > 0">
             <div *ngFor="let article of topItems">

@@ -17,7 +17,7 @@
                             alt=""
                             class="object-cover object-center w-full rounded-lg max-h-96 my-2"
                         />
-                        <p>{{ article.title | truncate }}</p>
+                        <p>{{ article.title }}</p>
                     </a>
                     <div class="item-infor mt-2">
                         <a *ngIf="article.user" >
@@ -75,6 +75,24 @@
                           </div>
                     </a>
                     <small class="text-sm text-gray-700">{{ users.createdAt }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="popular-channel-item m-4">
+        <div class="title-popular m-4">
+            <p class="text-2xl mb-4">Topic phổ biến</p>
+        </div>
+        <div class="grid grid-cols-4">
+            <div class="item-popular mx-4 " *ngFor="let topic of topics ">
+                <div class="item-topic mt-2">
+                    <a *ngIf="topic" routerLink="/topicDetail/{{ topic._id }}" routerLinkActive="active">
+                        <h2
+                        class="text-lg font-semibold text-gray-900 mt-1">
+                        {{ topic.name }}
+                        </h2>
+                    </a>
                 </div>
             </div>
         </div>
