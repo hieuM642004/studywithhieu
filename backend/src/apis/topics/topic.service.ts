@@ -34,9 +34,9 @@ export class TopicService {
     let topic: Topic;
 
     if (mongoose.Types.ObjectId.isValid(identifier)) {
-      topic = await this.topicModel.findById(identifier);
+      topic = await this.topicModel.findById(identifier).populate('articles');
     } else {
-      topic = await this.topicModel.findOne({ slug: identifier });
+      topic = await this.topicModel.findOne({ slug: identifier }).populate('articles');
     }
 
     if (!topic) {

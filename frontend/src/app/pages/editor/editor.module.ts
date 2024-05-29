@@ -6,7 +6,9 @@ import { EditorComponent } from './editor.component';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { LoadingComponent } from '../../components/loading/loading.component';
-
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { AlertComponent } from '../../components/alert/alert.component';
 const routes: Routes = [
   {
     path: '',
@@ -23,7 +25,8 @@ const routes: Routes = [
     HttpClientModule,RouterModule,
     RouterModule,
     CKEditorModule,
-    LoadingComponent
+    LoadingComponent,
+    AlertComponent
   ],
   exports: [],
   providers: [],

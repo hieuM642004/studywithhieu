@@ -172,3 +172,5 @@
   </button>
 </div>
 <p *ngIf="successMessage" class="text-green-600">{{successMessage}}</p>
+<app-alert *ngIf="errorMessage" [message]="'Your message here.'" [type]="'error'"></app-alert>
+

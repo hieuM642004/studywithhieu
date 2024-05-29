@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AuthGuard } from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-comments',
@@ -23,9 +24,11 @@ export class CommentsComponent implements OnInit {
   rootComments: any[] = [];
   commentSubscription: Subscription | undefined;
 isDisplayMore: boolean = false;
+  router: any;
   constructor(
     private commentService: CommentService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly authGuard: AuthGuard
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +62,7 @@ isDisplayMore: boolean = false;
         this.comments[index] = updatedComment;
       }
       
-      // Cập nhật trong mảng rootComments nếu là bình luận gốc
+    
       if (updatedComment.parentId === null) {
         const rootIndex = this.rootComments.findIndex(
           (c) => c._id === updatedComment._id
@@ -75,7 +78,6 @@ isDisplayMore: boolean = false;
         (comment) => comment._id !== deletedComment._id
       );
       
-      // Xóa trong mảng rootComments nếu là bình luận gốc
       if (deletedComment.parentId === null) {
         this.rootComments = this.rootComments.filter(
           (comment) => comment._id !== deletedComment._id
@@ -91,6 +93,10 @@ isDisplayMore: boolean = false;
   }
 
   sendNewComment(): void {
+    if (!this.authGuard.canActivate()) {
+      this.router.navigate(['/login']); 
+      return; 
+    }
     const userId = this.authService.getAccessTokenPayload().id;
     this.newComment.idUser = userId;
     this.newComment.idArticle = this.articleId!;

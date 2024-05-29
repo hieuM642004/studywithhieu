@@ -22,7 +22,7 @@ export class EditorComponent implements OnInit {
   previousArticleId: string | undefined;
   loading = false;
   successMessage: string | null = null;
-  errorMessage: string | null = null;
+  errorMessage: boolean=false
   constructor(
     private readonly articlesService: ArticlesService,
     private readonly topicsService: TopicsService,
@@ -64,8 +64,8 @@ export class EditorComponent implements OnInit {
   }
 
   saveData() {
-    if (!this.selectedTopicId) {
-      console.error('No topic selected');
+    if (!this.selectedTopicId || !this.editorData.trim() || !this.image || !this.sets.every(set => set.firstName.trim() && set.content.trim() && set.audioFile)) {
+      this.errorMessage=true
       return;
     }
     this.loading = true; 
