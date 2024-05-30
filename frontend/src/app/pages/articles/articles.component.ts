@@ -35,33 +35,9 @@ export class ArticlesComponent implements OnInit {
         this.totalPages = articlesData.data.totalPages;
         this.currentPage = Number(articlesData.data.currentPage);
         this.totalItems = articlesData.data.totalItems;
-        this.fetchUsers();
         this.totalPagesArray = Array.from({length: this.totalPages}, (_, i) => i + 1);
       } else {
         console.error('Data from articles not formatted');
-      }
-    });
-  }
-
-  fetchUsers() {
-    this.usersService.getUsers().subscribe((usersData) => {
-      if (usersData && Array.isArray(usersData.data)) {
-        this.users = usersData.data;
-        this.attachUserToArticles();
-      } else {
-        console.error('Data from user not formatted');
-      }
-    });
-  }
-
-  attachUserToArticles() {
-    this.data.forEach((article) => {
-      const postedById = article.postedBy;
-      const user = this.users.find(user => user._id === postedById);
-      if (user) {
-        article.user = user;
-      } else {
-        console.error('Not found user for article:', article._id);
       }
     });
   }

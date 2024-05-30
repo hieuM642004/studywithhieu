@@ -12,8 +12,6 @@ import {TruncatePipe} from '../../pipes/truncate.pipe';
 
 @Component({
   selector: 'app-detail-populer-user',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './detail-populer-user.component.html',
   styleUrl: './detail-populer-user.component.scss'
 })

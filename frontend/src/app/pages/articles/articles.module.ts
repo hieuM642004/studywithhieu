@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FavoriteComponent } from '../../components/favorite/favorite.component';
 import { CommentService } from '../../services/socket/comments.service';
 import { DateFormatPipe } from '../../pipes/time.pipe';
+import { UserComponent } from '../../components/user/user.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule,RouterModule,
     FavoriteComponent,
+    UserComponent
    
   ],
   exports: [],

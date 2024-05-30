@@ -51,7 +51,7 @@ export const routes: Routes = [
   {
     path: 'populer-views',
     loadChildren: () =>
-      import('./pages/populer-detail-by-views/populerDetail.module').then((m) => m.PopulerModule),
+      import('./pages/populer-detail-by-views/populerDetail.module').then((m) => m.PopulerDetailModule),
   },
   {
     path: 'populer-followers',

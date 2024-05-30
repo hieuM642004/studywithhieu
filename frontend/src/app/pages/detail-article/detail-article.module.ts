@@ -11,6 +11,7 @@ import { PlaylistComponent } from '../../components/playlist/playlist.component'
 import { DateFormatPipe } from '../../pipes/time.pipe';
 import { FavoriteComponent } from '../../components/favorite/favorite.component';
 import { CommentsComponent } from '../../components/comments/comments.component'; 
+import { UserComponent } from '../../components/user/user.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
     FormsModule,
     PlaylistComponent,
     FavoriteComponent,
-    CommentsComponent
+    CommentsComponent,
+    UserComponent
   ],
   exports: [],
   providers: [],

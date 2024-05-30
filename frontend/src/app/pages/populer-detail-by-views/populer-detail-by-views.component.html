@@ -1,47 +1,38 @@
-
 <div class="container mx-auto">
-    <div class="popular-raido-item m-4">
-        <div class="title-popular m-4">
-            <p class="text-2xl mb-4">Radio phổ biến</p>
-            <a
-                routerLink="/populer"  
-                class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]"
-                routerLinkActive="active"><i class="pi pi-angle-left"></i>Quay lại</a>
-        </div>
-        <div class="grid grid-cols-4 " *ngIf="topItems.length > 0">
-            <div *ngFor="let article of topItems">
-                <div class="item-popular m-4">
-                    <a routerLink="/articles/{{ article.slug }}" routerLinkActive="active">
-                        <img
-                            src="{{article.images[0]}}"
-                            alt=""
-                            class="object-cover object-center w-full rounded-lg max-h-96 my-2"
-                            />
-                        <p>{{ article.title | truncate }}</p>
-                    </a>
-                    <div class="item-infor mt-2">
-                        <a *ngIf="article.user" >
-                            <div class="flex">
-                                <img
-                                  *ngIf="article.user"
-                                  class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                                  [src]="article.user.avatar"
-                                  alt="avatar"
-                                />
-                                <a *ngIf="article.user" routerLink="/user/{{ article.user.slug }}"
-                                  ><h2
-                                    class="text-lg font-semibold text-gray-900 mt-1"
-                                    *ngIf="article.user"
-                                  >
-                                    {{ article.user.username }}
-                                  </h2></a>
-                              </div>
-                        </a>
-                        <small class="text-sm text-gray-700">{{ article.createdAt }}</small>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="popular-raido-item m-4">
+    <div class="title-popular m-4">
+      <p class="text-2xl mb-4">Radio phổ biến</p>
+      <a
+        routerLink="/populer"
+        class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded inline-block min-w-[auto]"
+        routerLinkActive="active"
+        ><i class="pi pi-angle-left"></i>Quay lại</a
+      >
     </div>
-</div>
+    <div class="grid grid-cols-4" *ngIf="topItems.length > 0">
+      <div *ngFor="let article of topItems">
+        <div class="item-popular m-4">
+          <a
+            routerLink="/articles/{{ article.slug }}"
+            routerLinkActive="active"
+          >
+            <img
+              src="{{ article.images[0] }}"
+              alt=""
+              class="object-cover object-center w-full rounded-lg max-h-96 my-2"
+            />
+            <p>{{ article.title }}</p>
+          </a>
+          <div class="item-infor mt-2">
+            <app-user
+              *ngIf="article && article.postedBy"
+              [user]="article.postedBy"
+            ></app-user>
 
+            <small class="text-sm text-gray-700">{{ article.createdAt }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,22 +11,8 @@
             <div class="item-popular mx-4 " *ngFor="let users of topUser ">
                 <div class="item-infor mt-4">
                     <a *ngIf="users" >
-                        <div class="flex">
-                            <img
-                              *ngIf="users"
-                              class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                              [src]="users.avatar"
-                              alt="avatar"
-                            />
-                            <a routerLink="/user/{{ users.slug }}">
-                                <h2
-                                class="text-lg font-semibold text-gray-900 mt-1"
-                                *ngIf="users"
-                              >
-                                {{ users.username }}
-                              </h2>
-                            </a>
-                          </div>
+                        <app-user  *ngIf="users "
+          [user]="users"></app-user>
                     </a>
                     <small class="text-sm text-gray-700">{{ users.createdAt }}</small>
                 </div>

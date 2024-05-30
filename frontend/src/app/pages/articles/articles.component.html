@@ -6,22 +6,8 @@
     <div class="flex items-start px-4 py-6 ">
       <div class="">
         <div class="flex ">
-          <div class="flex">
-            <img
-              *ngIf="article.user"
-              class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-              [src]="article.user.avatar"
-              alt="avatar"
-            />
-            <a *ngIf="article.user" routerLink="/user/{{ article.user.slug }}"
-              ><h2
-                class="text-lg font-semibold text-gray-900 mt-1"
-                *ngIf="article.user"
-              >
-                {{ article.user.username }}
-              </h2></a
-            >
-          </div>
+          <app-user  *ngIf="article && article.postedBy"
+          [user]="article.postedBy"></app-user>
 
           <small class="ml-2 text-sm text-gray-700">{{ article.createdAt | dateFormat:'dd/MM/yyyy HH:mm:ss' }}</small>
         </div>

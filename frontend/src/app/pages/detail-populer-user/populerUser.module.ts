@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailPopulerUserComponent } from './detail-populer-user.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from '../../components/user/user.component';
 
 
 const routes: Routes = [
@@ -13,11 +14,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-//   declarations: [PopulerComponent],
+  declarations: [DetailPopulerUserComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    HttpClientModule,RouterModule
+    HttpClientModule,
+    UserComponent
   ],
   exports: [],
   providers: [],

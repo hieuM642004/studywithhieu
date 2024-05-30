@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterLink, RouterModule, Routes } from '@angular/router';
 import { PopulerComponent } from './populer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from '../../components/user/user.component';
 
 
 const routes: Routes = [
@@ -13,11 +14,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-//   declarations: [PopulerComponent],
+  declarations: [PopulerComponent],
   imports: [
     CommonModule,
+    RouterLink,
     RouterModule.forChild(routes),
-    HttpClientModule,RouterModule
+    HttpClientModule,
+    UserComponent
   ],
   exports: [],
   providers: [],
