@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
         ) {
           return this.authService.refreshAccessToken().pipe(
             switchMap((newAccessToken: string) => {
-              console.log('Access token refreshed');
+           
 
               this.cookieService.set('accessToken', newAccessToken);
 

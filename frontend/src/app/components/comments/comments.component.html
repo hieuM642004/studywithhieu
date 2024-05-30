@@ -1,4 +1,4 @@
-<section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
+<section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased shadow-md">
   <div class="max-w-2xl mx-auto px-4">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
@@ -22,9 +22,9 @@
       </div>
       <button
         type="submit"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        Submit
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="m3 3 3 9-3 9 19-9Z"/><path d="M6 12h16"/></svg>
       </button>
     </form>
 
@@ -49,7 +49,7 @@
           <time [attr.datetime]="comment.date" title="Comment date">{{ comment.date | date: 'MMM. d, y' }}</time>
         </p>
       </div>
-      <button (click)="toggleDropdown(comment)" class="relative flex p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+      <button *ngIf="canEditComment(comment) && canDeleteComment(comment)" (click)="toggleDropdown(comment)" class="relative flex p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
           <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
         </svg>
@@ -57,13 +57,13 @@
       </button>
 
       <!-- Dropdown menu -->
-      <div [ngStyle]="{ display: comment.showDropdown ? 'block' : 'none' }" class="absolute right-44 mt-2 z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+      <div [ngStyle]="{ display: comment.showDropdown ? 'block' : 'none' }" class="absolute right-72 mt-2 z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
         <ul class="text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
           <li>
-            <button (click)="toggleEdit(comment)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</button>
+            <button *ngIf="canEditComment(comment)" (click)="toggleEdit(comment)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</button>
           </li>
           <li>
-            <button (click)="deleteComment(comment._id)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</button>
+            <button *ngIf="canDeleteComment(comment)" (click)="deleteComment(comment._id)" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</button>
           </li>
         </ul>
       </div>
@@ -91,7 +91,9 @@
     <div *ngIf="comment.isReplying" class="mt-4">
       <textarea [(ngModel)]="comment.newReplyContent" rows="2" class="w-full p-2 border rounded-md dark:bg-gray-800 dark:text-white" placeholder="Write a reply..."></textarea>
       <div class="flex space-x-2 mt-2">
-        <button (click)="sendReply(comment)" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">Reply</button>
+        <button  (click)="sendReply(comment)" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="m3 3 3 9-3 9 19-9Z"/><path d="M6 12h16"/></svg>
+        </button>
         <button (click)="cancelReply(comment)" class="text-gray-500 dark:text-gray-400 font-medium rounded-lg text-sm px-4 py-2">Cancel</button>
       </div>
     </div>
