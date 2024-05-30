@@ -43,6 +43,11 @@ export class AuthService {
     return null;
   }
 
+  isAdmin(): boolean {
+    const payload = this.getAccessTokenPayload();
+    return payload && payload.role === 'admin';
+  }
+
   isAccessTokenExpired(): boolean {
     const payload = this.getAccessTokenPayload();
     if (payload && payload.exp) {

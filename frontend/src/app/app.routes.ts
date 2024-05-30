@@ -84,8 +84,9 @@ export const routes: Routes = [
   //Routes for admin
   {
     path: 'admin',
-    component: TopicsComponent,
-    canActivate: [AdminGuard]
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [AdminGuard],
   },
   {
     path: '**',

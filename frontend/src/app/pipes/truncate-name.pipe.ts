@@ -1,20 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'truncateName',
-  standalone: true,
+  name: 'truncate'
 })
-export class TruncateNamePipe implements PipeTransform {
-  // Used to truncate a string to a certain length
-  transform(
-    value: string,
-    maxLength: number = 16,
-    ellipsis: string = '...'
-  ): unknown {
-    if (value.length > maxLength) {
-      return value.slice(0, maxLength) + ellipsis;
+export class TruncatePipe implements PipeTransform {
+  transform(value: string, limit = 50, trail = '...'): string {
+    if (!value) return '';
+    if (value.length > limit) {
+      return value.substring(0, limit) + trail;
     }
-
     return value;
   }
 }
