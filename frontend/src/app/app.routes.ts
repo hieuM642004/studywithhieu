@@ -88,6 +88,7 @@ export const routes: Routes = [
       import('./admin/admin.module').then((m) => m.AdminModule),
     canActivate: [AdminGuard],
   },
+   //Routes for not found
   {
     path: '**',
     redirectTo: 'not-found',

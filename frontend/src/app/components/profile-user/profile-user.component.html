@@ -1,43 +1,93 @@
+<button
+  id="dropdownUserAvatarButton"
+  data-dropdown-toggle="dropdownAvatar"
+  class="flex text-sm bg-white rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+  type="button"
+>
+  <span class="sr-only">Open user menu</span>
+  <img
+    *ngIf="userPayload"
+    class="w-8 h-8 rounded-full"
+    [src]="userPayload.avatar"
+    alt="user photo"
+  />
+  <span *ngIf="!userPayload"
+    ><button
+      type="button"
+      class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+    >
+      Đăng nhập
+    </button></span
+  >
+</button>
 
-<button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-white rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
-    <span class="sr-only">Open user menu</span>
-    <img *ngIf="userPayload " class="w-8 h-8 rounded-full" [src]="userPayload.avatar" alt="user photo">
-    <span *ngIf="!userPayload" ><button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Đăng nhập</button></span>
+<!-- Dropdown menu -->
+<div
+  id="dropdownAvatar"
+  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+>
+  <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+    <div *ngIf="userPayload">{{ userPayload.username }}</div>
+    <div class="font-medium truncate"></div>
+  </div>
+  <ul
+    class="py-2 text-sm text-gray-700 dark:text-gray-200"
+    aria-labelledby="dropdownUserAvatarButton"
+  >
+    <ng-container>
+      <li>
+        <a
+          *ngIf="!isAdmin && userPayload && userPayload.role === 'admin'"
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          routerLink="/admin/dashboard"
+          >Go to admin page</a
+        >
+      </li>
+    </ng-container>
 
-    </button>
-    
-    <!-- Dropdown menu -->
-    <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-          <div *ngIf="userPayload">{{ userPayload.username }}</div>
-          <div class="font-medium truncate"></div>
-        </div>
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
-          <ng-container *ngIf="userPayload">
-             <li>
-            <a  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" routerLink="/my-account/{{ userPayload.slug }}">My account</a>
-          </li>
-          </ng-container>
-          <ng-container *ngIf="userPayload">
-             <li>
-            <a  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" routerLink="/new-post">Post</a>
-          </li>
-          </ng-container>
-         
-          <ng-container *ngIf="!userPayload">
-            <li>
-                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" routerLink="/login">Login</a>
-            </li>
-            <li>
-                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" routerLink="/register">Register</a>
-            </li>
-        </ng-container>
-        </ul>
-        <div class="py-2">
-          <span *ngIf="userPayload">
-              <a (click)="logoutAcount()"  class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
-          </span>
-        
-        </div>
-    </div>
-    
+    <ng-container *ngIf="userPayload">
+      <li>
+        <a
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          routerLink="/new-post"
+          >Post</a
+        >
+      </li>
+    </ng-container>
+    <ng-container *ngIf="userPayload">
+      <li>
+        <a
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          routerLink="/my-account/{{ userPayload.slug }}"
+          >My account</a
+        >
+      </li>
+    </ng-container>
+
+    <ng-container *ngIf="!userPayload">
+      <li>
+        <a
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          routerLink="/login"
+          >Login</a
+        >
+      </li>
+      <li>
+        <a
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          routerLink="/register"
+          >Register</a
+        >
+      </li>
+    </ng-container>
+  </ul>
+  <div class="py-2">
+    <span *ngIf="userPayload">
+      <a
+        (click)="logoutAcount()"
+        class="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        >Log out</a
+      >
+    </span>
+  </div>
+</div>
