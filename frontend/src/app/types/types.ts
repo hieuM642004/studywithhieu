@@ -59,6 +59,7 @@ export interface Articles {
   images: string[];
   content: string;
   postedBy: string;
+  idTopic?:any;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -94,11 +95,11 @@ export interface User {
 export interface Topics {
   _id: string;
   name: string;
-  articles?: string;
+  articles?: any;
   slug: string;
   createdAt: string;
   updatedAt: string;
-  
+  data?:any
 }
 export interface Episodes {
   _id?: string;

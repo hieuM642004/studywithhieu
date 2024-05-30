@@ -39,6 +39,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'topics/:slug',
+    loadChildren: () =>
+      import('./pages/topics/topics.module').then((m) => m.TopicslModule),
+    
+  },
+  {
     path: 'about',
     loadChildren: () =>
       import('./pages/about/about.module').then((m) => m.AboutModule),

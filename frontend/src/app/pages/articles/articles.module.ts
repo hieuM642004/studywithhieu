@@ -8,6 +8,7 @@ import { FavoriteComponent } from '../../components/favorite/favorite.component'
 import { CommentService } from '../../services/socket/comments.service';
 import { DateFormatPipe } from '../../pipes/time.pipe';
 import { UserComponent } from '../../components/user/user.component';
+import { HashtagComponent } from '../../components/hashtag/hashtag.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule,RouterModule,
     FavoriteComponent,
-    UserComponent
+    UserComponent,
+    HashtagComponent
    
   ],
   exports: [],

@@ -49,6 +49,8 @@ export class ArticleService {
 
     const articles = await this.articleModel
       .find(query)
+      .populate('postedBy')
+      .populate('idTopic')
       .skip(startIndex)
       .limit(limit)
       .exec();
@@ -107,9 +109,9 @@ export class ArticleService {
     let article: Article;
 
     if (mongoose.Types.ObjectId.isValid(identifier)) {
-      article = await this.articleModel.findById(identifier);
+      article = await this.articleModel.findById(identifier).populate('postedBy');
     } else {
-      article = await this.articleModel.findOne({ slug: identifier });
+      article = await this.articleModel.findOne({ slug: identifier }).populate('postedBy');
     }
     if (!article) {
       throw new NotFoundException('Article not found.');

@@ -12,12 +12,10 @@ export class TopicService {
   async findAll(): Promise<Topic[]> {
     const topics = await this.topicModel.find().populate('articles');
     return topics;
-}
-
+  }
 
   async create(topicDto: Topic): Promise<Topic> {
     try {
-     
       const newTopic = new this.topicModel({
         name: topicDto.name,
         articles: topicDto.articles,
@@ -34,9 +32,15 @@ export class TopicService {
     let topic: Topic;
 
     if (mongoose.Types.ObjectId.isValid(identifier)) {
-      topic = await this.topicModel.findById(identifier).populate('articles');
+      topic = await this.topicModel.findById(identifier).populate({
+        path: 'articles',
+        populate: { path: 'postedBy' },
+      });
     } else {
-      topic = await this.topicModel.findOne({ slug: identifier }).populate('articles');
+      topic = await this.topicModel.findOne({ slug: identifier }).populate({
+        path: 'articles',
+        populate: { path: 'postedBy' },
+      });
     }
 
     if (!topic) {
@@ -47,7 +51,6 @@ export class TopicService {
   }
 
   async updateById(id: string, topic: Topic): Promise<Topic> {
-   
     return await this.topicModel.findByIdAndUpdate(
       id,
       {

@@ -5,7 +5,8 @@ import { SchemaTypes, Types } from 'mongoose';
 @Schema({
   timestamps: true,
 })
-export class Article  {
+export class Article  { 
+
   @Prop()
   title: string;
   @Prop()
