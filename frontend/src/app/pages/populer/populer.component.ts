@@ -3,11 +3,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ArticlesService } from '../../services/articles.service';
-import { Articles, PaginatedArticles } from '../../types/types';
+import { Articles, PaginatedArticles, Topics } from '../../types/types';
 import { User } from '../../types/types';
 import { UsersService } from '../../services/user.service';
 import { AuthInterceptor } from '../../interceptor/auth.interceptor';
 import {TruncatePipe} from '../../pipes/truncate.pipe';
+import {TopicsService} from '../../services/topics.service';
 
 @Component({
   selector: 'app-populer',
@@ -24,8 +25,8 @@ export class PopulerComponent implements OnInit {
   totalPagesArray: number[] = [];
   topItems: Articles[] = [];
   topUser: User[] = [];
-
-  constructor(private articlesService: ArticlesService, private usersService: UsersService) {}
+  topicItem : Topics[] = [];
+  constructor(private articlesService: ArticlesService, private usersService: UsersService, private topicsService: TopicsService) {}
 
   ngOnInit(): void {
     this.fetchArticles(this.currentPage, this.pageSize);
@@ -39,13 +40,23 @@ export class PopulerComponent implements OnInit {
         this.currentPage = Number(articlesData.data.currentPage);
         this.totalItems = articlesData.data.totalItems;
         this.fetchUsers();
+        this.fecchTopic();
         this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
         this.setTopItems();
         this.setTopUsers();
+        
       } else {
         console.error('Data from articles not formatted');
       }
     });
+  }
+
+  fecchTopic(){
+    this.topicsService.getTopics().subscribe(topicData =>{
+      this.topicItem = topicData.data;
+      console.log(this.topicItem);
+      
+    })
   }
 
   fetchUsers() {
@@ -58,6 +69,7 @@ export class PopulerComponent implements OnInit {
       }
     });
   }
+  
 
   attachUserToArticles() {
     this.data.forEach((article) => {
