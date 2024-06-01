@@ -46,18 +46,15 @@
         <td class="px-2 py-3">
           {{ article.idTopic.name }}
         </td>
-        <td class="px-2 py-3">
-          {{ article.postedBy.username }}
+        <td class="px-2 py-3" *ngIf="article && article.postedBy">
+          {{ article?.postedBy }}
         </td>
         <td class="px-2 py-3">
           {{ article.views }}
         </td>
-        <td class="px-2 py-3 text-right">
-          <a
-            href="#"
-            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-            >Edit</a
-          >
+        <td class="px-2 py-3 flex items-center">
+          <app-btn-edit></app-btn-edit>
+          <app-btn-delete></app-btn-delete>
         </td>
       </tr>
     </tbody>

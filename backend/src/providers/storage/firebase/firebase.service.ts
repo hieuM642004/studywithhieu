@@ -4,7 +4,8 @@ import {
   ref as sRef,
   uploadBytesResumable,
   getDownloadURL,
-  uploadBytes
+  uploadBytes,
+  deleteObject
 } from "firebase/storage";
 import {
   getAuth,
@@ -86,7 +87,17 @@ class FirebaseService {
       throw error;
     }
   }
-  
+  async deleteImageFromFirebase(imageUrl: string): Promise<void> {
+    try {
+      const storage = getStorage(this.appInstance);
+      const storageRef = sRef(storage, imageUrl);
+      await deleteObject(storageRef);
+      console.log(`Deleted image at URL: ${imageUrl}`);
+    } catch (error) {
+      console.error('Error deleting image from Firebase:', error);
+      throw error;
+    }
+  }
 
 
 }

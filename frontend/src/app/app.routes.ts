@@ -4,7 +4,6 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { AuthGuard } from './guards/auth.guard';
-import { TopicsComponent } from './admin/topics/topics.component';
 import { AdminGuard } from './guards/admin.guard';
 
 

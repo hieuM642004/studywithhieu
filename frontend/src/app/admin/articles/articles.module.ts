@@ -10,6 +10,8 @@ import { DateFormatPipe } from '../../pipes/time.pipe';
 import { UserComponent } from '../../components/user/user.component';
 import { HashtagComponent } from '../../components/hashtag/hashtag.component';
 import { TruncatePipe } from '../../pipes/truncate-name.pipe';
+import { BtnEditComponent } from '../_components/btn-edit/btn-edit.component';
+import { BtnDeleteComponent } from '../_components/btn-delete/btn-delete.component';
 
 
 const routes: Routes = [
@@ -20,7 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ArticlesComponent, DateFormatPipe,TruncatePipe ],
+  declarations: [ArticlesComponent,TruncatePipe ],
   imports: [
     CommonModule,
     NgOptimizedImage,
@@ -28,7 +30,9 @@ const routes: Routes = [
     HttpClientModule,RouterModule,
     FavoriteComponent,
     UserComponent,
-    HashtagComponent
+    HashtagComponent,
+    BtnEditComponent,
+    BtnDeleteComponent
    
   ],
   exports: [],

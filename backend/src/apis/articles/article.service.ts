@@ -133,36 +133,38 @@ export class ArticleService {
       if (!article) {
         throw new NotFoundException('Article not found.');
       }
-
+  
+    
       for (const imageUrl of article.images) {
-        const fileId = this.googleDriveUploader.extractFileIdFromUrl(imageUrl);
-        await this.googleDriveUploader.deleteImage(fileId);
+        await this.firebaseService.deleteImageFromFirebase(imageUrl);
       }
-
+  
+      
       const imagesUrlPromises = files.map(async (file) => {
-        const fileStream = Readable.from(file.buffer);
-        const fileId = await this.googleDriveUploader.uploadImage(
-          fileStream,
+        const imageUrl = await this.firebaseService.uploadImageToFirebase(
+          file.buffer,
           file.originalname,
-          '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
+          'articles',
         );
-        return this.googleDriveUploader.getThumbnailUrl(fileId);
+        return imageUrl;
       });
       const imagesUrl = await Promise.all(imagesUrlPromises);
-
+  
+      
       article.title = articleDto.title;
       article.content = articleDto.content;
       article.images = imagesUrl;
       article.idTopic = articleDto.idTopic;
       article.slug = articleDto.slug;
       article.episodes = articleDto.episodes;
-
+  
       return await article.save();
     } catch (error) {
       console.error('Error updating article:', error);
-      throw error;
+      throw new Error('Could not update article. Please try again.');
     }
   }
+  
 
   async deleteById(id: string): Promise<Article> {
     const deletedArticle = await this.articleModel.findByIdAndDelete(id);
