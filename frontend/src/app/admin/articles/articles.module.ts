@@ -12,6 +12,8 @@ import { HashtagComponent } from '../../components/hashtag/hashtag.component';
 import { TruncatePipe } from '../../pipes/truncate-name.pipe';
 import { BtnEditComponent } from '../_components/btn-edit/btn-edit.component';
 import { BtnDeleteComponent } from '../_components/btn-delete/btn-delete.component';
+import { BtnAddComponent } from '../_components/btn-add/btn-add.component';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 
 const routes: Routes = [
@@ -32,8 +34,9 @@ const routes: Routes = [
     UserComponent,
     HashtagComponent,
     BtnEditComponent,
-    BtnDeleteComponent
-   
+    BtnDeleteComponent,
+   BtnAddComponent,
+   ToastComponent
   ],
   exports: [],
   providers: [DatePipe],

@@ -15,6 +15,7 @@ const routes: Routes = [
       }
     ]
   },
+ 
   {
     path: '',
     component: AdminComponent,
@@ -22,10 +23,27 @@ const routes: Routes = [
       {
         path: 'articles',
         loadChildren: () =>
-          import('./articles/articles.module').then(m => m.ArticlesModule)
+          import('./articles/articles.module').then(m => m.ArticlesModule),
+      
       }
     ]
-  }
+  },
+  {
+  
+            path: 'articles/add-article',
+            loadChildren: () =>
+              import('./articles/form-articles/form-articles.module').then(m => m.FormArticlesModule)
+          
+    
+  },
+  {
+  
+            path: 'articles/:id',
+            loadChildren: () =>
+              import('./articles/form-articles/form-articles.module').then(m => m.FormArticlesModule)
+          
+    
+  },
 ];
 
 @NgModule({

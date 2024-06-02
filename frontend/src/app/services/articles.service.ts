@@ -57,12 +57,12 @@ export class ArticlesService {
   
 
   // Editing a article via the API
-  editArticle = (url: string, body: any): Observable<any> => {
-    return this.apiService.put(url, body, {});
+  editArticle = (identifier: string,body: any): Observable<any> => {
+    return this.apiService.put(`${API_URL}/articles/${identifier}`, body, {});
   };
 
   // Deleting a article via the API
-  deleteArticle = (url: string): Observable<any> => {
-    return this.apiService.delete(url, {});
+  deleteArticle = (identifier: string): Observable<any> => {
+    return this.apiService.delete(`${API_URL}/articles/${identifier}`,{});
   };
 }

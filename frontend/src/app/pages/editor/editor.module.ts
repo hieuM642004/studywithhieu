@@ -30,7 +30,7 @@ const routes: Routes = [
     AlertComponent,
    
   ],
-  exports: [],
+  exports: [EditorComponent],
   providers: [],
 })
 

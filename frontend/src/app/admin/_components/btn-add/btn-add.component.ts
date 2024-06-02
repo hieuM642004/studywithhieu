@@ -3,13 +3,12 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-btn-edit',
+  selector: 'app-btn-add',
   standalone: true,
-  imports:[CommonModule,RouterModule],
-  templateUrl: './btn-edit.component.html',
-  styleUrls: ['./btn-edit.component.scss']
+  imports: [CommonModule,RouterModule],
+  templateUrl: './btn-add.component.html',
+  styleUrl: './btn-add.component.scss'
 })
-export class BtnEditComponent {
+export class BtnAddComponent {
   @Input() targetRoute: string = '/';
-  @Input() articleId: string = '';
 }

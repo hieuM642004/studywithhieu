@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
+
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-btn-delete',
   standalone: true,
-  imports: [],
+  imports: [ConfirmDialogComponent],
   templateUrl: './btn-delete.component.html',
-  styleUrl: './btn-delete.component.scss'
+  styleUrls: ['./btn-delete.component.scss']
 })
 export class BtnDeleteComponent {
+  @ViewChild(ConfirmDialogComponent) confirmDialog!: ConfirmDialogComponent;
+  @Output() deleteConfirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  onDelete(event: Event) {
+    this.confirmDialog.confirm2(event).then((confirmed: boolean) => {
+      this.deleteConfirmed.emit(confirmed);
+    });
+  }
+  
+  
 }

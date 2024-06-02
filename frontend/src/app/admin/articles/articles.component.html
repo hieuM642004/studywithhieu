@@ -1,4 +1,5 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <app-btn-add [targetRoute]="'/admin/articles/add-article'"></app-btn-add>
   <table
     class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400"
   >
@@ -53,8 +54,11 @@
           {{ article.views }}
         </td>
         <td class="px-2 py-3 flex items-center">
-          <app-btn-edit></app-btn-edit>
-          <app-btn-delete></app-btn-delete>
+          <app-btn-edit [targetRoute]="'/admin/articles/' + article._id"></app-btn-edit>
+
+          <app-toast></app-toast>
+          <app-btn-delete (deleteConfirmed)="onDeleteConfirmed($event,article._id)"></app-btn-delete>
+
         </td>
       </tr>
     </tbody>
