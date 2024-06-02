@@ -40,6 +40,8 @@ export class CommentsComponent implements OnInit, OnDestroy {
     this.commentSubscription = this.commentService
       .onComments()
       .subscribe((comments: any[]) => {
+        console.log(comments);
+        
         this.rootComments = comments.filter(
           (comment) => comment.parentId === null
         );

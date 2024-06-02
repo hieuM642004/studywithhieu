@@ -19,7 +19,7 @@ export class EpisodeService {
   }
 
   async findAll(): Promise<Episode[]> {
-    const episodes = await this.episodeModel.find().exec();
+    const episodes = await this.episodeModel.find().populate("idPodcast").exec();
   
     return episodes;
   }

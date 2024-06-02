@@ -1,0 +1,35 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-2 py-3">#</th>
+          <th scope="col" class="px-2 py-3">User Comment</th>
+          <th scope="col" class="px-2 py-3">Content</th>
+          <th scope="col" class="px-2 py-3">Comment Reply</th>
+          <th scope="col" class="px-2 py-3">
+            <span class="sr-only">Actions</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of comments; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ i + 1 }}</th>
+          <td class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ comment.idUser.username }}</td>
+          <td class="px-2 py-3">{{ comment.content.length > 50 ? (comment.content | slice:0:50) + '...' : comment.content }}</td>
+          <td class="px-2 py-3">
+            <div *ngIf="comment.replies.length > 0">
+              <div *ngFor="let reply of comment.replies">
+                {{ reply.content.length > 50 ? (reply.content | slice:0:50) + '...' : reply.content }}
+              </div>
+            </div>
+          </td>
+          <td class="px-2 py-3 flex items-center">
+            <button (click)="deleteComment(comment._id)" class="text-red-600 hover:text-red-800">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

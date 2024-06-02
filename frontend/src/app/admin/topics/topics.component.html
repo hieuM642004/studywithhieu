@@ -1,0 +1,51 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <app-btn-add [targetRoute]="'/admin/articles/add-article'"></app-btn-add>
+    <table
+      class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th scope="col" class="px-2 py-3">#</th>
+          <th scope="col" class="px-2 py-3">Name</th>
+          <th scope="col" class="px-2 py-3">Article</th>
+        
+          <th scope="col" class="px-2 py-3">
+            <span class="sr-only">Edit</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let topic of topics; let i = index"
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        >
+          <th
+            class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ i + 1 }}
+          </th>
+          <th
+            class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ topic.name }}
+          </th>
+        
+          <td class="px-2 py-3" >
+            {{ topic.articles.length
+            }}
+          </td>
+          
+         
+          <td class="px-2 py-3 flex items-center">
+            <app-btn-edit [targetRoute]="'/admin/episode/'"></app-btn-edit>
+  
+            <app-toast></app-toast>
+            <app-btn-delete ></app-btn-delete>
+  
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

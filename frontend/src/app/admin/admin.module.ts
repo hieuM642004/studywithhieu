@@ -44,6 +44,30 @@ const routes: Routes = [
           
     
   },
+  {
+  
+            path: 'episodes',
+            loadChildren: () =>
+              import('./episodes/episodes.module').then(m => m.EpisodesModule)
+          
+    
+  },
+  {
+  
+            path: 'comments',
+            loadChildren: () =>
+              import('./comments/comments.module').then(m => m.CommentsModule)
+          
+    
+  },
+  {
+  
+            path: 'topics',
+            loadChildren: () =>
+              import('./topics/topics.module').then(m => m.TopicsModuleAdmin)
+          
+    
+  },
 ];
 
 @NgModule({
