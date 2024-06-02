@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Topic } from './schemas/topic.schema';
@@ -16,6 +16,10 @@ export class TopicService {
 
   async create(topicDto: Topic): Promise<Topic> {
     try {
+      const existingTopic = await this.topicModel.findOne({ name: topicDto.name });
+      if (existingTopic) {
+        throw new BadRequestException(`Topic with name "${topicDto.name}" already exists.`);
+      }
       const newTopic = new this.topicModel({
         name: topicDto.name,
         articles: topicDto.articles,
@@ -51,6 +55,10 @@ export class TopicService {
   }
 
   async updateById(id: string, topic: Topic): Promise<Topic> {
+    const existingTopic = await this.topicModel.findOne({ name: topic.name, _id: { $ne: id } });
+    if (existingTopic) {
+      throw new BadRequestException(`Topic with name "${topic.name}" already exists.`);
+    }
     return await this.topicModel.findByIdAndUpdate(
       id,
       {
