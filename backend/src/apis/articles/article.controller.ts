@@ -37,6 +37,15 @@ export class ArticleController  {
       return new ResponseData<PaginatedResult<Article>>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
+  @Get('/top')
+  async getTopArticles(): Promise<ResponseData<Article[]>> {
+    try {
+      const topArticles = await this.articleService.findTopArticles();
+      return new ResponseData<Article[]>(topArticles, HttpStatus.SUCCESS, HttpMessage.SUCCESS);
+    } catch (error) {
+      return new ResponseData<Article[]>(null, HttpStatus.ERROR, HttpMessage.ERROR);
+    }
+  }
   
 
   @Post()

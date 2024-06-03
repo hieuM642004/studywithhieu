@@ -28,6 +28,12 @@ export class ArticlesService {
     headers: new HttpHeaders().set('Authorization','Bearer ' + this.authService.getAccessToken()),
   })
   }
+  getTopArticles(): Observable<PaginatedArticles> {
+  
+   return this.http.get<PaginatedArticles>(`${API_URL}/articles/top`,{
+    headers: new HttpHeaders().set('Authorization','Bearer ' + this.authService.getAccessToken()),
+  })
+  }
 
   getArticlesById(identifier: string): Observable<any> {
     return this.apiService.get(`${API_URL}/articles/${identifier}`, {

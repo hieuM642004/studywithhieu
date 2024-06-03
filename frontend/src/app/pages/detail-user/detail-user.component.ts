@@ -44,6 +44,8 @@ export class DetailUserComponent {
     this.usersService.getUserById(slug).subscribe(
       (responseData) => {
         this.user = responseData.data;
+        console.log(responseData.data);
+        
         if (this.user?.articles && this.user.articles.length > 0) {
           this.user.articles.forEach((article: any) => {
             this.userArticles.push(article);

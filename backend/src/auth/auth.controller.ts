@@ -9,6 +9,7 @@ import {
   Res,
   UnauthorizedException,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthService } from './auth.service';
@@ -40,7 +41,11 @@ export class AuthController {
         HttpMessage.SUCCESS,
       );
     } catch (error) {
-      return new ResponseData<User>(null, HttpStatus.ERROR, HttpMessage.ERROR);
+      if (error instanceof BadRequestException) {
+        return new ResponseData<User>(null, HttpStatus.CONFLICT, error.message);
+      } else {
+        return new ResponseData<User>(null, HttpStatus.ERROR, HttpMessage.ERROR);
+      }
     }
   }
 

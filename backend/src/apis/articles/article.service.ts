@@ -64,7 +64,9 @@ export class ArticleService {
     return result;
   }
 
-
+  async findTopArticles(): Promise<Article[]> {
+    return this.articleModel.find().sort({ views: -1 }).limit(10).exec();
+  }
 
 
 
