@@ -5,13 +5,15 @@ import * as bcrypt from 'bcrypt';
 import { Readable } from 'stream';
 import { User } from './schemas/user.schema';
 import { GoogleDriveUploader } from 'src/providers/storage/drive/drive.upload';
+import FirebaseService from 'src/providers/storage/firebase/firebase.service';
 @Injectable()
 export class UserService {
+  private firebaseService: FirebaseService;
   constructor(
     @InjectModel(User.name)
     private readonly userModel: mongoose.Model<User>,
     private readonly googleDriveUploader: GoogleDriveUploader,
-  ) {}
+  ) { this.firebaseService = new FirebaseService();}
 
   async findAll(): Promise<User[]> {
     const users = await this.userModel.find().populate("followers");
@@ -73,12 +75,11 @@ export class UserService {
       }
 
       if (file) {
-        const fileId = await this.googleDriveUploader.uploadImage(
-          Readable.from(file.buffer),
+        const avatarUrl = await this.firebaseService.uploadImageToFirebase(
+          file.buffer,
           file.originalname,
-          '1eHh70ah2l2JuqHQlA1riebJZiRS9L20q',
+          'avatars',
         );
-        const avatarUrl = this.googleDriveUploader.getThumbnailUrl(fileId);
         user.avatar = avatarUrl;
       }
 
@@ -95,6 +96,7 @@ export class UserService {
       throw error;
     }
   }
+
 
   async deleteById(id: string): Promise<User> {
     return await this.userModel.findByIdAndDelete(id);
