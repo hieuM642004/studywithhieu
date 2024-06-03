@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
+import { TabViewModule } from 'primeng/tabview';
 import { HttpClientModule } from '@angular/common/http';
 import { DetailUserComponent } from './detail-user.component';
+import { UserComponent } from '../../components/user/user.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     HttpClientModule,RouterModule,
-    RouterModule
+    RouterModule,
+    TabViewModule,
+    UserComponent
   ],
   exports: [],
   providers: [],

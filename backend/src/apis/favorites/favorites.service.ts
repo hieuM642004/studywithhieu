@@ -10,7 +10,7 @@ export class FavoritesService {
   ) {}
 
   async findAll(): Promise<Favorites[]> {
-    const favoritess = await this.favoritesModel.find();
+    const favoritess = await this.favoritesModel.find().populate("idUser").populate("idArticle");
     return favoritess;
   }
 

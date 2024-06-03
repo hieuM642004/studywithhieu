@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UsersService } from '../../services/user.service';
 import { User } from '../../types/types';
 import { ArticlesService } from '../../services/articles.service';
 import { Articles } from '../../types/types';
 import { AuthService } from '../../services/auth.service';
-
+import { FavoriteService } from '../../services/favorite.service';
 @Component({
   selector: 'app-detail-user',
   templateUrl: './detail-user.component.html',
@@ -14,6 +14,9 @@ import { AuthService } from '../../services/auth.service';
 export class DetailUserComponent {
   user: User | undefined;
   slug: string;
+  activeTabIndex: number = 0;
+  followed: any[] = [];
+  favorites: any[] = [];
   userArticles: Articles[] = [];
   isFollowing: boolean = false;
   hideBtnFollower: boolean = true;
@@ -21,7 +24,9 @@ export class DetailUserComponent {
     private authService: AuthService,
     private usersService: UsersService,
     private route: ActivatedRoute,
-    private articlesService: ArticlesService
+    private articlesService: ArticlesService,
+    private favoriteService: FavoriteService,
+    private router: Router
   ) {
     this.slug = '';
   }
@@ -39,12 +44,17 @@ export class DetailUserComponent {
     this.usersService.getUserById(slug).subscribe(
       (responseData) => {
         this.user = responseData.data;
-
         if (this.user?.articles && this.user.articles.length > 0) {
           this.user.articles.forEach((article: any) => {
             this.userArticles.push(article);
+
+            if (this.user?.followers && this.user.followers.length > 0) {
+              this.followed = this.user.followers;
+            }
           });
         }
+
+        this.myFavorite(this.user?._id ?? '');
 
         this.checkFollowingStatus(this.user);
         this.checkDisplayBtnFollow();
@@ -55,20 +65,12 @@ export class DetailUserComponent {
     );
   }
 
-  // fetchUserArticles() {
-  //   if (this.user && this.user.articles && this.user.articles.length > 0) {
-  //     this.user.articles.forEach((articleId) => {
-  //       this.articlesService.getArticlesById(articleId).subscribe(
-  //         (articleData) => {
-  //           this.userArticles.push(articleData.data);
-  //         },
-  //         (error) => {
-  //           console.error('Error fetching article:', error);
-  //         }
-  //       );
-  //     });
-  //   }
-  // }
+  myFavorite(idUser: string): void {
+    this.favoriteService.getFavorites().subscribe((favorites) => {
+      const loved = favorites.data.find((f: any) => f.idUser._id === idUser);
+      this.favorites = loved.idArticle;
+    });
+  }
 
   toggleFollow(): void {
     const followerId = this.authService.getAccessTokenPayload().id;
@@ -123,5 +125,14 @@ export class DetailUserComponent {
     } else {
       this.isFollowing = false;
     }
+  }
+  onTabChange(event: any) {
+    const tabFragment =
+      event.index === 0
+        ? 'articles-posted'
+        : event.index === 1
+        ? 'followed'
+        : 'favorited-article';
+    this.router.navigate([], { fragment: tabFragment, relativeTo: this.route });
   }
 }
