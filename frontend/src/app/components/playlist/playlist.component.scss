@@ -1,0 +1,88 @@
+.playlist {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 99;
+    background-color: white;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    .episode {
+      @apply cursor-pointer  border-b border-gray-300;
+      h3 {
+        @apply text-lg font-semibold;
+      }
+      p {
+        @apply text-sm text-gray-600;
+      }
+    }
+  }
+  
+  .audio-player {
+    @apply  pb-2 border-t border-gray-300;
+  
+    .control-buttons {
+      @apply flex items-center space-x-2;
+      
+      .control-button, .play-button {
+        @apply bg-none border-none cursor-pointer outline-none;
+      }
+  
+      .play-button {
+        @apply w-12 h-12 border-2 border-red-300 rounded-full flex items-center justify-center mx-4;
+      }
+  
+      .icon {
+        @apply w-4 h-4 fill-current text-red-300;
+      }
+  
+      .prev-icon::before {
+        content: '⏪';
+      }
+  
+      .rewind-icon::before {
+        content: '⏪';
+      }
+  
+      .play-icon::before {
+        content: '▶';
+      }
+  
+      .pause-icon::before {
+        content: '⏸';
+      }
+  
+      .forward-icon::before {
+        content: '⏩';
+      }
+  
+      .next-icon::before {
+        content: '⏩';
+      }
+    }
+  
+    .progress-container {
+      @apply flex items-center space-x-2 w-full;
+  
+      .progress-bar {
+        @apply flex-1 h-2 bg-red-100 rounded-full overflow-hidden relative cursor-pointer;
+      }
+  
+      .progress {
+        @apply h-full bg-red-300;
+      }
+  
+      .time-display {
+        @apply text-gray-700 text-sm font-sans;
+      }
+    }
+  
+    .playback-rate {
+      @apply ml-4;
+      
+      select {
+        @apply border border-gray-300 rounded px-2 py-1;
+      }
+    }
+  }
+  

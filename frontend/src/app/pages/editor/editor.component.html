@@ -1,0 +1,177 @@
+<ckeditor [editor]="Editor" [(ngModel)]="editorData"></ckeditor>
+
+<div class="grid gap-6 md:grid-cols-2 mt-3">
+  <div>
+    <label
+      class="flex cursor-pointer appearance-none justify-center rounded-md border border-dashed border-gray-300 bg-white px-3 py-6 text-sm transition hover:border-gray-400 focus:border-solid focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75"
+      tabindex="0"
+    >
+      <span for="photo-dropbox" class="flex items-center space-x-2">
+        <svg class="h-6 w-6 stroke-gray-400" viewBox="0 0 256 256">
+          <path
+            d="M96,208H72A56,56,0,0,1,72,96a57.5,57.5,0,0,1,13.9,1.7"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="24"
+          ></path>
+          <path
+            d="M80,128a80,80,0,1,1,144,48"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="24"
+          ></path>
+          <polyline
+            points="118.1 161.9 152 128 185.9 161.9"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="24"
+          ></polyline>
+          <line
+            x1="152"
+            y1="208"
+            x2="152"
+            y2="128"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="24"
+          ></line>
+        </svg>
+        <span class="text-xs font-medium text-gray-600">
+          Drop files to Attach, or
+          <span class="text-blue-600 underline">browse</span>
+        </span>
+      </span>
+      <input
+        id="photo-dropbox"
+        type="file"
+        class="sr-only"
+        id="multiple_files"
+        type="file"
+        multiple
+        (change)="handleFileInput($event)"
+        #fileInput
+      />
+    </label>
+  </div>
+  <div>
+    <label
+      for="topics"
+      class="block text-sm font-medium text-gray-900 dark:text-white mb-2"
+      >Select a topic</label
+    >
+    <select
+      id="topics"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      (change)="onTopicSelected($event)"
+    >
+      <option selected disabled>Choose a topic</option>
+
+      <option *ngFor="let topic of topics" [value]="topic._id">
+        {{ topic.name }}
+      </option>
+    </select>
+  </div>
+</div>
+<div class="grid gap-6 md:grid-cols-1 mt-3 ">
+<div *ngFor="let set of sets; let i = index" class="bg-blue-gray-50 p-3 rounded-md relative">
+<h2 class="mt-1 text-center font-bold">Tập:{{i + 1}}</h2>
+  
+
+    <label
+      for="first_name_{{i}}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Title {{i + 1}}</label
+    >
+    <input
+      type="text"
+      id="first_name_{{i}}"
+      [(ngModel)]="set.firstName"
+      class="bg-gray-50 border !border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="John"
+      required
+    />
+    <label
+      for="content_{{i}}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Description {{i + 1}}</label
+    >
+   
+    <textarea id="content_{{i}}"
+    [(ngModel)]="set.content"
+    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    placeholder="content" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+    
+
+    <label
+      for="audio_{{i}}"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >Audio</label
+    >
+    <label
+      class="flex cursor-pointer appearance-none justify-center rounded-md border border-dashed border-gray-300 bg-white px-3 py-3 text-sm transition hover:border-gray-400 focus:border-solid focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75"
+      tabindex="0"
+    >
+      <span class="flex items-center space-x-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-audio-lines"
+        >
+          <path d="M2 10v3" />
+          <path d="M6 6v11" />
+          <path d="M10 3v18" />
+          <path d="M14 8v7" />
+          <path d="M18 5v13" />
+          <path d="M22 10v3" />
+        </svg>
+        <span class="text-xs font-medium text-gray-600">
+          Drop files to Attach, or
+          <span class="text-blue-600 underline">browse</span>
+        </span>
+      </span>
+      <input
+        id="audio-dropbox_{{i}}"
+        type="file"
+        class="sr-only"
+        (change)="handleFileInputAudio($event, i)"
+        #fileInput
+      />
+    </label>
+
+    <button (click)="removeSet(i)" [disabled]="sets.length <= 1" class="absolute top-0 right-2 mt-2 text-white  focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-1.5 disabled:cursor-not-allowed">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+</div>
+<div class="flex justify-end">
+  <button (click)="addSet()" class="mt-3 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+  </button>
+  
+  
+  <button
+    (click)="saveData()" 
+    type="button"
+    class="mt-3 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+  >
+   <span *ngIf="!loading">Save Data</span> 
+    
+   <app-loading *ngIf="loading"></app-loading>
+
+  </button>
+</div>
+
+<app-alert *ngIf="errorMessage && errorChanged" [message]="'Your message here.'" [type]="'error'"></app-alert>
+<app-alert *ngIf="successMessage && errorChanged" [message]="'Your message here.'" [type]="'success'"></app-alert>
+

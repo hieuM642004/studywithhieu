@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "6646c46ee36d10149144d38a"
+  },
+  "idUser": {
+    "$oid": "6628fd423b28e3c5969fedf7"
+  },
+  "idArticle": {
+    "$oid": "663391f0f876d0a1e854df83"
+  },
+  "parentId": null,
+  "content": "content 1",
+  "replies": [],
+  "createdAt": {
+    "$date": "2024-05-17T02:43:58.635Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-17T02:43:58.635Z"
+  },
+  "__v": 0
+}]

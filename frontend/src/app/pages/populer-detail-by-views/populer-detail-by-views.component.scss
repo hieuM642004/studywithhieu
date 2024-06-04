@@ -1,0 +1,23 @@
+.item-popular{
+    img{
+        border-radius: 5px;
+        height: 200px;
+    }
+    .item-infor{
+        img{
+            border-radius: 50%;
+            height: 50px;
+        }
+    }
+}
+.title-popular{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: space-around;
+    a{
+        height: fit-content;
+        width: 7rem;
+        padding: auto;
+        margin-left: 30.6rem;
+    }
+}

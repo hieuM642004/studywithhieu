@@ -1,0 +1,91 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <app-btn-add [targetRoute]="'/admin/articles/add-article'"></app-btn-add>
+  <table
+    class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-2 py-3">#</th>
+        <th scope="col" class="px-2 py-3">Title</th>
+        <th scope="col" class="px-2 py-3">Image</th>
+        <th scope="col" class="px-2 py-3">Content</th>
+        <th scope="col" class="px-2 py-3">Topic</th>
+        <th scope="col" class="px-2 py-3">Posted by</th>
+        <th scope="col" class="px-2 py-3">Views</th>
+        <th scope="col" class="px-2 py-3">
+          <span class="sr-only">Edit</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let article of data; let i = index"
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
+        <th
+          class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        >
+          {{ i + 1 }}
+        </th>
+        <th
+          class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        >
+          {{ article.title }}
+        </th>
+        <td class="px-2 py-3">
+          <img
+            [src]="article.images[0]"
+            alt="image"
+            class="mx-auto w-44 max-h-44"
+          />
+        </td>
+        <td class="px-2 py-3">
+          {{ article.content | truncate : 50 : "..." }}
+        </td>
+        <td class="px-2 py-3">
+          {{ article.idTopic.name }}
+        </td>
+        <td class="px-2 py-3" *ngIf="article && article.postedBy">
+          {{ article?.postedBy }}
+        </td>
+        <td class="px-2 py-3">
+          {{ article.views }}
+        </td>
+        <td class="px-2 py-3 flex items-center">
+          <app-btn-edit [targetRoute]="'/admin/articles/' + article._id"></app-btn-edit>
+
+          <app-toast></app-toast>
+          <app-btn-delete (deleteConfirmed)="onDeleteConfirmed($event,article._id)"></app-btn-delete>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex justify-center mt-4">
+  <button
+    class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded-l disabled:pointer-events-none disabled:opacity-50"
+    (click)="onPageChange(currentPage - 1)"
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
+  <ng-container *ngFor="let page of totalPagesArray">
+    <button
+      class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded"
+      [class.active]="page === currentPage"
+      (click)="onPageChange(page)"
+    >
+      {{ page }}
+    </button>
+  </ng-container>
+  <button
+    class="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded-r disabled:pointer-events-none disabled:opacity-50"
+    (click)="onPageChange(currentPage + 1)"
+    [disabled]="currentPage === totalPages"
+  >
+    Next
+  </button>
+</div>

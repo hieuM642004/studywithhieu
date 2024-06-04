@@ -1,0 +1,43 @@
+.item-logo{
+    display: inline-flex;
+    padding: 5px;
+    img{
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+    p{
+        padding: 10px 10px;
+        font-weight: bold;
+    }
+    time{
+        padding: 10px 10px;
+        font-size: smaller;
+    }
+}
+
+.item-pod{
+    padding: 20px;
+    margin: 10px;
+    margin: 5px 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    &:hover{
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    }
+}
+
+.item-post{
+    img{
+        height: 400px;
+        width: 100%;
+        border-radius: 5px;
+        margin: 10px 0px;
+    }
+}
+
+.item-button{
+    button{
+        margin: 5px 5px;
+    }
+}

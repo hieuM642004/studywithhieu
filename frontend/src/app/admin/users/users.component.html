@@ -1,0 +1,41 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <app-btn-add [targetRoute]="'/admin/users/users'"></app-btn-add>
+    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-2 py-3">#</th>
+          <th scope="col" class="px-2 py-3">User Name</th>
+          <th scope="col" class="px-2 py-3">Avatar</th>
+          <th scope="col" class="px-2 py-3">Email</th>
+          <th scope="col" class="px-2 py-3">Role</th>
+          <th scope="col" class="px-2 py-3">
+            <span class="sr-only">Edit</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ i + 1 }}
+          </th>
+          <th class="px-2 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ user.username }}
+          </th>
+          <td class="px-2 py-3">
+            <img [src]="user.avatar" alt="image" class="mx-auto w-44 max-h-44" />
+          </td>
+          <td class="px-2 py-3">
+            {{ user.email }}
+          </td>
+          <td class="px-2 py-3">
+            {{ user.role }}
+          </td>
+          <td class="px-2 py-3 flex items-center">
+            <app-btn-edit [targetRoute]="'/admin/users/' + user._id"></app-btn-edit>
+            <app-btn-delete (deleteConfirmed)="onDeleteConfirmed($event,user._id)"></app-btn-delete>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
