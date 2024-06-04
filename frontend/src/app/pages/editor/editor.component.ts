@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrl: './editor.component.scss',
+  styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
@@ -58,9 +58,7 @@ export class EditorComponent implements OnInit {
       this.imagePreview = article.data.images;
       const episodeIds = article.data.episodes;
       this.episodeService.getEpisodesById(episodeIds).subscribe((response) => {
-        if (
-          response.statusCode === 201
-        ) {
+        if (response.statusCode === 201) {
           const episodeData = response.data;
           if (
             episodeData &&
@@ -68,6 +66,7 @@ export class EditorComponent implements OnInit {
             !Array.isArray(episodeData)
           ) {
             this.sets = [episodeData].map((episode: any) => ({
+              _id: episode._id,
               firstName: episode.title,
               content: episode.description,
               audioFile: episode.audioUrl,
@@ -109,15 +108,17 @@ export class EditorComponent implements OnInit {
 
   saveData() {
     this.errorMessage = !this.errorMessage; // Reset errorMessage flag
+    const isEditing = !!this.previousArticleId;
+
     if (
       !this.selectedTopicId ||
       !this.editorData.trim() ||
-      !this.image ||
+      (!isEditing && !this.image) ||
       !this.sets.every(
         (set) => set.firstName.trim() && set.content.trim() && set.audioFile
       )
     ) {
-      this.toastComponent.showToast('Data all input not empty', 'error');
+      this.toastComponent.showToast('All inputs must be filled', 'error');
       this.errorMessage = true;
       this.errorChanged = !this.errorChanged; // Update errorChanged flag
       return;
@@ -135,8 +136,16 @@ export class EditorComponent implements OnInit {
     formData.append('postedBy', data.postedBy);
     formData.append('idTopic', data.idTopic!);
 
+    if (isEditing) {
+      this.updateData(formData);
+    } else {
+      this.createData(formData);
+    }
+  }
+
+  createData(formData: FormData) {
     this.articlesService.addArticle(formData).then(
-      (articleResponse) => {
+      (articleResponse: any) => {
         this.errorMessage = false;
         this.previousArticleId = articleResponse.data._id;
         const episodeRequests = this.sets.map((set) => {
@@ -148,20 +157,63 @@ export class EditorComponent implements OnInit {
           (episodeResponses) => {
             this.loading = false;
             this.toastComponent.showToast(
-              'Article add successfully',
+              'Article added successfully',
               'success'
             );
             console.log('Episodes data saved successfully', episodeResponses);
           },
           (error) => {
+            this.loading = false;
             console.error('Error saving episodes data', error);
           }
         );
       },
-      (error) => {
+      (error: any) => {
         this.errorMessage = true;
         this.errorChanged = !this.errorChanged; // Update errorChanged flag
+        this.loading = false;
         console.error('Error saving article data', error);
+      }
+    );
+  }
+
+  updateData(formData: FormData) {
+    const episodeRequests = this.sets.map((set) => {
+      const episodeFormData = this.extractEpisodeData(set);
+      return this.episodeService.editEpisode(set._id, episodeFormData);
+    });
+
+    forkJoin(episodeRequests).subscribe(
+      (episodeResponses) => {
+        const episodeIds = episodeResponses.map((res: any) => res.data._id);
+        formData.append('episodes', JSON.stringify(episodeIds));
+
+        this.articlesService
+          .editArticle(this.previousArticleId!, formData)
+          .subscribe(
+            (articleResponse) => {
+              this.errorMessage = false;
+              this.loading = false;
+              this.toastComponent.showToast(
+                'Article updated successfully',
+                'success'
+              );
+              console.log(
+                'Episodes data updated successfully',
+                episodeResponses
+              );
+            },
+            (error) => {
+              this.errorMessage = true;
+              this.errorChanged = !this.errorChanged; // Update errorChanged flag
+              this.loading = false;
+              console.error('Error updating article data', error);
+            }
+          );
+      },
+      (error) => {
+        this.loading = false;
+        console.error('Error updating episodes data', error);
       }
     );
   }
