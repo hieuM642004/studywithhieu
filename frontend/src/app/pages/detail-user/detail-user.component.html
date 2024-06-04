@@ -52,7 +52,7 @@
         <div class="bg-white shadow rounded-lg p-6">
           <p-tabView (onChange)="onTabChange($event)">
             <p-tabPanel
-              header="Articles posted"
+              header="Articles posted ({{userArticles.length}})"
               [routerLink]="['.']"
               fragment="articles-posted"
             >
@@ -87,7 +87,7 @@
               </div>
             </p-tabPanel>
             <p-tabPanel
-              header="Followed"
+              header="Followed ({{followed.length}})"
               [routerLink]="['.']"
               fragment="followed"
             >
@@ -102,7 +102,7 @@
               </div>
             </p-tabPanel>
             <p-tabPanel
-              header="Favorited article"
+              header="Favorited article ({{favorites.length}})"
               [routerLink]="['.']"
               fragment="favorited-article"
             >

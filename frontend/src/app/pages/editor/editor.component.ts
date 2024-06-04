@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { from, of } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 import { TopicsService } from '../../services/topics.service';
 import { Topics } from '../../types/types';
 import { AuthService } from '../../services/auth.service';
 import { ArticlesService } from '../../services/articles.service';
 import { EpisodeService } from '../../services/episode.service';
 import { forkJoin } from 'rxjs';
+import { ToastComponent } from '../../components/toast/toast.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-editor',
@@ -13,11 +17,13 @@ import { forkJoin } from 'rxjs';
   styleUrl: './editor.component.scss',
 })
 export class EditorComponent implements OnInit {
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   public Editor = ClassicEditor;
   public editorData = '<h1>Title</h1><p>Content</p>';
   topics: Topics[] = [];
   selectedTopicId: string | undefined;
   image: File | undefined;
+  imagePreview: string | undefined;
   episode = '';
   sets: any[] = [{ firstName: '', content: '', audioFile: null }];
   previousArticleId: string | undefined;
@@ -30,11 +36,46 @@ export class EditorComponent implements OnInit {
     private readonly articlesService: ArticlesService,
     private readonly topicsService: TopicsService,
     private authService: AuthService,
-    private episodeService: EpisodeService
+    private episodeService: EpisodeService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.fetchTopics();
+    this.route.paramMap.subscribe((params) => {
+      const articleId = params.get('id');
+      if (articleId) {
+        this.previousArticleId = articleId;
+        this.loadArticleData(articleId);
+      }
+    });
+  }
+
+  loadArticleData(articleId: string) {
+    this.articlesService.getArticlesById(articleId).subscribe((article) => {
+      this.editorData = `<h1>${article.data.title}</h1><p>${article.data.content}</p>`;
+      this.selectedTopicId = article.data.idTopic;
+      this.imagePreview = article.data.images;
+      const episodeIds = article.data.episodes;
+      this.episodeService.getEpisodesById(episodeIds).subscribe((response) => {
+        if (
+          response.statusCode === 201
+        ) {
+          const episodeData = response.data;
+          if (
+            episodeData &&
+            typeof episodeData === 'object' &&
+            !Array.isArray(episodeData)
+          ) {
+            this.sets = [episodeData].map((episode: any) => ({
+              firstName: episode.title,
+              content: episode.description,
+              audioFile: episode.audioUrl,
+            }));
+          }
+        }
+      });
+    });
   }
 
   extractContentAndTitle(htmlString: string) {
@@ -68,7 +109,15 @@ export class EditorComponent implements OnInit {
 
   saveData() {
     this.errorMessage = !this.errorMessage; // Reset errorMessage flag
-    if (!this.selectedTopicId || !this.editorData.trim() || !this.image || !this.sets.every(set => set.firstName.trim() && set.content.trim() && set.audioFile)) {
+    if (
+      !this.selectedTopicId ||
+      !this.editorData.trim() ||
+      !this.image ||
+      !this.sets.every(
+        (set) => set.firstName.trim() && set.content.trim() && set.audioFile
+      )
+    ) {
+      this.toastComponent.showToast('Data all input not empty', 'error');
       this.errorMessage = true;
       this.errorChanged = !this.errorChanged; // Update errorChanged flag
       return;
@@ -98,7 +147,10 @@ export class EditorComponent implements OnInit {
         forkJoin(episodeRequests).subscribe(
           (episodeResponses) => {
             this.loading = false;
-            this.successMessage = 'Data saved successfully';
+            this.toastComponent.showToast(
+              'Article add successfully',
+              'success'
+            );
             console.log('Episodes data saved successfully', episodeResponses);
           },
           (error) => {
@@ -129,6 +181,11 @@ export class EditorComponent implements OnInit {
     const files: FileList = event.target.files;
     if (files && files.length > 0) {
       this.image = files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.image);
     }
   }
 
@@ -144,8 +201,6 @@ export class EditorComponent implements OnInit {
 
   handleFileInputAudio(event: any, index: number) {
     const file = event.target.files[0];
-    console.log(file);
-
     this.sets[index].audioFile = file;
   }
 }

@@ -8,7 +8,7 @@ import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [AuthModule,MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
-  controllers: [UserController],
+  controllers: [ UserController],
   providers: [UserService,GoogleDriveUploader],
 })
 export class UserModule {}

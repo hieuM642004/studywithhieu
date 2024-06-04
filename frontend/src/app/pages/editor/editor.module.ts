@@ -9,6 +9,7 @@ import { LoadingComponent } from '../../components/loading/loading.component';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { AlertComponent } from '../../components/alert/alert.component';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     CKEditorModule,
     LoadingComponent,
     AlertComponent,
-   
+   ToastComponent
   ],
   exports: [EditorComponent],
   providers: [],

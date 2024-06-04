@@ -31,8 +31,8 @@ export class EpisodeService {
   }
 
   // Editing a episode via the API
-  editEpisode = (url: string, body: any): Observable<any> => {
-    return this.apiService.put(url, body, {});
+  editEpisode = (identifier: string,body: any): Observable<any> => {
+    return this.apiService.put(`${API_URL}/episodes/${identifier}`, body, {});
   };
 
   // Deleting a article via the API
