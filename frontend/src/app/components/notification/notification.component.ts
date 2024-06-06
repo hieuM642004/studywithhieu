@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../services/socket/notification.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-notification',
@@ -14,14 +15,16 @@ export class NotificationComponent implements OnInit{
 
   notifications: any[] = [];
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private notificationService: NotificationService,private authService:AuthService) {}
 
   ngOnInit(): void {
-    this.notificationService.getNotifications(); // Lấy thông báo đã có trước đó
+    this.notificationService.getNotifications(); 
     this.notificationService.notifications$.subscribe((notifications) => {
       console.log(notifications);
-      
-      this.notifications = notifications; // Cập nhật danh sách thông báo
+      const currentUserId = this.authService.getAccessTokenPayload().id;
+      this.notifications = notifications.filter(
+        notification => notification.recipient._id === currentUserId
+      );
     });
   }
 }

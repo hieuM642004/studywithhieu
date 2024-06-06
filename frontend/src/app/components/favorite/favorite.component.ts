@@ -29,11 +29,17 @@ export class FavoriteComponent implements OnInit {
       const idUser = this.authService.getAccessTokenPayload().id;
       this.favoriteService.getFavorites().subscribe(
         (response) => {
+          const idUser = this.authService.getAccessTokenPayload().id;
+          console.log(idUser);
+          console.log(response);
+      
           const userFavorites = response.data.find(
-            (favorite: any) => favorite.idUser === idUser
+            (favorite: any) => favorite.idUser._id === idUser
           );
           if (userFavorites) {
-            this.isFavorited = userFavorites.idArticle.includes(this.articleId);
+            this.isFavorited = userFavorites.idArticle.some(
+              (article: any) => article._id === this.articleId
+            );
           } else {
             this.isFavorited = false;
           }
@@ -42,6 +48,7 @@ export class FavoriteComponent implements OnInit {
           console.error('Error checking favorite:', error);
         }
       );
+      
 
       this.favoriteService.countFavoritesByArticleId(this.articleId).subscribe(
         (count) => {
@@ -82,7 +89,6 @@ export class FavoriteComponent implements OnInit {
       } else {
         this.favoriteService.addFavorite(data).subscribe(
           (response) => {
-            console.log(response);
             this.isFavorited = true;
             this.favoritesCount++;
           },

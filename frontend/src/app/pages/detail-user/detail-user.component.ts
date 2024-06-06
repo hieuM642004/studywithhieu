@@ -1,38 +1,48 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../../services/user.service';
-import { User } from '../../types/types';
 import { ArticlesService } from '../../services/articles.service';
-import { Articles } from '../../types/types';
 import { AuthService } from '../../services/auth.service';
 import { FavoriteService } from '../../services/favorite.service';
+import { User, Articles } from '../../types/types';
+import { ToastComponent } from '../../components/toast/toast.component';
+
 @Component({
   selector: 'app-detail-user',
   templateUrl: './detail-user.component.html',
-  styleUrl: './detail-user.component.scss',
+  styleUrls: ['./detail-user.component.scss'],
 })
-export class DetailUserComponent {
+export class DetailUserComponent implements OnInit {
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   user: User | undefined;
   slug: string;
+  userForm!: FormGroup;
   activeTabIndex: number = 0;
   followed: any[] = [];
   favorites: any[] = [];
   userArticles: Articles[] = [];
   isFollowing: boolean = false;
   hideBtnFollower: boolean = true;
+  displayUpdateDialog: boolean = false;
+  selectedFile: File | null = null;
+
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
     private route: ActivatedRoute,
     private articlesService: ArticlesService,
     private favoriteService: FavoriteService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {
     this.slug = '';
   }
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    this.initializeForm();
+
     if (this.slug) {
       this.fetchUser(this.slug);
     } else {
@@ -40,12 +50,28 @@ export class DetailUserComponent {
     }
   }
 
-  fetchUser(slug: string) {
+  initializeForm(): void {
+    this.userForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      avatar: [''],
+    });
+  }
+
+  fetchUser(slug: string): void {
     this.usersService.getUserById(slug).subscribe(
       (responseData) => {
         this.user = responseData.data;
         console.log(responseData.data);
-        
+
+        if (this.user) {
+          this.userForm.patchValue({
+            username: this.user.username,
+            email: this.user.email,
+            avatar: this.user.avatar,
+          });
+        }
+
         if (this.user?.articles && this.user.articles.length > 0) {
           this.user.articles.forEach((article: any) => {
             this.userArticles.push(article);
@@ -57,7 +83,6 @@ export class DetailUserComponent {
         }
 
         this.myFavorite(this.user?._id ?? '');
-
         this.checkFollowingStatus(this.user);
         this.checkDisplayBtnFollow();
       },
@@ -87,8 +112,6 @@ export class DetailUserComponent {
           });
       }
     } else {
-      const followedUserId = this.user?._id;
-
       if (followedUserId) {
         this.usersService
           .followUser(followedUserId, followerId)
@@ -98,15 +121,13 @@ export class DetailUserComponent {
       }
     }
   }
-  checkDisplayBtnFollow() {
+
+  checkDisplayBtnFollow(): void {
     const followerId = this.authService.getAccessTokenPayload().id;
     const followedUserId = this.user?._id;
-    if (followedUserId === followerId) {
-      this.hideBtnFollower = false;
-    } else {
-      this.hideBtnFollower = true;
-    }
+    this.hideBtnFollower = followedUserId !== followerId;
   }
+
   checkFollowingStatus(userData: any): void {
     const userId = this.authService.getAccessTokenPayload().id;
     if (userId) {
@@ -128,7 +149,8 @@ export class DetailUserComponent {
       this.isFollowing = false;
     }
   }
-  onTabChange(event: any) {
+
+  onTabChange(event: any): void {
     const tabFragment =
       event.index === 0
         ? 'articles-posted'
@@ -136,5 +158,56 @@ export class DetailUserComponent {
         ? 'followed'
         : 'favorited-article';
     this.router.navigate([], { fragment: tabFragment, relativeTo: this.route });
+  }
+
+  extractEpisodeData(set: any): FormData {
+    const formData = new FormData();
+    formData.append('username', set.username);
+    formData.append('email', set.email);
+    formData.append('avatar', set.avatar);
+    return formData;
+  }
+
+  showUpdateDialog(): void {
+    this.displayUpdateDialog = true;
+  }
+
+  hideUpdateDialog(): void {
+    this.displayUpdateDialog = false;
+  }
+
+  onFileChange(event: any): void {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
+  onSubmit(): void {
+    if (!this.userForm || this.userForm.invalid) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('username', this.userForm.get('username')?.value);
+    formData.append('email', this.userForm.get('email')?.value);
+    if (this.selectedFile) {
+      formData.append('avatar', this.selectedFile);
+    }
+    const currentUserId = this.authService.getAccessTokenPayload().id;
+
+    this.usersService.editUser(currentUserId, formData).subscribe(
+      (response) => {
+        const newSlug = response.data.slug;
+        this.router.navigate([`/my-account/${newSlug}`]).then(() => {
+          this.fetchUser(newSlug);
+        });
+
+        this.hideUpdateDialog();
+        this.toastComponent.showToast('User updated successfully', 'success');
+      },
+      (error) => {
+        console.error('Error updating user', error);
+      }
+    );
   }
 }

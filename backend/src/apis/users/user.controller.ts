@@ -60,7 +60,9 @@ export class UserController {
       return new ResponseData<User>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
-  @UseGuards(AuthGuard('jwt'))
+
+  // @UseGuards(AuthGuard('jwt'))
+
   @Get(':identifier')
   async getUser(
     @Param('identifier') identifier: string,
@@ -99,7 +101,7 @@ export class UserController {
       return new ResponseData<User>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
-
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   async deleteUser(@Param('id') id: string): Promise<ResponseData<User>> {
     try {

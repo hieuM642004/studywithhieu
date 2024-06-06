@@ -37,6 +37,7 @@ export class ArticleController  {
       return new ResponseData<PaginatedResult<Article>>(null, HttpStatus.ERROR, HttpMessage.ERROR);
     }
   }
+   @UseGuards(AdminGuard)
   @Get('/top')
   async getTopArticles(): Promise<ResponseData<Article[]>> {
     try {

@@ -48,9 +48,21 @@ export class ArticlesComponent implements OnInit {
     }
   }
   shareOnTwitter(article: any) {
-    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent('https://mywebsitePodccast.com/articles/' + article.slug)}&text=${encodeURIComponent(article.title)}&hashtags=${encodeURIComponent('example,angular')}`;
+    // Truy xuất ảnh từ bài viết
+    const imageUrl = article.images && article.images.length > 0 ? article.images[0] : '';
+  
+    // URL của trang web
+    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent('http://localhost:4200/articles/' + article.slug)}&text=${encodeURIComponent(article.title)}&hashtags=${encodeURIComponent('podcast')}`;
+  
+    // Thêm thẻ meta cho ảnh
+    const metaImage = document.createElement('meta');
+    metaImage.setAttribute('property', 'og:image');
+    metaImage.setAttribute('content', imageUrl);
+    document.head.appendChild(metaImage);
+
     window.open(url, '_blank');
   }
+  
  
 }
 

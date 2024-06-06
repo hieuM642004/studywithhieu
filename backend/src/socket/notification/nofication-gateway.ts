@@ -15,6 +15,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/apis/users/schemas/user.schema';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-nofication.dto';
+import { log } from 'console';
 @WebSocketGateway(3002, { cors: true })
 @Injectable()
 export class NotificationGateway
@@ -49,7 +50,8 @@ export class NotificationGateway
   async handleRequestNotifications(client: Socket, userId: string) {
     try {
       const notifications = await this.notificationModel
-        .find({ recipient: userId })
+        .find({ recipient: userId})
+        .where({ recipient: userId})
         .populate('recipient')
         .populate('sender')
         .populate('article') 

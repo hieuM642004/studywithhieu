@@ -3,3 +3,21 @@
     background-color: #C7C8CC;
    
 }
+
+.flex-container {
+    position: relative;
+}
+
+.new-button {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    
+    
+   
+}
+
+.flex-container:hover .new-button {
+    display: block;
+}

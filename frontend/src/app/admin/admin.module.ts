@@ -68,6 +68,22 @@ const routes: Routes = [
           
     
   },
+  {
+    path: '',
+    component: AdminComponent,
+    children: [
+      {
+        path: 'users',
+        loadChildren: () =>
+           import('./users/users.module').then(m => m.UsersModule)
+      }
+    ]
+  },
+  {
+    path: 'users/:id',
+    loadChildren: () =>
+       import('./users/form-users/form-users.module').then(m => m.FormUsersModule)
+  },
 ];
 
 @NgModule({

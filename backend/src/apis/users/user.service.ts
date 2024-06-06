@@ -85,10 +85,10 @@ export class UserService {
 
       user.username = userDto.username;
       user.email = userDto.email;
-      user.password = userDto.password;
+      // user.password = userDto.password;
       user.role = userDto.role;
       user.slug = userDto.slug;
-      user.followers = userDto.followers;
+      // user.followers = userDto.followers;
 
       return await user.save();
     } catch (error) {

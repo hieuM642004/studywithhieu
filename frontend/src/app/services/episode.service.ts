@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class EpisodeService {
-  constructor(private apiService: ApiService, private http:HttpClient) {}
+  constructor(private apiService: ApiService, private http: HttpClient) {}
 
   // Getting episodes from the API
   getEpisodes(): Observable<any> {
@@ -23,7 +23,6 @@ export class EpisodeService {
       responseType: 'json',
     });
   }
-  
 
   // Adding a episode via the API
   addEpisode(body: any): Observable<any> {
@@ -31,7 +30,8 @@ export class EpisodeService {
   }
 
   // Editing a episode via the API
-  editEpisode = (identifier: string,body: any): Observable<any> => {
+
+  editEpisode = (identifier: string, body: any): Observable<any> => {
     return this.apiService.put(`${API_URL}/episodes/${identifier}`, body, {});
   };
 

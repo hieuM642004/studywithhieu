@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log('Interceptor called with request:', req);
+    // console.log('Interceptor called with request:', req);
     const accessToken = this.cookieService.get('accessToken');
     const clonedReq = this.addTokenToRequest(req, accessToken);
 

@@ -60,11 +60,7 @@ export class EditorComponent implements OnInit {
       this.episodeService.getEpisodesById(episodeIds).subscribe((response) => {
         if (response.statusCode === 201) {
           const episodeData = response.data;
-          if (
-            episodeData &&
-            typeof episodeData === 'object' &&
-            !Array.isArray(episodeData)
-          ) {
+          if (episodeData && typeof episodeData === 'object' && !Array.isArray(episodeData)) {
             this.sets = [episodeData].map((episode: any) => ({
               _id: episode._id,
               firstName: episode.title,
@@ -83,9 +79,7 @@ export class EditorComponent implements OnInit {
     const paragraphs = Array.from(doc.getElementsByTagName('p')).map(
       (p) => p.innerHTML
     );
-    const headers = Array.from(
-      doc.querySelectorAll('h1, h2, h3, h4, h5, h6')
-    ).map((h) => h.innerHTML);
+    const headers = Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6')).map((h) => h.innerHTML);
 
     return {
       title: headers.join(' '),
@@ -108,25 +102,23 @@ export class EditorComponent implements OnInit {
 
   saveData() {
     this.errorMessage = !this.errorMessage; // Reset errorMessage flag
-    const isEditing = !!this.previousArticleId;
-
+    const isEditing = !!this.previousArticleId; // Kiểm tra nếu đang chỉnh sửa
+  
     if (
       !this.selectedTopicId ||
       !this.editorData.trim() ||
-      (!isEditing && !this.image) ||
-      !this.sets.every(
-        (set) => set.firstName.trim() && set.content.trim() && set.audioFile
-      )
+      (!isEditing && !this.image) || // Chỉ yêu cầu hình ảnh nếu là tạo mới
+      !this.sets.every((set) => set.firstName.trim() && set.content.trim() && set.audioFile)
     ) {
       this.toastComponent.showToast('All inputs must be filled', 'error');
       this.errorMessage = true;
       this.errorChanged = !this.errorChanged; // Update errorChanged flag
       return;
     }
-
+  
     this.loading = true;
     const data = this.extractContentAndTitle(this.editorData);
-
+  
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('content', data.content);
@@ -135,14 +127,14 @@ export class EditorComponent implements OnInit {
     }
     formData.append('postedBy', data.postedBy);
     formData.append('idTopic', data.idTopic!);
-
+  
     if (isEditing) {
       this.updateData(formData);
     } else {
       this.createData(formData);
     }
   }
-
+  
   createData(formData: FormData) {
     this.articlesService.addArticle(formData).then(
       (articleResponse: any) => {
@@ -152,14 +144,11 @@ export class EditorComponent implements OnInit {
           const episodeFormData = this.extractEpisodeData(set);
           return this.episodeService.addEpisode(episodeFormData);
         });
-
+  
         forkJoin(episodeRequests).subscribe(
           (episodeResponses) => {
             this.loading = false;
-            this.toastComponent.showToast(
-              'Article added successfully',
-              'success'
-            );
+            this.toastComponent.showToast('Article added successfully', 'success');
             console.log('Episodes data saved successfully', episodeResponses);
           },
           (error) => {
@@ -176,40 +165,32 @@ export class EditorComponent implements OnInit {
       }
     );
   }
-
+  
   updateData(formData: FormData) {
     const episodeRequests = this.sets.map((set) => {
       const episodeFormData = this.extractEpisodeData(set);
       return this.episodeService.editEpisode(set._id, episodeFormData);
     });
-
+  
     forkJoin(episodeRequests).subscribe(
       (episodeResponses) => {
         const episodeIds = episodeResponses.map((res: any) => res.data._id);
         formData.append('episodes', JSON.stringify(episodeIds));
-
-        this.articlesService
-          .editArticle(this.previousArticleId!, formData)
-          .subscribe(
-            (articleResponse) => {
-              this.errorMessage = false;
-              this.loading = false;
-              this.toastComponent.showToast(
-                'Article updated successfully',
-                'success'
-              );
-              console.log(
-                'Episodes data updated successfully',
-                episodeResponses
-              );
-            },
-            (error) => {
-              this.errorMessage = true;
-              this.errorChanged = !this.errorChanged; // Update errorChanged flag
-              this.loading = false;
-              console.error('Error updating article data', error);
-            }
-          );
+  
+        this.articlesService.editArticle(this.previousArticleId!, formData).subscribe(
+          (articleResponse) => {
+            this.errorMessage = false;
+            this.loading = false;
+            this.toastComponent.showToast('Article updated successfully', 'success');
+            console.log('Episodes data updated successfully', episodeResponses);
+          },
+          (error) => {
+            this.errorMessage = true;
+            this.errorChanged = !this.errorChanged; // Update errorChanged flag
+            this.loading = false;
+            console.error('Error updating article data', error);
+          }
+        );
       },
       (error) => {
         this.loading = false;
@@ -217,7 +198,7 @@ export class EditorComponent implements OnInit {
       }
     );
   }
-
+  
   fetchTopics() {
     this.topicsService.getTopics().subscribe((topics) => {
       this.topics = topics.data;

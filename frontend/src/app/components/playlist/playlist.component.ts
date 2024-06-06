@@ -41,8 +41,8 @@ export class PlaylistComponent implements OnInit{
     if (this.articleId) {
       this.episodeService.getEpisodes().subscribe(
         (response) => {
-          console.log(response);
-          this.episodes = response.data.filter((episode: any) => episode.idPodcast === this.articleId);
+          console.log(response,'play');
+          this.episodes = response.data.filter((episode: any) => episode.idPodcast._id === this.articleId);
         },
         (error) => {
           console.error('Error fetching playlist:', error);

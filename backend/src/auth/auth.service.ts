@@ -30,10 +30,10 @@ export class AuthService {
 
   async register(user: User, file: Express.Multer.File): Promise<User> {
     try {
-      const existingUser =this.userModel.findOne({email: user.email})
-      if (existingUser) {
-        throw new BadRequestException('Email is already in use');
-      }
+      // const existingUser =this.userModel.findOne({email: user.email})
+      // if (existingUser) {
+      //   throw new BadRequestException('Email is already in use');
+      // }
       const hashedPassword = await bcrypt.hash(user.password, 10);
       const userWithHashedPassword = { ...user, password: hashedPassword };
       let avatarUrl: string | undefined = undefined;
