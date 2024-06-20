@@ -1,0 +1,110 @@
+[{
+  "_id": {
+    "$oid": "665ff845f10adb2e623a11e4"
+  },
+  "recipient": {
+    "$oid": "66488b3ce496521e55a68450"
+  },
+  "sender": {
+    "$oid": "6648979be496521e55a68716"
+  },
+  "article": {
+    "$oid": "665ff845f10adb2e623a11db"
+  },
+  "read": false,
+  "createdAt": {
+    "$date": "2024-06-05T05:31:49.212Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-05T05:31:49.212Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665ff9a3f10adb2e623a1253"
+  },
+  "recipient": {
+    "$oid": "66488b3ce496521e55a68450"
+  },
+  "sender": {
+    "$oid": "6648979be496521e55a68716"
+  },
+  "article": {
+    "$oid": "665ff9a3f10adb2e623a124a"
+  },
+  "read": false,
+  "createdAt": {
+    "$date": "2024-06-05T05:37:39.602Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-05T05:37:39.602Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665ffa11f10adb2e623a1284"
+  },
+  "recipient": {
+    "$oid": "66488b3ce496521e55a68450"
+  },
+  "sender": {
+    "$oid": "6648979be496521e55a68716"
+  },
+  "article": {
+    "$oid": "665ffa11f10adb2e623a127b"
+  },
+  "read": false,
+  "createdAt": {
+    "$date": "2024-06-05T05:39:29.587Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-05T05:39:29.587Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665ffa9cf10adb2e623a12e1"
+  },
+  "recipient": {
+    "$oid": "6648979be496521e55a68716"
+  },
+  "sender": {
+    "$oid": "66488b3ce496521e55a68450"
+  },
+  "article": {
+    "$oid": "665ffa9cf10adb2e623a12d8"
+  },
+  "read": false,
+  "createdAt": {
+    "$date": "2024-06-05T05:41:48.544Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-05T05:41:48.544Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665ffb25f10adb2e623a130d"
+  },
+  "recipient": {
+    "$oid": "6648979be496521e55a68716"
+  },
+  "sender": {
+    "$oid": "66488b3ce496521e55a68450"
+  },
+  "article": {
+    "$oid": "665ffb25f10adb2e623a1304"
+  },
+  "read": false,
+  "createdAt": {
+    "$date": "2024-06-05T05:44:05.228Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-05T05:44:05.228Z"
+  },
+  "__v": 0
+}]
